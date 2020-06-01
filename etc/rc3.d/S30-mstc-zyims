@@ -1,0 +1,7 @@
+#!/bin/sh
+
+#lauch all app for ZyIMS
+test -e /bin/mm.exe && /bin/mm.exe &
+test -e /bin/mm.exe && sleep 5
+test -e /bin/icf.exe && /bin/icf.exe &
+

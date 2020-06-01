@@ -1,0 +1,92 @@
+<html>
+   <head>
+      <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+      <meta http-equiv="x-frame-options" content="sameorigin">
+      <link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>
+            <script language="javascript" src="util.js"></script>
+            <script language="javascript">
+<!-- hide
+function btnApplySave() {
+   var loc = 'tvservices.cmd?';
+
+   with ( document.forms[0] ) {
+     if (chkTVServices.checked == true)
+        loc += 'tvServicesEnable=1';
+     else
+        loc += 'tvServicesEnable=0';
+
+     loc += '&vpxyOptions=' + vpxyOptions.value;
+     loc += '&WSOptions=' + WSOptions.value;
+	 
+   }
+   loc += '&sessionKey=<%ejGetOther(sessionKey)%>';
+   var code = 'location="' + loc + '"';
+   eval(code);
+}
+
+function frmLoad() {
+   with ( document.forms[0] ) {
+      var tvServicesEnable = '<%ejGet(TVSerivcesEnable)%>';
+
+      if (tvServicesEnable == 1)
+      {
+         chkTVServices.checked = true;
+      }
+      else 
+      {
+         chkTVServices.checked = false;
+      }
+
+      vpxyOptions.value = '<%ejGet(TVServicesUdpxyOptions)%>';
+      WSOptions.value = '<%ejGet(TVServicesWSOptions)%>';
+   }
+}
+
+// done hiding -->
+</script>
+   </head>
+   <body onLoad='frmLoad()'>
+      <blockquote>
+         <form>
+            <P>
+               <b>TV Services</b><br>
+               <br>
+               TV Services allow access to Movistar TV multicast contents from a SmartTV, an Android device or other UPnP/DLNA-capable devices.
+			   <br>
+			   <br>
+               Select the desired values and click "Apply/Save". 
+            </P>
+
+            <tr>
+               <td colspan="2">
+                  <input type='checkbox' name='chkTVServices'></td>
+               <td>
+                    Enable TV Services</td>
+            </tr>
+
+            <br>
+            <br>
+            <div id='hideinfo'>               
+               <table>
+               <tr>
+                  <td><b>udpxy</b> Options:</td>
+                  <td><input type='text' name='vpxyOptions' size="128" maxlength="256"></td>
+               </tr>
+               <tr>
+                  <td><b>Web Service</b> Options:</td>
+                  <td><input type='text' name='WSOptions' size="128" maxlength="256"></td>
+               </tr>
+               </table>
+            </div>            
+            <br>
+            <br>
+            <center>
+               <input type='button' onClick='btnApplySave()' value='Apply/Save'>
+            </center>
+         </form>
+      </blockquote>
+   </body>
+</html>
+
+

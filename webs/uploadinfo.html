@@ -1,0 +1,73 @@
+<html>
+   <head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+		<meta http-equiv="x-frame-options" content="sameorigin">
+		<link rel="stylesheet" href='stylemain.css' type='text/css'>
+        <link rel="stylesheet" href='colors.css' type='text/css'>
+    <script language="javascript">
+<!-- hide
+var msg = new Array();
+msg[0] = 'El proceso de actualización está en proceso. El router se reiniciará al finalizar. El proceso toma alrededor de 2 minutos.';
+msg[1] = 'La subida del archivo ha fallado. El sistema no tiene memoria. El router de banda ancha se está reiniciando.';
+msg[2] = 'La subida del archivo ha fallado. No se ha seleccionado ningún archivo.';
+msg[3] = 'La subida del archivo ha fallado. El archivo seleccionado contiene una imagen ilegal.';
+msg[4] = 'Error grave durante la subida de la imagen.';
+msg[5] = 'La subida del archivo ha fallado. El archivo seleccionado contiene un id modelo ilegal.';
+
+var idxStr = '<%ejGetOther(sysInfo, upldSts)%>';
+
+function getMsgIndex() {
+   var idxNum = parseInt(idxStr);
+   if ( isNaN(idxNum) || idxNum < 0 || idxNum > 5 )
+      idxNum = 4;
+
+   return idxNum;
+}
+
+function reboot() {
+   var enblPopWin = '<%ejGet(enblPopWin)%>';
+   var loc = 'main.html';
+   var code = 'window.top.location="' + loc + '"';
+
+   if ( enblPopWin == '1' ) {
+      loc = 'index.html';
+      code = 'location="' + loc + '"';
+   }
+
+   eval(code);
+}
+
+function frmLoad() {
+   // only reboot if upload progress is successful
+   if ( getMsgIndex() == 0 )
+      setTimeout('reboot()', 40000);
+}
+
+function btnBack() {
+   var code = 'location="' + 'upload.cgi' + '"';
+
+   if (<%ejGet(glbUploadMode)%> == 2)
+      code = 'location="' + 'updatesettings.cgi' + '"';
+   eval(code);
+}
+
+// done hiding -->
+</script>
+   </head>
+   <body onLoad='frmLoad()'>
+      <blockquote> <b>Broadband Router Update</b><br>
+         <br>
+         <script language="javascript">
+<!-- hide
+document.write(msg[getMsgIndex()]);
+// done hiding -->
+</script>
+         <br>
+         <br>
+         <center>
+            <!--input type='button' onClick='btnBack()' value='Back'-->
+         </center>
+      </blockquote>
+   </body>
+</html>

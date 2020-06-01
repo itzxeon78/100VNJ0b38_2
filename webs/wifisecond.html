@@ -1,0 +1,763 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="x-frame-options" content="sameorigin">
+<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+<title>movistar</title>
+<link href="/mhs/css/style.css" rel="stylesheet" type="text/css" />
+<!--<script type="text/javascript" src="/mhs/js/jquery.1.4.2-min.js" ></script>-->
+<!--<script src="/mhs/js/jquery-page.js" type="text/javascript"></script>-->
+<!--Botton-->
+<link type="text/css" rel="stylesheet" href="/mhs/css/ui.switchbutton.min.css" />
+<!--<link type="text/css" rel="stylesheet" href="css/demo.css" />-->
+<script type="text/javascript" src="/mhs/js/jquery-1.6.3.min.js"></script>
+<script type="text/javascript" src="/mhs/js/jquery.tmpl.min.js"></script>
+<script type="text/javascript" src="/mhs/js/jquery-ui-1.8.16.custom.min.js"></script>
+<script type="text/javascript" src="/mhs/js/jquery.switchbutton.min.js"></script>
+<script type="text/javascript" src="/mhs/js/main.js"></script>
+<!--<script type="text/javascript" src="/mhs/js/demo.js"></script>-->
+<!--<script type="text/javascript" src="/mhs/js/index.js"></script>-->
+<!--<script type="text/javascript" src="/mhs/APIS/api_fake.js"></script>-->
+<script type="text/javascript" src="/mhs/js/jquery.utils.homestation.min.js"></script>
+<!--<script type="text/javascript" src="/mhs/js/languages.js"></script>-->
+<!--<script type="text/javascript" src="/mhs/js/jquery.json-2.2.js"></script>-->
+<script type="text/javascript" src="/mhs/js/networkMap/wifisecond.js"></script>
+<!--<script type="text/javascript" src="/mhs/js/networkMap/applications.js"></script>-->
+<script type="text/javascript" src="/mhs/js/jquery.qrcode.min.js"></script>
+<script type="text/javascript">
+<!-- hide
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function getSsidName(){
+var tmp="<%ejGetWl(wlSsid_wl0v1)%>";
+document.getElementById("ssidname").value = tmp;
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+// done hiding -->
+</script>
+</head>
+
+<body onload="MM_preloadImages('/mhs/img/x3.png'); getSsidName();">
+    <!--top-->
+<!--wrapper-->
+<div class="wrapper">
+<div class="wrapper2">
+	<div id="pageloading" style="display: none" >
+		<div id="loadingimg"><img src="/mhs/images/loading.gif" width="102" height="116" /></div>
+	</div>
+    <div class="topBorder">
+            <div class="top_LLBox"><div id="home"><img src="/mhs/img/meun.png" width="45" height="45" /></div><div id="menu" class="toptitle2">MEN&Uacute</div>
+            	<div id="pagemenu" class="menuList">
+                	<ul>
+                    	<!--li><a href="InicioLogout.cmd">Inicio</a></li-->
+                        <li><a href="mhs.html">WiFi</a></li>
+                        <li><a href="wifi5g.html">WiFi Plus</a></li>
+                        <li><a href="wifisecond.html">WiFi Invitados</a></li>
+                        <li><a href="PortForwardWizard.cmd?page=1">Puertos</a></li>
+                        <li class="sec"><a href="#">Red local&nbsp;></a>
+                        	<ul>
+                            	<li><a href="networkmap.html">Mapa de red local</a></li>
+                                <li><a href="lan_v4.html">Red Local</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="multipuesto.html">Multipuesto / Monopuesto</a></li>
+                        <li><a href="lan_v6.html">IPv6</a></li>
+                        <li><a href="changepasswd.html">Cambio contrase&ntildea del router</a></li>
+                        <li><a href="firmwareupgrad.html">Actualizaciones Firmware</a></li>
+                        <li><a href="configsetting.html">Otras funcionalidades</a></li>
+                        <li class="sec"><a href="#">Ayuda&nbsp;></a>
+                        	<ul>
+                            	<li><a href="wizard_help.html">Ayuda configurador web</a></li>
+                                <li><a href="sysinfo.html">Acerca de</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="advancedsettings.html">Configuraci&oacuten avanzada</a></li>
+                    </ul></div>
+                </div>
+            <div class="top_CBox toptitle">Acceso al Configurador Router</div>
+            <div class="top_RRBox logoBox_in"><img src="/mhs/img/logo.png"/></div>
+    </div><!--top END-->
+    <!--stlye_mins-->
+    	<div class="topBorder2">
+            <div class="toptitle2">Acceso al Configurador Router</div>
+    	</div>
+    <!--stlye_mins end-->
+    <div class="mainBorder"><div class="items"><a href="javascript:void(0)" onclick="logoutBtu();">Cerrar sesi&oacuten</a></div></div>
+    <!--location-->
+    <div class="locationTitle">WiFi Invitados</div><!--location end-->
+    
+    <!--MAIN-->
+<div class="mainBorder">
+	<div id="logout" class="finBox">
+    	<div class="artBox">¿Est&aacute seguro de que desea cerrar la sesi&oacuten?<br/>
+            </div>
+            <div class="artBox">
+              <div class="leftBtu"><input type="button" name="button" id="button" value="Cancelar" class="checkBtu" onclick="closeDiv();"/></div>
+              <div class="rightBtu"><input type="button" name="button" id="button" value="Aceptar" class="checkBtu" onclick="javascript:location.href='logout.cmd'"/></div>
+            </div>
+    </div>
+    
+   	<div class="artBox black2">Desde aqu&iacute podr&aacutes configurar tu red inal&aacutembrica para invitados. Escaneando el c&oacutedigo QR puedes incluso conectar tus equipos directamente.</div>
+
+  		<div class="artBox">
+        	<div class="tabBorder" id="SecActive">
+		   <div class="tabID">Activar WifiInvitados</div><div class="tabcontrol"><input type="checkbox" class="common" id="EnbSwitch"/></div>
+		</div>
+		
+        	<div class="tabBorder">
+            <div class="tabID">Nombre Wifi</div><div class="tabInput2"><input name="ssidname" type="text" class="chooseBox" id="ssidname" onkeypress="return maxlength32(event)"/></div>
+            </div> 
+
+			<div class="tabBorder" id="wifi_pass">
+            <div class="tabID">Clave Wifi <br/>(Introduce letras, números y caracteres especiales (@,&,!,+, etc) para que tu clave wifi tenga seguridad alta)</div><div class="tabInput2"><input name="wifiPass" type="password" autocomplete="new-password" maxlength="63" class="chooseBox" id="wifiPass" onkeyup="securitylevel(2);" onblur="securitymode(this);" />
+			</div>
+            <div class="tabcontrol2"><img src="/mhs/img/icon_eye.png" name="reveal" onclick="revealPasswd();"/></div>
+            </div>
+            
+            <div class="tabBorder_nM">
+            <div class="tabID2">Nivel de seguridad de la contrase&ntildea</div><div class="tabInput2"><div class="wrmBox"><span id="pass_level_value" class="trad" key="Insegura"></span><div id="id_pro_inner"></div></div></div>
+            </div>
+            
+        </div>
+        
+        <div class="artBox">
+            <div class="tabBorder"><div class="tabID">Seguridad:</div><div class="tabInput">
+        	 <select id="wifi_sec" onchange="wifisecuritymodified(this);" >
+				<option value="None" class="trad" ></option>	
+				<option value="WPA2PSK" class="trad" ></option>
+				<option value="WPAPSKWPA2PSK" class="trad"  ></option>
+				<option value="WEP-128Bits" class="trad" ></option>
+			</select>
+       	  	</div></div>
+
+           <div class="tabBorder_46" style="display:none" id="wifi_TKIPAES"><div class="tabID">Encriptaci&oacuten</div><div class="tabInput">
+              <select name="TKIP_Selection" class="wselect2" id="TKIP_Selection">
+                <option value="TKIP">TKIP</option>
+				<option value="AES">AES</option>
+				<option value="TKIPAES">TKIP+AES</option>
+              </select>
+       	    </div></div>
+       	    
+		  <input type="hidden" name="sessionKey" id="sessionKey" value="<% ejGetOther(sessionKey)%>">           
+          
+          
+          <div class="tabBorder_70">
+        	Escanea este c&oacutedigo y guarda los datos de tu configuraci&oacuten inal&aacutembrica en tu m&oacutevil. Adem&aacutes, si tu aplicaci&oacuten de escaneo lo permite, podr&aacutes compartirlo con tus amigos e incluso conectarte directamente 
+          </div>
+          <div class="tabBorder_20" id="qrcode"></div>
+          
+  </div>
+        
+		<div class="tabBorder"><input type="submit" name="accept_icon" id="accept_icon" value="Aplicar Cambios" class="checkBtu" onclick="wifisecondaccept();" /></div>
+		<div id="fin" class="fin_item">
+           <ul>
+             <li id="calltab1"><a class="finBox" id="alink" href="#tab1">alink</a></li>
+             <li id="calltab2"><a class="finBox" id="alink2" href="#tab2">alink2</a></li>
+           </ul>
+        </div><!--fin-->
+
+		<div id="tab1" class="finBox">
+            <div class="artBox" id="content" align="center">content<br/>
+            </div>
+            <div class="artBox">
+                <div align="center"><input  name="button" id="button" value="Cerrar" style="text-align:center" class="checkBtu2" onclick="closeDiv();"/></div>
+            </div>
+        </div><!-- #tab1 finBox end-->
+         <div id="tab2" class="finBox">
+            <div class="artBox" id="content2" align="center">content<br/>
+            </div><!--artBox-->
+            <div class="artBox">
+                <div align="center"><input  name="button" id="button" value="Cerrar" style="text-align:center" class="checkBtu2" onclick="closeDiv2();"/></div>
+            </div>
+        </div><!-- #tab2 finBox end-->
+</div><!--main END-->
+    
+    <!--footer-->
+    <div class="footerBorder">
+    © Telef&oacutenica de Espa&ntildea S.A.U. Todos los derechos reservados v 1.1
+    </div><!--footer END-->
+</div></div><!--wrapper END-->
+</body>
+<script type="text/javascript">
+<!-- hide
+		var securitypassWEP="<%ejGetWl(wlKey1_wl0v1)%>";
+		var securitypassWPA2="<%ejGetWl(wlWpaPsk_wl0v1)%>";			
+		var sub = document.getElementById("alink");
+		var sub2 = document.getElementById("alink2");
+		var ren;
+		if(detectAgent()=="MSIE") {
+		        ren = "table";
+
+		}else {
+		        ren = "canvas";
+		}
+
+		$(document).ready(function() {
+	
+		$.fx.speeds._default = 500;
+		jQuery.getJSON('/mhs/config.json', function(data, textStatus){
+			//STATUS = data.STATUS;
+			CONFIG = data.CONFIG;
+			configurationLoaded();
+         });
+       
+		$("#id_pro_inner").css("background-position","0 " + (0*-10) + "px");
+              $("#SecActive").find("input[id=EnbSwitch]").switchbutton();
+
+
+		frmLoad();		
+		
+		var sec_mode=document.getElementById("wifi_sec").selectedIndex;		
+		if(sec_mode==0){
+			$("#wifi_pass").hide();
+		}
+		else if( sec_mode == 1 || sec_mode == 2){ //WPA2-PSK/WPA/WPA2 PSK mixed
+			securitypassWPA2=document.getElementById("wifiPass").value="<%ejGetWl(wlWpaPsk_wl0v1)%>";
+		}else if( sec_mode == 3 ){ //WEIP-128
+			securitypassWEP=document.getElementById("wifiPass").value="<%ejGetWl(wlKey1_wl0v1)%>";		
+		}
+		
+		securitylevel(1);
+		generateQRCode();
+		
+	});
+
+function revealPasswd()
+{
+  var oldObject = document.getElementById("wifiPass");
+  var newObject = document.createElement('input');
+//  var show = document.getElementById("reveal");
+ 
+  newObject.value = $("#wifiPass").attr("value");
+  newObject.name = oldObject.name;
+  newObject.id = oldObject.id;
+  newObject.className = oldObject.className;
+  newObject.setAttribute("maxlength", 63); 
+  newObject.onkeyup = function(){securitylevel(2);};
+  newObject.onblur = function(){securitymode(this);}; 
+
+  if(oldObject.type == "password")
+  {
+    newObject.type = "text";
+//    document.getElementById("reveal").value = "Ocultar";
+  }
+  else
+  {
+    newObject.type = "password";
+    newObject.autocomplete = "new-password";
+//    document.getElementById("reveal").value = "Mostrar password";
+  }
+  oldObject.parentNode.replaceChild(newObject,oldObject);
+  return newObject;
+}	
+	
+function isHexaDigit(digit) {
+   var hexVals = new Array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+                           "A", "B", "C", "D", "E", "F", "a", "b", "c", "d", "e", "f");
+   var len = hexVals.length;
+   var i = 0;
+   var ret = false;
+
+   for ( i = 0; i < len; i++ )
+      if ( digit == hexVals[i] ) break;
+
+   if ( i < len )
+      ret = true;
+
+   return ret;
+}
+
+function isValidKey(val, size) {
+   var ret = false;
+   var len = val.length;
+   var dbSize = size * 2;
+
+   if ( len == size )
+      ret = true;
+   else if ( len == dbSize ) {
+      for ( i = 0; i < dbSize; i++ )
+         if ( isHexaDigit(val.charAt(i)) == false )
+            break;
+      if ( i == dbSize )
+         ret = true;
+   } else
+      ret = false;
+
+   return ret;
+}
+
+function isValidHex(value)
+{
+    var ret = true;
+    if((value.length % 2) != 0)
+    {
+        ret = false;
+    }
+    if(value.match(/[^a-fA-F0-9]+/))
+    {
+        ret = false;	
+    }
+    
+    return ret;
+}
+
+function checkHexDigitLevel(value)
+{
+    var flagNumber = 0;
+    var flagLetter = 0;
+    var flagSymbol = 0;
+    var hexDigits = value.length / 2;
+    var level = 0;
+    var i = 0;
+    while (level < 3 && i < hexDigits)
+    {
+        var asciiCode = parseInt(value.substring(i*2,i*2+2),16);
+
+		if (asciiCode >= 48 && asciiCode <= 57) //0-9
+		{ flagNumber = 1; }
+		else if (asciiCode >= 65 && asciiCode <= 90) //A-Z
+		{ flagLetter = 1; }
+		else if (asciiCode >= 97 && asciiCode <= 122) //a-z
+		{ flagLetter = 1; }
+		else if (asciiCode >= 0 && asciiCode <= 128)
+		{ flagSymbol = 1; }
+
+		level = flagNumber + flagLetter + flagSymbol;
+		i++;
+    }
+    return level;
+
+}
+
+function updateWEPstrength(type){
+    var value;
+	var level = 0;
+	
+	if(type == 1){
+	      value = "<%ejGetWl(wlKey1_wl0v1)%>";
+	}else if(type == 2){
+    	      value = $("#wifiPass").attr("value");
+	}	
+    //console.log(value);
+    var n = 0;
+    if (value != null) 
+        n = value.length;
+    if (n < 0) 
+        n = 0;
+    var L = 1;
+    
+    if(value.match(/([0-9])+/)){
+		level++; 
+    }
+    if(value.match(/([a-zA-Z])+/)){
+		level++;
+    }
+    if(value.match(/[^a-zA-Z0-9]+/)){
+		level++;
+    }
+    if (n < 13){
+		L = 1;
+    }
+    else if( n >= 13 && n < 26)
+    {
+        if(level == 1)
+        {L = 1;}
+        else if(level >= 2)
+        {L = 3;}
+    }
+    else if (n >= 26)
+    {	
+        if(isValidHex(value))
+        {
+            //Hexidecimal
+            level = checkHexDigitLevel(value);
+        }
+        
+        if(level == 1)
+        {L = 1;}
+        else if(level >= 2)
+        {L = 3;}
+    }
+
+    //$("#id_pro_inner").css("background-position", "0 " + (L * -10) + "px");
+	$("#pass_level_value").css("margin-left", (L *28) + "px");
+    //$("#pass_level_value").attr("key", "WIFI_SEC_PASS_STRENGTH_" + L);
+    switch(L){
+        case 1:
+               $("#pass_level_value").attr("key", "Baja");
+               break;
+        case 3:
+               $("#pass_level_value").attr("key", "Media");
+               break;
+        case 5:
+               $("#pass_level_value").attr("key", "Excelente");
+               break;
+    }
+	reloadTexts();
+    //reloadTextsDiv("wifi_pass");
+}
+function updateWPAPSKstrength(type){
+    var value;
+     var level = 0;
+	if(type == 1){
+		value = "<%ejGetWl(wlWpaPsk_wl0v1)%>";
+	}else if(type == 2){
+    	value = $("#wifiPass").attr("value");
+	}
+
+    var n = 0;
+    if (value != null) 
+        n = value.length;
+    if (n < 0) 
+        n = 0;
+    var L = 1;
+
+	
+    if(value.match(/([0-9])+/)){
+	    level++; 
+    }
+    if(value.match(/([a-zA-Z])+/)){
+	    level++;
+    }
+    if(value.match(/[^a-zA-Z0-9]+/)){
+	    level++;
+    }
+
+    if (n < 8){
+	    L = 1;
+    }else if(n >=8 && n <= 10){
+        if(level == 1)
+        {L = 1;}
+        else if(level > 1)
+        {L = 3;}
+    }else if(n > 10 && n <= 63){
+        if(level == 1)
+        {L = 1;}
+        else if(level == 2)
+        {L = 3;}
+        else if(level == 3)
+        {L = 5;}
+    }else if (n >= 64){	
+        if(isValidHex(value))
+        {
+            //Hexidecimal
+            level = checkHexDigitLevel(value);
+        }
+
+        if(level == 1)
+        {L = 1;}
+        else if(level == 2)
+        {L = 3;}
+        else if(level == 3)
+        {L = 5;}
+    }
+
+    $("#pass_level_value").css("margin-left", (L *28) + "px");
+    //$("#pass_level_value").attr("key", "WIFI_SEC_PASS_STRENGTH_" + L);
+    switch(L){
+        case 1:
+               $("#pass_level_value").attr("key", "Baja");
+               break;
+        case 3:
+               $("#pass_level_value").attr("key", "Media");
+               break;
+        case 5:
+               $("#pass_level_value").attr("key", "Excelente");
+               break;
+    }
+    //reloadTextsDiv("wifi_pass");
+	reloadTexts();
+}
+	
+
+function updateWEP64strength(object)
+{
+	var index = object.value.indexOf("0x");
+	len=object.value.length;
+	
+	if(len == 0){
+		alert("La clave WEP no debe estar vacia");
+		return false;
+	}
+	if(object.value.indexOf(" ")!=-1){
+ 		alert("Spaces and underscores are not allowed.");
+ 		return false; 
+	}
+	if(object.value.indexOf("_")!=-1){
+ 		alert("Spaces and underscores are not allowed.");
+ 		return false; 
+	}
+    /* wep 64 */
+
+	if(len==5 || len==10){
+		if ( isValidKey(object.value, 5) == false ) {
+			alert("Invalid Key Value");
+			return false;
+		}
+	}
+	else
+	{
+		alert("Invalid Key Value");
+		return false;
+	}
+	
+	return true;
+}
+
+function updateWEP128strength(object)
+{
+	var index = object.value.indexOf("0x");
+	len=object.value.length;
+	
+	if(len == 0){
+		alert("La clave WEP no debe estar vacia. La clave debe tener ya sea 13 o 26 caracteres.");
+		//$("#wep_errorPW").fadeIn();
+		return false;
+	}
+	//if(object.value.indexOf(" ")!=-1){
+ 		//alert("Los espacios y guiones bajos , no se permiten.");
+ 		//return false; 
+	//}
+	if(object.value.indexOf("_")!=-1){
+ 		alert("Los espacios y guiones bajos , no se permiten.");
+ 		return false; 
+	}
+    /* wep 128 */
+
+	if(len==13 || len==26){
+		if ( isValidKey(object.value, 13) == false ) {
+			alert("Valor no válido de clave.");
+			return false;
+		}
+	}
+	else
+	{
+		alert("Valor no válido de clave.");
+		return false;
+	}
+
+	return true;
+}
+
+function maxlength32(e){
+	var len = 0, charlen = 0;
+	var keynum = 0;
+	var keychar;
+	var x = document.getElementById("ssidname");
+
+	if(x.value.length > 0)
+	{
+	   len = UTF8CodeLength(x.value); //the current length in text
+
+	   if(window.event) // IE/Chrome
+	   {
+	      keynum = e.keyCode;
+	   }
+	   else if(e.which) // Netscape/Firefox/Opera
+	   {
+	      keynum = e.which;
+	   }
+	   if(keynum >= 32)
+	   {
+	      keychar = String.fromCharCode(keynum);
+	      charlen = UTF8CodeLength(keychar);
+	      if(len+charlen > 32) // total len of the text value and the keychar
+	      {
+	         return false;
+	      }
+	   }
+
+	}
+	return true;
+}
+
+function securitymode(b){
+	var wifisec_mode=document.getElementById("wifi_sec").selectedIndex;		
+	//alert("into securitymode wifisec_mode:"+ wifisec_mode);
+	if(wifisec_mode == 1 || wifisec_mode == 2 ){  //WPA2-PSK/WPA-PSK
+		updateWPAstrength(0);
+	}else if(wifisec_mode == 3){         //WEP-128/
+		updateWEP128strength(b);
+	}	
+}
+function securitylevel(b){
+	var wifisec_mode=document.getElementById("wifi_sec").selectedIndex;		
+	if(wifisec_mode == 1 || wifisec_mode == 2 ){  //WPA2-PSK/WPA-PSK
+		updateWPAPSKstrength(b);
+	}else if(wifisec_mode == 3){         //WEP-64/
+		updateWEPstrength(b);
+	}
+}
+function wifisecuritymodified(select){
+	//securitymode();
+	var wep="<%ejGetWl(wlKey1_wl0v1)%>";
+ 	if($("#wifi_sec")[0].options[1].selected == true || $("#wifi_sec")[0].options[2].selected == true ){  //WPA-PSK         
+		securitypassWPA2=document.getElementById("wifiPass").value="<%ejGetWl(wlWpaPsk_wl0v1)%>";		
+		updateWPAPSKstrength(1);
+	}else if( $("#wifi_sec")[0].options[3].selected == true ){  //WEP
+		//securitypassWEP=document.getElementById("wifiPass").value="<%ejGetWl(wlKey1_wl0v1)%>";	
+		if(wep == "1234567890123")
+		   securitypassWEP=document.getElementById("wifiPass").value="";
+		else
+		   securitypassWEP=document.getElementById("wifiPass").value=wep;
+		updateWEPstrength(1);
+	}
+    if ($("#wifi_sec")[0].options[0].selected == true) { //OPEN
+        securitySelected = "None";
+        $("#wifi_pass").hide(500);
+				
+		/*always show Baja for Open mode*/
+		$("#pass_level_value").css("margin-left", "0px");
+		$("#pass_level_value").attr("key", "Baja");	
+		reloadTexts();
+    }
+	if ($("#wifi_sec")[0].options[1].selected == true || $("#wifi_sec")[0].options[2].selected == true ) {  //WPA2-PSK/WPA-PSK 
+		$("#wifi_pass").show();
+	}
+	if ($("#wifi_sec")[0].options[3].selected == true ) {  // WEP-128
+        //confirm("WPS does not support WEP, are you sure to continue with WPS disabled?");
+        $("#wps_disable").fadeIn();
+        //$('#content').text("WPS does not support WEP, are you sure to continue with WPS disabled?");
+		$("#wifi_pass").show();
+	}
+	
+    $('#wifiPass').unbind("keypress");
+    $('#wifiPass').unbind("keydown");
+    $('#wifiPass').unbind("keyup");
+}
+
+
+function loadingProcess(){	
+	$("#pageloading").css("display","block");
+	setTimeout("location.href = '/wifisecond.html';",10000);
+	$("#pageloading").fadeOut(10000);
+}
+
+function generateQRCode () {
+	var ssid = "<%ejGetWl(wlSsid_wl0v1)%>";
+	//var hidden ="<%If tcWebApi_get("WLan_Entry","HideSSID","h") = "1" then asp_Write("1") else asp_Write("") end if%>";
+	var org_enc = "<%ejGetWl(wlAuthMode_wl0v1)%>";	
+	if((org_enc.indexOf("psk")!=-1) || (org_enc.indexOf("wpa")!=-1)){
+		var enc = "WPA";
+		var key = "<%ejGetWl(wlWpaPsk_wl0v1)%>";
+	}else if(org_enc.indexOf("shared")!=-1){
+		var enc = "WEP";
+		var key = "<%ejGetWl(wlKey1_wl0v1)%>";
+	}else{
+		if(document.getElementById("wifi_sec").selectedIndex == 3){
+			var enc = "WEP";
+			var key = "<%ejGetWl(wlKey1_wl0v1)%>";
+		}
+		else
+		{
+			var enc="nopass";
+			var key="";
+		}
+	}
+	//var qrstring = 'WIFI:S:'+escape_string(ssid)+';T:'+enc+';P:'+escape_string(key)+';';
+	var qrstring = 'WIFI:S:'+ssid+';T:'+enc+';P:'+key+';';
+	/*
+	if (hidden) {
+		qrstring += 'H:true';
+	}
+	*/
+	qrstring += ';';
+	$('#qrcode').empty();
+	$('#qrcode').qrcode({
+		render	: ren,
+		text	: qrstring,
+		padding : 0,
+		width: 96,
+		height: 96
+	});
+}
+
+function frmLoad(){
+	var mode = '<%ejGetWl(wlAuthMode_wl0v1)%>';
+	var wpaPskKey = '<%ejGetWl(wlWpaPsk_wl0v1)%>';
+	var wpa = '<%ejGetWl(wlWpa_wl0v1)%>';
+	var enbl = '<%ejGetWl(wlEnbl_wl0v1)%>';
+	var wep = '<%ejGetWl(wlWep_wl0v1)%>';
+	var secstr = '';
+
+	switch(wpa){
+		case "tkip":
+			$('#TKIP_Selection').val("TKIP");
+			secstr += '(TKIP)';
+			break;
+		case "aes":
+			$('#TKIP_Selection').val("AES");
+			secstr += '(AES)';
+			break;
+		case "tkip+aes":
+			$('#TKIP_Selection').val("TKIPAES");
+			secstr += '(TKIPAES)';
+			break;
+	}
+	
+	document.getElementById("wifi_sec").options[0].text = 'Sin seguridad';
+	document.getElementById("wifi_sec").options[1].text = 'WPA2-PSK'+secstr;
+	document.getElementById("wifi_sec").options[2].text = 'WPA/WPA2 PSK mixed'+secstr;
+	document.getElementById("wifi_sec").options[3].text = 'Bajo (WEP-128Bits)';
+	
+	
+	switch(mode){
+		case "open":
+		    if(wep == 'enabled')
+		    {
+		      document.getElementById("wifi_sec").selectedIndex = 3;
+			$("#wifi_pass").show();
+            }
+		    else
+		    {
+		      document.getElementById("wifi_sec").selectedIndex = 0;
+			  $("#wifi_pass").hide();
+		    }
+			break;
+		case "shared":
+			document.getElementById("wifi_sec").selectedIndex = 3;
+			$("#wifi_pass").show();
+			break;
+		case "wpa":
+			document.getElementById("wifi_sec").selectedIndex = 1;
+			$("#wifi_pass").show();
+			break;
+		case "psk2":
+			document.getElementById("wifi_sec").selectedIndex = 1;
+			$("#wifi_pass").show();
+			break;
+		case "psk psk2":
+			document.getElementById("wifi_sec").selectedIndex = 2;
+			$("#wifi_pass").show();
+			break;
+	}
+
+    if(enbl == 0 ){
+		$("#SecActive").find("input[id=EnbSwitch]").prop("checked", false).change();
+	}else{
+		$("#SecActive").find("input[id=EnbSwitch]").prop("checked", true).change();
+	}
+}
+// done hiding -->
+ </script>
+</html>

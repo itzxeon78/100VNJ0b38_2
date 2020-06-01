@@ -1,0 +1,100 @@
+<html>
+   <head>
+      <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+      <meta http-equiv="x-frame-options" content="sameorigin">
+      <link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>
+            <script language="javascript" src="util.js"></script>
+            <script language="javascript">
+
+<!-- hide
+
+function frmLoad() {
+   with ( document.forms[0] ) {
+
+   }
+}
+
+
+function btnApply() {
+   var loc = 'dnsrt.cmd?action=add';
+
+   with ( document.forms[0] ) {
+      if ( DomainName.value == '' ) {
+	      alert( 'Please enter a Domain Name' );
+	      return;
+      }
+ 
+      loc += '&DomainName=' + encodeUrl(DomainName.value);
+//Elina
+      if (SubnetMask.value!='' && isValidIpAddress(SubnetMask.value) == false &&  SubnetMask.value != '255.255.255.255') {
+         alert('Subnet mask "' + SubnetMask.value + '" has invalid IP address.');
+         return;
+      }
+      loc += '&SubnetMask=' + SubnetMask.value;
+
+      loc += '&wanIf=' + wanIf.options[wanIf.selectedIndex].value;
+
+   }
+   loc += '&sessionKey=<%ejGetOther(sessionKey)%>'
+   var code = 'location="' + loc + '"';
+   eval(code);
+}
+
+// done hiding -->
+</script>
+   </head>
+   <body onLoad='frmLoad()'>
+      <blockquote>
+         <form>
+            <P>
+               <b>Domain Name Routing Setup</b><br>
+               Enter the domain name, and WAN interface then click "Save/Apply" to add the entry to the DNS routing table. <br>
+               Note: If selected "MER" as WAN interface, default gateway must be configured.<br>
+               <br>
+	    </P>
+            
+            <table border="0" cellpadding="0" cellspacing="0">
+               <tr>
+                  <td>Domain Name: </td>
+                  <td><input type='text' name='DomainName'></td>
+               </tr>
+               <tr>
+                  <td>Subnet Mask:</td>
+                  <td><input type='text' name='SubnetMask'></td>
+               </tr>               
+            </table>
+	    <br>
+	    
+            <table border="0" cellpadding="0" cellspacing="0">
+               <tr>
+                  <td>Use Interface</td>
+                  <td><select name='wanIf'>
+                        <script language="javascript">
+<!-- hide
+{
+   var i = 0;
+   var interfaceInfo = '<%ejGetOther(wanInterfaceInfo, route)%>';
+   var interfaces = interfaceInfo.split('|');
+   
+   for ( i = 0; i < interfaces.length; i++ ) {
+      var names = interfaces[i].split('/');
+      document.write("  <option value='" + names[1] + "'>");
+      document.writeln(interfaces[i]);
+   }
+}
+// done hiding -->
+</script>
+                     </select></td>
+               </tr>
+            </table>
+
+            <br>
+            <center>
+               <input type='button' onClick='btnApply()' value='Apply'>
+            </center>
+         </form>
+      </blockquote>
+   </body>
+</html>
+

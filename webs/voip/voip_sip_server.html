@@ -1,0 +1,1971 @@
+<html><head>
+<meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+<link rel=stylesheet href='../stylemain.css' type='text/css'>
+<link rel=stylesheet href='../colors.css' type='text/css'>
+<script type="text/javascript" src="showpath.js" ></script>
+<script type="text/JavaScript" src="common.js" ></script>
+<script type="text/JavaScript" src="voipSipServer.js" ></script>
+<script language="javascript">
+<!-- hide 
+
+var maxSp = '<%ejGetVoice(maxSp)%>'; // MaxProfileCount
+var currentSp = '<%ejGetVoice(numSp)%>'; //current Profile count
+var maxLines = '<%ejGetVoice(maxLines)%>'; //MaxLineCount
+if ( maxLines.search("ejGetVoice") >= 0 ) {
+   maxLines = 2; // if not provided by provisioning, hard-code maxLines
+}
+var currentAcnt = '<%ejGetVoice(numLines)%>'; //current sip accounts
+var voiceRunning='<%ejGetVoice(voiceInUse)%>';
+
+var tmplc = '<%ejGetVoice(linesPerVP)%>'; //number of lines per profile
+
+var tmpvpn = '<%ejGetVoice(VPName)%>';
+var tmppa = '<%ejGetVoice(proxyAddr)%>';
+var tmppp = '<%ejGetVoice(proxyPort)%>';
+var tmpra = '<%ejGetVoice(regAddr)%>';
+var tmprp = '<%ejGetVoice(regPort)%>';
+var tmpuad  = '<%ejGetVoice(domainName)%>';
+
+var tmpie  = '<%ejGetVoice(inviteExpTmr)%>';
+var tmpre  = '<%ejGetVoice(regExpTmr)%>';
+var tmpri  = '<%ejGetVoice(regRetryInt)%>';
+var tmplp = '<%ejGetVoice(localPort)%>';
+var transportList  = '<%ejGetVoice(transportList)%>';
+var toktransportList = transportList.split(" ");
+var tmpst = '<%ejGetVoice(transport)%>';
+
+var tmpdt = '<%ejGetVoice(dtmfRelay)%>';
+var tmpms  = '<%ejGetVoice(minSE)%>';
+var tmprpmi  = '<%ejGetVoice(rtpPortMin)%>';
+var tmprpmx  = '<%ejGetVoice(rtpPortMax)%>';
+var tmpft  = '<%ejGetVoice(faxPassThrough)%>';
+var tmpt38  = '<%ejGetVoice(t38Enable)%>';
+var tmpfc  = '<%ejGetVoice(faxCodec)%>';
+var tmpts  = '<%ejGetVoice(tosByteSip)%>';
+var tmptr  = '<%ejGetVoice(tosByteRtp)%>';
+var tmps3262 = '<%ejGetVoice(rfc3262support)%>';
+var tmpdm  = '<%ejGetVoice(digiMap)%>';
+var tmpdme  = '<%ejGetVoice(digiMapEnable)%>';
+var tmppe  = '<%ejGetVoice(poundEnable)%>';
+var ifList  = '<%ejGetVoice(ifList)%>';
+var tokInterfaceList = ifList.split(" ");
+var tmpboundIfList = '<%ejGetVoice(boundIfList)%>';
+var tmpifn  = '<%ejGetVoice(ifName)%>';
+var spainsetting = '<%ejGetVoice(spainSetting)%>';
+
+if(spainsetting !='1'){
+	var tmpphcfgcr = '<%ejGetVoice(phcfgkeyCallReturn)%>';
+	var tmpphcfgcaa = '<%ejGetVoice(phcfgkeyCA_Active)%>';
+	var tmpphcfgcad = '<%ejGetVoice(phcfgkeyCA_Disable)%>';
+	//var tmpphcfgivr = '<%ejGetVoice(phcfgkeyIVR)%>';
+	var tmpphcfginternal = '<%ejGetVoice(phcfgkeyInternal)%>';
+	var tmpphcfgtransfer = '<%ejGetVoice(phcfgkeyTransfer)%>';
+	var tmpphcfgcwa = '<%ejGetVoice(phcfgkeyCW_Active)%>';
+	var tmpphcfgcwd = '<%ejGetVoice(phcfgkeyCW_Deactive)%>';
+	var tmpphcfgcfua = '<%ejGetVoice(phcfgkeyCFU_Active)%>';
+	var tmpphcfgcfud = '<%ejGetVoice(phcfgkeyCFU_Deactive)%>';
+	var tmpphcfgcfnra = '<%ejGetVoice(phcfgkeyCFNR_Active)%>';
+	var tmpphcfgcfnrd = '<%ejGetVoice(phcfgkeyCFNR_Deactive)%>';
+	var tmpphcfgcfba = '<%ejGetVoice(phcfgkeyCFB_Active)%>';
+	var tmpphcfgcfbd = '<%ejGetVoice(phcfgkeyCFB_Deactive)%>';
+	// aircheng add for one shot call waiting enable/disable
+	var tmpphcfgoscwa = '<%ejGetVoice(phcfgkeyOSCW_Active)%>';
+	var tmpphcfgoscwd = '<%ejGetVoice(phcfgkeyOSCW_Deactive)%>';
+	var tmpphcfgdnde = '<%ejGetVoice(phcfgkeyDND_Enable)%>';
+	var tmpphcfgdndd = '<%ejGetVoice(phcfgkeyDND_Disable)%>';
+	var tmpphcfgcpa = '<%ejGetVoice(phcfgkeyCP_Active)%>';
+	var tmpphcfgcpr = '<%ejGetVoice(phcfgkeyCP_Retreive)%>';
+	var tmpphcfgccbsd = '<%ejGetVoice(phcfgkeyCCBS_Deactive)%>';
+	// aircheng add for outgoing sip
+	var tmpphcfgos = '<%ejGetVoice(phcfgkeyOutgoingSip)%>';
+}
+var tmpdialint = '<%ejGetVoice(dialInterDigit)%>';
+var tmpoa = '<%ejGetVoice(obProxyAddr)%>';
+var tmpop = '<%ejGetVoice(obProxyPort)%>';
+var tmpsrtpEnable = '<%ejGetVoice(srtpEnable)%>';
+var tmpsrtpCryptoSuite = '<%ejGetVoice(srtpCryptoSuiteName)%>';
+//DNS SRV
+var tmps3263 = '<%ejGetVoice(rfc3263support)%>';
+//VoIP IOP
+var tmpvi  = '<%ejGetVoice(voipiop)%>';
+var sessionkey = '<%ejGetOther(sessionKey)%>';
+
+
+
+for (var i = 0; i < currentSp; i++) {
+
+   eval( "var lc" + i + " \= \"\" " ); /*line count per profile*/
+   eval( "var vpn" + i + " \= \"\" " ); /*vpName*/
+   eval( "var pa" + i + " \= \"\" " ); /*proxyAddr*/
+   eval( "var pp" + i + " \= \"\" " ); /*proxyPort*/
+   eval( "var ra" + i + " \= \"\" " ); /*regAddr*/
+   eval( "var rp" + i + " \= \"\" " ); /*regPort*/
+   eval( "var uad" + i + " \= \"\" " ); /*domainName*/ 
+   eval( "var ie" + i + " \= \"\" " ); /*inviteExpTmr*/
+   eval( "var re" + i + " \= \"\" " ); /*regExpTmr*/
+   eval( "var ri" + i + " \= \"\" " ); /*regRetryInt*/
+   eval( "var lp" + i + " \= \"\" " ); /*localPort*/
+   eval( "var st" + i + " \= \"\" " ); /*transport*/
+   eval( "var dt" + i + " \= \"\" " ); /*dtmfRelay*/
+   eval( "var ms" + i + " \= \"\" " ); /*minSE*/
+   eval( "var rpmi" + i + " \= \"\" "); /*rtpPortMin*/
+   eval( "var rpmx" + i + " \= \"\" "); /*rtpPortMax*/
+   eval( "var ft" + i + " \= \"\" " );   /*faxPassThrough*/
+   eval( "var fc" + i + " \= \"\" " );   /*faxCodec*/
+   eval( "var t38" + i + " \= \"\" " );  /*t38Enable*/
+
+   eval( "var ts" + i + " \= \"\" " );  /*tosByteSip*/
+   eval( "var tr" + i + " \= \"\" " );  /*tosByteRtp*/
+   eval( "var s3262" + i + " \= \"\" ");  /*rfc3262support*/
+   eval( "var dm" + i + " \= \"\" " );  /*digiMap*/
+   eval( "var dme" + i + " \= \"\" " );  /*digiMapEnable*/
+   //eval( "var pe" + i + " \= \"\" " );  /*poundEnable*/
+   eval( "var bil" + i + " \= \"\" " );  /*boundIfList*/
+   eval( "var ifn" + i + " \= \"\" " );  /*ifName*/
+
+if(spainsetting !='1'){   
+   eval( "var phcfgcr" + i + " \= \"\" " );   /*phcfgkeyCallReturn*/   
+   eval( "var phcfgcaa" + i + " \= \"\" " );  /*phcfgkeyCA_Active*/  
+   eval( "var phcfgcad" + i + " \= \"\" " );   /*phcfgkeyCA_Disable*/
+   //eval( "var phcfgivr" + i + " \= \"\" " );   /*phcfgkeyIVR*/ 
+   eval( "var phcfginternal" + i + " \= \"\" " );   /*phcfgkeyInternal*/  
+   eval( "var phcfgtransfer" + i + " \= \"\" " );   /*phcfgkeyTransfer*/  
+   eval( "var phcfgcwa" + i + " \= \"\" " );   /*phcfgkeyCW_Active*/
+   eval( "var phcfgcwd" + i + " \= \"\" " );   /*phcfgkeyCW_Deactive*/ 
+   eval( "var phcfgcfua" + i + " \= \"\" " );   /*phcfgkeyCFU_Active*/ 
+   eval( "var phcfgcfud" + i + " \= \"\" " );   /*phcfgkeyCFU_Deactive*/
+   eval( "var phcfgcfnra" + i + " \= \"\" " );   /*phcfgkeyCFNR_Active*/
+   eval( "var phcfgcfnrd" + i + " \= \"\" " );  /*phcfgkeyCFNR_Deactive*/
+   eval( "var phcfgcfba" + i + " \= \"\" " );   /*phcfgkeyCFB_Active*/
+   eval( "var phcfgcfbd" + i + " \= \"\" " );   /*phcfgkeyCFB_Deactive*/  
+   // aircheng add for one shot call waiting enable/disable
+   eval( "var phcfgoscwa" + i + " \= \"\" " );   /*phcfgkeyOSCW_Active*/
+   eval( "var phcfgoscwd" + i + " \= \"\" " );   /*phcfgkeyOSCW_Deactive*/
+   eval( "var phcfgdnde" + i + " \= \"\" " );   /*phcfgkeyDND_Enable*/
+   eval( "var phcfgdndd" + i + " \= \"\" " );   /*phcfgkeyDND_Disable*/	 
+   eval( "var phcfgcpa" + i + " \= \"\" " );   /*phcfgkeyCP_Active*/
+   eval( "var phcfgcpr" + i + " \= \"\" " );   /*phcfgkeyCP_Retreive*/
+   eval( "var phcfgccbsd" + i + " \= \"\" " );   /*phcfgkeyCCBS_Deactive*/
+   // aircheng add for outgoing sip
+   eval( "var phcfgos" + i + " \= \"\" " );   /*phcfgkeyOutgoingSip*/
+}
+   eval( "var dialint" + i + " \= \"\" " );   /*dialInterDigit*/   
+   
+   eval( "var oa" + i + " \= \"\" " );   /*obProxyAddr*/   
+   eval( "var op" + i + " \= \"\" " );   /*obProxyPort*/      
+   eval( "var srtpe" + i + " \= \"\" " );   /*srtpEnable*/
+   eval( "var srtpcs" + i + " \= \"\" " );   /*srtpCryptoSuiteName*/
+   eval( "var s3263" + i + " \= \"\" " );   /*rfc3263support*/
+
+}
+if ( tmplc.search("ejGetVoice") < 0 ){
+	eval(tmplc);
+}
+if ( tmpvpn.search("ejGetVoice") < 0 ){
+	eval(tmpvpn);
+}
+if ( tmppa.search("ejGetVoice") < 0 ){
+	eval(tmppa);
+}
+if ( tmppp.search("ejGetVoice") < 0 ){
+	eval(tmppp);
+}
+if ( tmpra.search("ejGetVoice") < 0 ){
+	eval(tmpra);
+}
+if ( tmprp.search("ejGetVoice") < 0 ){
+	eval(tmprp);
+}
+if ( tmpuad.search("ejGetVoice") < 0 ){
+	eval(tmpuad);
+}
+if ( tmpie.search("ejGetVoice") < 0 ){
+	eval(tmpie);
+}
+if ( tmpre.search("ejGetVoice") < 0 ){
+	eval(tmpre);
+}
+if ( tmpri.search("ejGetVoice") < 0 ){
+	eval(tmpri);
+}
+if ( tmplp.search("ejGetVoice") < 0 ){
+	eval(tmplp);
+}
+if ( tmpst.search("ejGetVoice") < 0 ){
+	eval(tmpst);
+}
+if ( tmpdt.search("ejGetVoice") < 0 ){
+	eval(tmpdt);
+}
+if ( tmpms.search("ejGetVoice") < 0 ){
+	eval(tmpms);
+}
+if ( tmprpmi.search("ejGetVoice") < 0 ){
+	eval(tmprpmi);
+}
+if ( tmprpmx.search("ejGetVoice") < 0 ){
+	eval(tmprpmx);
+}
+if ( tmpft.search("ejGetVoice") < 0 ){
+	eval(tmpft);
+}
+if ( tmpfc.search("ejGetVoice") < 0 ){
+	eval(tmpfc);
+}
+if ( tmpt38.search("ejGetVoice") < 0 ){
+	eval(tmpt38);
+}
+if ( tmpts.search("ejGetVoice") < 0 ){
+	eval(tmpts);
+}
+if ( tmptr.search("ejGetVoice") < 0 ){
+	eval(tmptr);
+}
+if ( tmps3262.search("ejGetVoice") < 0 ){
+	eval(tmps3262);
+}
+if ( tmpdm.search("ejGetVoice") < 0 ){
+	eval(tmpdm);
+}
+if ( tmpdme.search("ejGetVoice") < 0 ){
+	eval(tmpdme);
+}
+if ( tmppe.search("ejGetVoice") < 0 ){
+	eval(tmppe);
+}
+
+if ( tmpifn.search("ejGetVoice") < 0 ){
+	eval(tmpifn);
+}
+if ( tmpboundIfList.search("ejGetVoice") < 0 ){
+	eval(tmpboundIfList);
+}
+if(spainsetting !='1'){   
+	if ( tmpphcfgcr.search("ejGetVoice") < 0 ){
+		eval(tmpphcfgcr);
+	}
+	if ( tmpphcfgcaa.search("ejGetVoice") < 0 ){
+		eval(tmpphcfgcaa);
+	}
+	if ( tmpphcfgcad.search("ejGetVoice") < 0 ){
+		eval(tmpphcfgcad);
+	}
+	/*
+	if ( tmpphcfgivr.search("ejGetVoice") < 0 ){
+		eval(tmpphcfgivr);
+	}
+	*/
+	if ( tmpphcfginternal.search("ejGetVoice") < 0 ){
+		eval(tmpphcfginternal);
+	}
+	if ( tmpphcfgtransfer.search("ejGetVoice") < 0 ){
+		eval(tmpphcfgtransfer);
+	}
+	if ( tmpphcfgcwa.search("ejGetVoice") < 0 ){
+		eval(tmpphcfgcwa);
+	}
+	if ( tmpphcfgcwd.search("ejGetVoice") < 0 ){
+		eval(tmpphcfgcwd);
+	}
+	if ( tmpphcfgcfua.search("ejGetVoice") < 0 ){
+		eval(tmpphcfgcfua);
+	}
+	if ( tmpphcfgcfud.search("ejGetVoice") < 0 ){
+		eval(tmpphcfgcfud);
+	}
+	if ( tmpphcfgcfnra.search("ejGetVoice") < 0 ){
+		eval(tmpphcfgcfnra);
+	}
+	if ( tmpphcfgcfnrd.search("ejGetVoice") < 0 ){
+		eval(tmpphcfgcfnrd);
+	}
+	if ( tmpphcfgcfba.search("ejGetVoice") < 0 ){
+		eval(tmpphcfgcfba);
+	}
+	if ( tmpphcfgcfbd.search("ejGetVoice") < 0 ){
+		eval(tmpphcfgcfbd);
+	}
+	// aircheng add for one shot call waiting enable/disable
+	if ( tmpphcfgoscwa.search("ejGetVoice") < 0 ){
+		eval(tmpphcfgoscwa);
+	}
+	if ( tmpphcfgoscwd.search("ejGetVoice") < 0 ){
+		eval(tmpphcfgoscwd);
+	}
+	if ( tmpphcfgdnde.search("ejGetVoice") < 0 ){
+		eval(tmpphcfgdnde);
+	}
+	if ( tmpphcfgdndd.search("ejGetVoice") < 0 ){
+		eval(tmpphcfgdndd);
+	}
+	if ( tmpphcfgcpa.search("ejGetVoice") < 0 ){
+		eval(tmpphcfgcpa);
+	}
+	if ( tmpphcfgcpr.search("ejGetVoice") < 0 ){
+		eval(tmpphcfgcpr);
+	}
+	if ( tmpphcfgccbsd.search("ejGetVoice") < 0 ){
+		eval(tmpphcfgccbsd);
+	}
+	// aircheng add for outgoing sip
+	if ( tmpphcfgos.search("ejGetVoice") < 0 ){
+		eval(tmpphcfgos);
+	}
+}
+
+if ( tmpdialint.search("ejGetVoice") < 0 ){
+	eval(tmpdialint);
+}
+
+if ( tmpoa.search("ejGetVoice") < 0 ){
+	eval(tmpoa);
+}
+if ( tmpop.search("ejGetVoice") < 0 ){
+	eval(tmpop);
+}
+if ( tmpsrtpEnable.search("ejGetVoice") < 0 ){
+	eval(tmpsrtpEnable);
+}
+if ( tmpsrtpCryptoSuite.search("ejGetVoice") < 0 ){
+	eval(tmpsrtpCryptoSuite);
+}
+if ( tmps3263.search("ejGetVoice") < 0 ){
+	eval(tmps3263);
+}
+if ( tmpvi.search("ejGetVoice") < 0 ){
+	eval(tmpvi);
+}
+
+/*default profile setting*/
+var deflc = 1;
+var defvpn = "changeme";
+var defpa = "sip.sample.com";
+var defpp = 5060;
+var defra = "sip.sample.com";
+var defrp = 5060;
+var defuad  = "sip.sample.com";
+var defie  = 180;
+var defre  = 3600;
+var defri  = 1800;
+var deflp = 5060;
+var defst = "UDP";
+var defdt = "RFC2833";
+var defms  = 120;
+var defrpmi  = 50000;
+var defrpmx  = 65500;
+var defft  = 1;
+var deffc  = 'pcma';
+var deft38  = 0;
+var defts  = 40;
+var deftr  = 40;
+var defs3262 = 0;
+var defdm  = '';
+var defdme  = 0;
+var defpe  = 0;
+
+var defboundIfList = '';
+var defifn  = "Any_WAN";
+var defphcfgcr = '*66#';
+var defphcfgcaa = '*82';
+var defphcfgcad = '*67';
+//var defphcfgivr = '****';
+var defphcfginternal = '####';
+var defphcfgtransfer = '*98#';
+var defphcfgcwa = '*41#';
+var defphcfgcwd = '#41#';
+var defphcfgcfua = '*22#';
+var defphcfgcfud = '#22#';
+var defphcfgcfnra = '*23#';
+var defphcfgcfnrd = '#23#';
+var defphcfgcfba = '*24#';
+var defphcfgcfbd = '#24#';
+// aircheng add for one shot call waiting enable/disable
+var defphcfgoscwa = '*85';
+var defphcfgoscwd = '*70';
+var defphcfgdnde = '*95#';
+var defphcfgdndd = '#95#';
+var defphcfgcpa = '';
+var defphcfgcpr = '';
+var defphcfgccbsd = '#37#';
+// aircheng add for outgoing sip
+var defphcfgos = '#12';
+if(spainsetting =='1')
+{
+	var defdialint = 10;
+}
+else
+{
+	var defdialint = 3;
+}
+
+var defoa = '';
+var defop = 5060;
+var defsrtpe = 0;
+var defsrtpcs = 'AES_CM_128_HMAC_SHA1_80';
+var defs3263 = 0;
+var defvi = 0;
+/**************************************/
+
+function enableAdvanceItem()
+{
+	if(document.getElementById("advanced").style.display == "")
+	{
+		document.getElementById("localPort").disabled = true;
+		document.getElementById("proxyPort").disabled = true;
+		document.getElementById("regPort").disabled = true;
+	}else
+	{
+		document.getElementById("localPort").disabled = false;
+		if(document.getElementById("support3263").checked != true){
+			document.getElementById("proxyPort").disabled = false;
+			document.getElementById("regPort").disabled = false;
+		}
+	}
+}
+
+
+
+function loadPreprocess()
+{
+	//resetMsg();
+	//recoverPortStart = document.getElementById("rtpPortStart").value;
+	//recoverPortEnd = document.getElementById("rtpPortEnd").value;
+	frmLoad();
+}
+
+
+
+/* Forward declarations of variables so that no errors show up
+when the Web page is opened directly with a browser */
+
+
+function hideMultiIf(){
+	if(tokInterfaceList.length < 2) {
+	} else if(tokInterfaceList.length == 2) {
+		document.forms[1].multiIf.disabled = true;
+	} else {
+		for (i = 1; i < tokInterfaceList.length; i++) {
+			document.forms[1].multiIf[i-1].disabled = true;
+		}
+	}
+}
+
+function showMultiIf(){
+	if(tokInterfaceList.length < 2) {
+	} else if(tokInterfaceList.length == 2) {
+		document.forms[1].multiIf.disabled = false;
+	} else {
+		for (i = 1; i < tokInterfaceList.length; i++) {
+			document.forms[1].multiIf[i-1].disabled = false;
+		}
+	}
+}
+
+function updateTransportList(){
+	var SPSelect = document.forms[0].SPSelect.value; 
+		for(i=0;i<toktransportList.length;i++){
+			document.forms[1].sipTransport.options[i] = new Option(toktransportList[i],toktransportList[i]);
+			if(SPSelect < parseInt(currentSp)){
+				if(document.forms[1].sipTransport.options[i].value == eval("st"+ SPSelect )){
+					document.forms[1].sipTransport.options[i].selected = true;
+				}
+			}else{
+				if(document.forms[1].sipTransport.options[i].value == defst){
+					document.forms[1].sipTransport.options[i].selected = true;	
+				}					
+			}
+		}
+		if(document.getElementById("support3263").checked == true){
+			document.forms[1].sipTransport.options[parseInt(toktransportList.length)] = new Option('AUTO','Auto');			
+			document.forms[1].sipTransport.length = parseInt(toktransportList.length) + 1;			
+		}else{
+			document.forms[1].sipTransport.length = toktransportList.length;		
+		}
+}
+
+function rfc3263_showPort(){
+
+	if(document.getElementById("support3263").checked == true){
+		document.getElementById("proxyPort").disabled = true;
+		document.getElementById("regPort").disabled = true;		
+	}else{
+		document.getElementById("proxyPort").disabled = false;
+		document.getElementById("regPort").disabled = false;		
+	}
+	updateTransportList();
+}
+
+
+function printInterfaceListBox(){
+	var inBoundIfList = 0;
+    var j =  document.forms[0].SPSelect.value; 	
+	var tmplist = '';
+	var boundInterfaces = '';
+	if(j < parseInt(currentSp)){
+		boundInterfaces = eval("bil" + j + ".split('|')");
+	}
+	
+   for(i = 1; i < tokInterfaceList.length; i++)
+   {
+      inBoundIfList = 0;
+      for(j = 0; j < boundInterfaces.length; j++)
+	  {		
+		if( tokInterfaceList[i] == boundInterfaces[j] ) {
+			inBoundIfList = 1;
+			break;
+		}
+	  }
+	  
+	  if(inBoundIfList == 1) {
+	    document.writeln(" <input type='checkbox' name='multiIf' checked value=" + tokInterfaceList[i] + '>' + tokInterfaceList[i] );
+	  } else {
+	    document.writeln(" <input type='checkbox' name='multiIf' value=" + tokInterfaceList[i] + '>' + tokInterfaceList[i] );
+	  }
+   }
+}
+
+
+function printSPSelectList(){
+
+	var addNewIdx ;
+	var spname ; 
+   for (i = 0; i < currentSp; i++) {
+		addNewIdx = i + 1;
+		vpname = eval('vpn'+i) ;
+		if(i == 0){
+			document.writeln("	<option selected='selected' value='" + i + "'>" + vpname +"</option>");		
+		}else{
+			document.writeln("	<option value='" + i + "'>" + vpname +"</option>");		
+		}
+   }
+
+	if( parseInt(currentSp) < parseInt(maxSp) && parseInt(currentAcnt)<parseInt(maxLines)){
+		document.writeln("		<option value='" + addNewIdx + "'>ADD_NEW</option>");
+	}
+}
+
+function btnStartSip(current_view) {
+
+	 if(formCheck() ==false){
+	 	return;
+	 }
+	var loc ;	 
+	var SPSelect =  document.forms[0].SPSelect.value; 
+
+	if(parseInt(SPSelect) < parseInt(currentSp) ){
+		loc = 'voicesipstart.cmd?';
+	}else{
+		if( parseInt(currentSp) >= parseInt(maxSp) || parseInt(currentAcnt) >= parseInt(maxLines)){
+			return;
+		}		
+		loc = 'voicesipAddSP.cmd?';
+	}
+   loc = addParamsToQuery( loc, current_view );
+   if(loc == 'error') {
+	return;
+   }
+   
+   //Stripping quotes and spaces
+   loc = loc.replace(/['" ]/g,'');
+   loc += '&sessionKey='+sessionkey;
+   
+   var code = 'location="' + loc + '"';
+   eval(code);
+}
+
+function btnDefaultSip(current_view) {
+   var loc = 'voicesipsetdefault.cmd?';
+   loc += 'currentview=' + current_view;
+
+   //Stripping quotes and spaces
+   loc = loc.replace(/['" ]/g,'');
+   loc += '&sessionKey='+sessionkey;
+
+var code = 'location="' + loc + '"';
+eval(code);
+
+}
+
+function btnDeleteProfile(current_view) {
+
+	if(parseInt(currentSp) <= 1){
+		alert("A single SIP Service Provider SHOULD be present in a VoiceService !!\n");	
+		return;
+	}
+   var loc = 'voicesipDeleteSP.cmd?';
+	var j =  document.forms[0].SPSelect.value;     
+   loc += 'currentview=' + current_view;
+   loc += '&spnum=' + j;
+   //Stripping quotes and spaces
+   loc = loc.replace(/['" ]/g,'');
+
+   loc += '&sessionKey='+sessionkey;
+var code = 'location="' + loc + '"';
+eval(code);
+
+}
+
+function addParamsToQuery( loc_init, current_view) {
+
+   var loc = loc_init;
+	var j =  document.forms[0].SPSelect.value;  
+   with ( document.forms[1] ) {
+		loc += 'currentview=' + current_view;
+		
+		loc += "&VPName" + j + "=" + vpName.value.replace(/['" ]/g,'');		
+		loc += "&localPort" + j + "=" + localPort.value.replace(/['" ]/g,'');
+         loc += "&obProxyAddr" + j + "=" + obProxyAddr.value.replace(/['" ]/g,'');
+         loc += "&obProxyPort" + j + "=" + obProxyPort.value.replace(/['" ]/g,'');		
+         loc += "&proxyAddr" + j + "=" + proxyAddr.value.replace(/['" ]/g,'');
+         loc += "&proxyPort" + j + "=" + proxyPort.value.replace(/['" ]/g,'');
+         loc += "&regAddr" + j + "=" + regAddr.value.replace(/['" ]/g,'');
+         loc += "&regPort"  + j + "=" + regPort.value.replace(/['" ]/g,'');
+         loc += "&domainName"  + j + "=" + domainName.value.replace(/['" ]/g,'');
+         loc += "&transport" + j + "=" + sipTransport.value.replace(/['" ]/g,'');
+         
+         loc += "&inviteExpTmr" + j + "=" + inviteExpTmr.value.replace(/['" ]/g,'');
+         loc += "&regExpTmr" + j + "=" + regExpTmr.value.replace(/['" ]/g,'');
+         loc += "&regRetryInt" + j + "=" + regRetryInt.value.replace(/['" ]/g,'');
+         loc += "&rtpPortMin" + j + "="  + rtpPortMin.value.replace(/['" ]/g,'');
+         loc += "&rtpPortMax" + j + "=" + rtpPortMax.value.replace(/['" ]/g,'');
+         loc += "&dtmfRelay" + j + "=" + dtmfRelay.value.replace(/['" ]/g,'');        
+         loc += "&regRetryInt" + j + "=" + regRetryInt.value.replace(/['" ]/g,'');
+         loc += "&regExpTmr" + j + "=" 	+ regExpTmr.value.replace(/['" ]/g,'');
+         loc += "&minSE" + j + "=" 		+ minSE.value.replace(/['" ]/g,'');
+	 	loc += "&digiMap" + j + "=" 	+ escape(dialPlan.value.replace(/[\r\n]/g,''));		
+	 	loc += "&dialInterDigit" + j + "=" +dialingIntervalTime.value.replace(/['" ]/g,'');
+		
+		if(support3263.checked == true){
+			loc += "&rfc3263support" + j + "=1";
+		}
+		else{
+			loc += "&rfc3263support" + j + "=0";
+		}
+		 
+		var iopflags=0;
+		for(i=0;i<voipiop.length;i++){
+		 if (voipiop[i].checked == true){
+			iopflags |= (1<<i);
+		 }           	
+		}
+		loc += "&voipiop="+iopflags; 
+		var enblSrtp = '<%ejGetVoice(EnableSRTP)%>';
+                if (enblSrtp =='1'){
+		if(supportSRTP.checked == true){
+			loc += "&srtpEnable" + j + "=1";
+		}
+		else{
+			loc += "&srtpEnable" + j + "=0";
+		}
+		loc += "&srtpCryptoSuiteName" + j + "=" + SRTPCryptoSuite.value.replace(/['" ]/g,'');
+			}
+
+         if (VoIP_FaxRelay[1].checked == true){
+         	loc += "&faxPassThrough" + j + "=Disable";
+         	loc += "&t38Enable" + j + "=on";
+         	}
+      	 else {
+         	loc += "&faxPassThrough" + j + "=Force";
+			if(faxPassCodec[0].checked){
+				loc += "&faxCodec" + j + "=" + faxPassCodec[0].value;
+			}
+			else{
+				loc += "&faxCodec" + j + "=" + faxPassCodec[1].value;
+			}
+         	loc += "&t38Enable" + j + "=off";
+			
+         }
+
+         loc += "&tosByteSip" + j + "=" + tosByteSip.value.replace(/['" ]/g,'');
+         loc += "&tosByteRtp" + j + "="+ tosByteRtp.value.replace(/['" ]/g,'');
+      
+		if(ifName[0].checked == true) {
+			loc += "&ifName"+ j +"=LAN";
+			loc += "&boundIfList" + j + "=";
+		} else if(ifName[1].checked == true) {
+			loc += "&ifName"+ j +"=Any_WAN";
+			loc += "&boundIfList" + j + "=";
+		} else {
+			loc += "&ifName"+ j +"=Multi_WAN";
+			var first = true;
+			if(tokInterfaceList.length < 2) {
+			} else if(tokInterfaceList.length == 2) {
+				if (multiIf.checked) {
+					loc += "&boundIfList" + j + "=" + multiIf.value.replace(/['" ]/g,'');
+					first = false;
+				}
+			} else {
+				for (i = 1; i < tokInterfaceList.length; i++) {
+					if (multiIf[i-1].checked) {
+						if (!first) {
+							loc += '|';
+						} else {
+							loc += "&boundIfList" + j + "=";
+						}
+						loc += multiIf[i-1].value.replace(/['" ]/g,'');
+						first = false;
+					}
+				}
+			}
+			if(first) {
+				alert('At least one interface must be bound.');
+				loc = 'error';
+				return loc;
+			}
+		}
+
+			       
+         if (support3262.checked == true){
+           	loc += "&rfc3262support" + j + "=on";         	
+         }
+      	 else {
+         	  loc += "&rfc3262support" + j + "=off";         	
+         } 
+				   
+         if (dialPlanEnable.checked == true){
+           	loc += "&digiMapEnable" + j + "=on";         	
+         }
+      	 else {
+         	  loc += "&digiMapEnable" + j + "=off";         	
+         }    
+         
+         if (poundEnable.checked == true){
+           	loc += "&poundEnable=on";         	
+         }
+      	 else {
+         	  loc += "&poundEnable=off";  	
+         } 
+if(spainsetting !='1'){            
+	  loc += "&phcfgkeyCallReturn" + j + "=" + escape(callReturn.value.replace(/['" ]/g,''));
+         loc += "&phcfgkeyCA_Active" + j + "="     + escape(oneShotCallidDisplay.value.replace(/['" ]/g,''));
+         loc += "&phcfgkeyCA_Disable" + j + "="     + escape(oneShotCallerHiddenCall.value.replace(/['" ]/g,''));
+		 /*
+         loc += "&phcfgkeyIVR" + j + "="     + escape(IVR.value.replace(/['" ]/g,''));
+		 */
+         loc += "&phcfgkeyInternal" + j + "="     + escape(InternalCall.value.replace(/['" ]/g,''));         
+         loc += "&phcfgkeyTransfer" + j + "="     + escape(CallTransfer.value.replace(/['" ]/g,''));
+		 
+         loc += "&phcfgkeyCW_Active" + j + "="   + escape(CallWaitingEnable.value.replace(/['" ]/g,''));
+         loc += "&phcfgkeyCW_Deactive" + j + "="  + escape(CallWaitingDisable.value.replace(/['" ]/g,''));
+         loc += "&phcfgkeyCFU_Active" + j + "="   + escape(unCallForwardEnable.value.replace(/['" ]/g,''));
+         loc += "&phcfgkeyCFU_Deactive" + j + "="  + escape(unCallForwardDisable.value.replace(/['" ]/g,''));
+         loc += "&phcfgkeyCFNR_Active" + j + "="   + escape(noCallForwardEnable.value.replace(/['" ]/g,''));
+         loc += "&phcfgkeyCFNR_Deactive" + j + "="  + escape(noCallForwardDisable.value.replace(/['" ]/g,''));
+         loc += "&phcfgkeyCFB_Active" + j + "="   + escape(BusyCallForwardEnable.value.replace(/['" ]/g,''));
+         loc += "&phcfgkeyCFB_Deactive" + j + "="  + escape(BusyCallForwardDisable.value.replace(/['" ]/g,''));
+
+         // aircheng add for one shot call waiting enable/disable
+		 loc += "&phcfgkeyOSCW_Active" + j + "="  + escape(oneShotCallWaitingEnable.value.replace(/['" ]/g,''));
+		 loc += "&phcfgkeyOSCW_Deactive" + j + "="  + escape(oneShotCallWaitingDisable.value.replace(/['" ]/g,''));
+		 
+         loc += "&phcfgkeyDND_Enable" + j + "="   + escape(dndenable.value.replace(/['" ]/g,''));
+         loc += "&phcfgkeyDND_Disable" + j + "="  + escape(dnddisable.value.replace(/['" ]/g,''));
+         /*
+         loc += '&phcfgkeyCP_Active='     + escape(CallPark.value.replace(/['" ]/g,''));
+         loc += '&phcfgkeyCP_Retreive='     + escape(CallParkRetreive.value.replace(/['" ]/g,''));
+         */
+
+		 /*Mask CCBS setting on GUI, because its function not ready now, KeyYang@MSTC 20120830*/	
+		 //loc += "&phcfgkeyCCBS_Deactive" + j + "="  + escape(ccbsDeactive.value.replace(/['" ]/g,''));
+		 // aircheng add for outgoing sip
+		 loc += "&phcfgkeyOutgoingSip" + j + "="  + escape(outgoingSip.value.replace(/['" ]/g,''));
+}
+      }
+
+   return loc;
+}
+
+
+function chkPortRange(portvalue,i)
+{
+	if (i == 'localPort'){
+		if (portvalue > 65535 || portvalue < 1030 || (portvalue > 9980 && portvalue < 14097))
+		{alert("The port value not allowed range - (1025 to 1029) or (9981 to 14096).");
+				sipLogPort.value = 5060;
+				sipLogPort.focus();
+		}
+	}
+	else if (i == 'proxyPort'){
+		if (portvalue > 65535 || portvalue < 1)
+		{
+			alert("The Port value must position between 1 to 65535.");
+			proxyPort.value = 5060;
+			proxyPort.focus();
+		}
+	}		
+	else if (i == 'regPort'){
+		if (portvalue > 65535 || portvalue < 1)
+		{
+			alert("The Port value must position between 1 to 65535.");
+			regPort.value = 5060;
+			regPort.focus();
+		}
+	}		
+}
+if(spainsetting !='1'){   
+	function checkPhoneConfigKey(phcfgarray, phcfg, namestr){
+		var key = phcfg.value;	
+		var j;
+		if(key.length>0){		
+			if(key.substr(0,1) == '*' || key.substr(0,1)=='#'){
+				for(i=0; i< phcfgarray.length; i++){
+						if(phcfgarray[i] == key){
+							alert(namestr+ " value :" + key+ " is already assigned, please use different value");
+							return false;
+						}
+				}
+				
+				for(i=1;i<10;i++){
+					if(key == '#0'+i || key == '#10'){
+						alert(namestr+" value :"+ key +" can't be set to speed dial format #01 to #10");
+						return false;
+					}
+				}
+			
+				phcfgarray[phcfgarray.length] = key;
+				return true;
+				
+			}
+		}
+		alert(namestr+" value invalid");
+		return false;
+	}
+}
+
+function enableButtons(){
+   var buttonStart = document.getElementById("StartButton");
+   var buttonDefault = document.getElementById("DefaultButton");
+   var buttonDelete = document.getElementById("DeleteButton");   
+	var SPSelect = document.forms[0].SPSelect.value;   
+    buttonStart.disabled = false;
+    buttonDefault.disabled = false;
+	if(parseInt(SPSelect) < parseInt(currentSp) ){
+		buttonDelete.disabled = false;	
+	}else{
+		buttonDelete.disabled = true;
+	}
+	
+   /*
+   if ( voiceRunning == 1 ) {
+      buttonStart.disabled = true;
+      buttonDefault.disabled = false;
+   } else {
+      buttonStart.disabled = false;
+      buttonDefault.disabled = false;
+   }
+   */
+}
+
+function frmLoad() {
+
+	var SPSelect = document.forms[0].SPSelect.value;
+	var boundInterfaces = '';
+
+	with ( document.forms[1] ) {
+		enableButtons();
+		if(parseInt(voiceRunning)==1){
+			alert("VoIP is in use,all voice configure change will take effect after the end of the call\n");		
+		}
+		if(parseInt(SPSelect) < parseInt(currentSp)){
+		 vpName.value = eval('vpn'+SPSelect);
+   	     localPort.value = eval('lp'+SPSelect);
+         proxyAddr.value = eval('pa'+SPSelect);
+         proxyPort.value = eval('pp'+SPSelect);
+         regAddr.value = eval('ra'+SPSelect);
+         regPort.value = eval('rp'+SPSelect);
+         domainName.value = eval('uad'+SPSelect);
+         obProxyAddr.value = eval('oa'+SPSelect);
+         obProxyPort.value = eval('op'+SPSelect);
+	  		 
+         if (eval("s3263" + SPSelect) == 1){
+         	support3263.checked = true;
+         }    
+         else{
+         	support3263.checked = false;		
+         }	
+	
+         if(eval('ifn'+SPSelect) == 'LAN'){
+			ifName[0].checked = true;
+			hideMultiIf();
+		 } else if(eval('ifn'+SPSelect) == 'Any_WAN'){
+			ifName[1].checked = true;
+			hideMultiIf();
+		 } else{
+			ifName[2].checked = true;
+			showMultiIf();	
+			/*boundInterfaces = eval("bil" + SPSelect+ ".split('|')");
+	
+			for(i = 1; i < tokInterfaceList.length; i++)
+			{
+				multiIf[i-1].checked = false;
+			}
+
+			for(i = 1; i < tokInterfaceList.length; i++)
+			{
+				for(var j = 0; j < boundInterfaces.length; j++)
+				{		
+					if( tokInterfaceList[i] == boundInterfaces[j] ) {
+						multiIf[i-1].checked = true;
+						break;
+					}
+				}
+
+			}*/
+			
+		}
+			
+		for(i=0;i<toktransportList.length;i++){
+			sipTransport.options[i] = new Option(toktransportList[i],toktransportList[i]);
+		}
+		if(eval("s3263" + SPSelect) == 1){
+			sipTransport.options[parseInt(toktransportList.length)] = new Option('AUTO','Auto');		
+			sipTransport.length = parseInt(toktransportList.length) + 1;			
+		}else{
+			sipTransport.length = toktransportList.length;		
+		}
+		for(i=0;i<sipTransport.length;i++){
+			if(sipTransport.options[i].value == eval("st"+ SPSelect )){
+				sipTransport.options[i].selected = true;
+			}	
+		}
+		
+        inviteExpTmr.value = eval("ie"+ SPSelect );
+	 	regExpTmr.value = eval("re"+ SPSelect );
+	 	regRetryInt.value = eval("ri"+ SPSelect );        
+					
+		for(i=0; i<dtmfRelay.length; i++){
+         if(dtmfRelay.options[i].value == eval("dt"+ SPSelect )){
+         	 dtmfRelay.options[i].selected = true;         	 
+         }
+        }
+         
+         minSE.value = eval("ms"+ SPSelect);
+         rtpPortMin.value = eval("rpmi"+ SPSelect);
+         rtpPortMax.value = eval("rpmx"+ SPSelect);
+         dialPlan.value = eval("dm"+ SPSelect);
+         if (eval("t38" + SPSelect) == 1){
+         	VoIP_FaxRelay[0].checked = false;
+         	VoIP_FaxRelay[1].checked = true;
+			hideFaxPassthroughCodec(1);			
+         }    
+         else{
+         	VoIP_FaxRelay[0].checked = true;
+         	VoIP_FaxRelay[1].checked = false;
+			hideFaxPassthroughCodec(0);			
+         }
+		 
+		 if(eval("fc" + SPSelect) == 'pcmu'){
+			faxPassCodec[0].checked = true;
+  		 }
+		 else{
+			faxPassCodec[1].checked = true;
+		 }
+		var enblSrtp = '<%ejGetVoice(EnableSRTP)%>';
+                 if (enblSrtp =='1'){
+		 if(eval("srtpe" + SPSelect) == 1){
+			supportSRTP.checked = true;
+		 }
+		 else{
+			supportSRTP.checked = false;
+		 }
+		 SRTPCryptoSuite.value = eval("srtpcs"+SPSelect);
+                 	}
+         tosByteSip.value = eval("ts"+SPSelect);
+         tosByteRtp.value = eval("tr"+SPSelect);
+         
+         if( eval("s3262"+SPSelect) == 1){
+         	support3262.checked = true;
+         }
+         else{
+         	support3262.checked = false;
+         }
+		 
+		 //voip iop
+		 for(i=0;i<voipiop.length;i++){
+			if(parseInt(tmpvi) & (1<<i)){
+				voipiop[i].checked = true;
+			}
+			else{
+				voipiop[i].checked = false;
+			}
+		 }
+		 
+         for(i=0;i<dialingIntervalTime.length;i++){
+         	if(dialingIntervalTime.options[i].value == eval("dialint"+SPSelect)){
+           dialingIntervalTime.options[i].selected = true;
+          }
+         }
+         
+         if(eval("dme"+SPSelect) == 1){
+         		dialPlanEnable.checked = true;
+         }
+         else{
+         	  dialPlanEnable.checked = false;
+         }
+         
+         if(tmppe == 1){
+         	 	poundEnable.checked = true;
+         }
+         else{
+         	  poundEnable.checked = false;
+         }
+	if(spainsetting !='1'){             
+	         if(eval( "phcfgcr" + SPSelect + ".indexOf('(null)')==-1")){
+	         		callReturn.value = eval("phcfgcr"+SPSelect) ;
+	         }
+			 
+	         if(eval( "phcfgcaa" + SPSelect + ".indexOf('(null)')==-1")){
+	         oneShotCallidDisplay.value = eval("phcfgcaa"+SPSelect);
+	         }
+	         if(eval( "phcfgcad" + SPSelect + ".indexOf('(null)')==-1")){
+	         oneShotCallerHiddenCall.value =eval("phcfgcad"+SPSelect);
+	         }
+
+			 if(eval("phcfgcwa" + SPSelect + ".indexOf('(null)')==-1")){
+	         CallWaitingEnable.value = eval("phcfgcwa"+SPSelect);
+	         }
+			 if(eval("phcfgcwd" + SPSelect + ".indexOf('(null)')==-1")){
+	         CallWaitingDisable.value = eval("phcfgcwd"+SPSelect);
+	         }
+			 /*
+	         if(eval( "phcfgivr" + SPSelect + ".indexOf('(null)')==-1")){
+	         IVR.value = eval("phcfgivr"+SPSelect);
+	         }
+			 */
+	         if(eval( "phcfginternal" + SPSelect + ".indexOf('(null)')==-1")){
+	         InternalCall.value = eval("phcfginternal"+SPSelect);
+	         }         
+	         if(eval("phcfgtransfer" + SPSelect + ".indexOf('(null)')==-1")){
+	         CallTransfer.value = eval("phcfgtransfer"+SPSelect);
+	         }
+	         /*
+	         if(phcfgcpa.indexOf('(null)')==-1){
+	         CallPark.value = phcfgcpa;
+	         }
+	         if(phcfgcpr.indexOf('(null)')==-1){
+	         CallParkRetreive.value = phcfgcpr;
+	         }
+	         */
+			 if(eval("phcfgcfua" + SPSelect + ".indexOf('(null)')==-1")){
+	         unCallForwardEnable.value = eval("phcfgcfua"+SPSelect);
+	         }
+			 if(eval("phcfgcfud" + SPSelect + ".indexOf('(null)')==-1")){
+	         unCallForwardDisable.value = eval("phcfgcfud"+SPSelect);
+	         }
+			 if(eval("phcfgcfnra" + SPSelect + ".indexOf('(null)')==-1")){
+	         noCallForwardEnable.value = eval("phcfgcfnra"+SPSelect);
+	         }
+			 if(eval("phcfgcfnrd" + SPSelect + ".indexOf('(null)')==-1")){
+	         noCallForwardDisable.value = eval("phcfgcfnrd"+SPSelect);
+	         }
+			 if(eval("phcfgcfba" + SPSelect + ".indexOf('(null)')==-1")){
+	         BusyCallForwardEnable.value = eval("phcfgcfba"+SPSelect);
+	         }
+			 if(eval("phcfgcfbd" + SPSelect + ".indexOf('(null)')==-1")){
+	         BusyCallForwardDisable.value = eval("phcfgcfbd"+SPSelect);
+	         }
+			 
+	         // aircheng add for one shot call waiting enable/disable
+			 if(eval("phcfgoscwa" + SPSelect + ".indexOf('(null)')==-1")){
+	         oneShotCallWaitingEnable.value = eval("phcfgoscwa"+SPSelect);
+	         }
+			 if(eval("phcfgoscwd" + SPSelect + ".indexOf('(null)')==-1")){
+	         oneShotCallWaitingDisable.value = eval("phcfgoscwd"+SPSelect);
+	         }
+			 
+	         if(eval("phcfgdnde" + SPSelect + ".indexOf('(null)')==-1")){
+	         dndenable.value = eval("phcfgdnde"+SPSelect);
+	         }
+	         if(eval("phcfgdndd" + SPSelect + ".indexOf('(null)')==-1")){
+	         dnddisable.value = eval("phcfgdndd"+SPSelect);
+	         }
+	         /*
+	         if(phcfgcpa.indexOf('(null)')==-1){
+	         CallPark.value = phcfgcpa;
+	         }
+	         if(phcfgcpr.indexOf('(null)')==-1){
+	         CallParkRetreive.value = phcfgcpr;
+	         }
+	         */
+			 /*Mask CCBS setting on GUI, because its function not ready now, KeyYang@MSTC 20120830*/	
+			 /*
+			 if(eval("phcfgccbsd" + SPSelect + ".indexOf('(null)')==-1")){
+	         ccbsDeactive.value = eval("phcfgccbsd"+SPSelect);
+	         }
+			 */
+
+			 // aircheng add for outgoing sip
+			 if(eval("phcfgos" + SPSelect + ".indexOf('(null)')==-1")){
+	         outgoingSip.value = eval("phcfgos"+SPSelect);
+	         } 
+	}		 
+		 
+		}else{
+			 vpName.value = defvpn;
+			 localPort.value = deflp;
+			 proxyAddr.value = defpa;
+			 proxyPort.value = defpp;
+			 regAddr.value = defra;
+			 regPort.value = defrp;
+			 domainName.value = defuad;
+			 obProxyAddr.value = defoa;
+			 obProxyPort.value = defop;			 
+			 
+			 if(defifn == 'LAN'){
+				ifName[0].checked = true;
+				hideMultiIf();
+			 } else if(defifn == 'Any_WAN'){
+				ifName[1].checked = true;
+				hideMultiIf();
+			 } else{
+				ifName[2].checked = true;
+				showMultiIf();
+			 }
+			 
+			 if (defs3263 == 1){
+				support3263.checked = true;
+			 }    
+			 else{
+				support3263.checked = false;		
+			 }
+			for(i=0;i<toktransportList.length;i++){
+				sipTransport.options[i] = new Option(toktransportList[i],toktransportList[i]);
+				if(sipTransport.options[i].value == defst){
+					sipTransport.options[i].selected = true;
+				}
+			}			 
+			if(defs3263 == 1){
+				sipTransport.options[parseInt(sipTransport.length)] = new Option('AUTO','Auto');			
+				sipTransport.length = parseInt(sipTransport.length) + 1;			
+			} 
+			 
+			inviteExpTmr.value = defie;
+			regExpTmr.value = defre;
+			regRetryInt.value = defri;        
+						
+			for(i=0; i<dtmfRelay.length; i++){
+			 if(dtmfRelay.options[i].value == defdt){
+				 dtmfRelay.options[i].selected = true;         	 
+			 }
+			}
+			 
+			 minSE.value = defms;
+			 rtpPortMin.value = defrpmi;
+			 rtpPortMax.value = defrpmx;
+			 dialPlan.value = defdm;
+			 if (deft38 == 1){
+				VoIP_FaxRelay[0].checked = false;
+				VoIP_FaxRelay[1].checked = true;
+				hideFaxPassthroughCodec(1);
+			 }    
+			 else{
+				VoIP_FaxRelay[0].checked = true;
+				VoIP_FaxRelay[1].checked = false;
+				hideFaxPassthroughCodec(0);
+				if(deffc == 'pcmu'){
+					faxPassCodec[0].checked = true;
+				}
+				else{
+					faxPassCodec[1].checked = true;
+				}
+			 }
+			 tosByteSip.value = defts;
+			 tosByteRtp.value = deftr;
+		
+                  var enblSrtp = '<%ejGetVoice(EnableSRTP)%>';
+                        if (enblSrtp =='1'){ 
+			if(defsrtpe == 1){
+				supportSRTP.checked = true;
+			 }
+			 else{
+				supportSRTP.checked = false;
+			 }
+		
+			 
+			 SRTPCryptoSuite.value = defsrtpcs;
+			  }
+		  
+			 
+			 if( defs3262 == 1){
+				support3262.checked = true;
+			 }
+			 else{
+				support3262.checked = false;
+			 }
+			 
+			 //voip iop
+			 for(i=0;i<voipiop.length;i++){
+				if(defvi & (1<<i)){
+					voipiop[i].checked = true;
+				}
+			 }
+			 
+			 for(i=0;i<dialingIntervalTime.length;i++){
+				if(dialingIntervalTime.options[i].value == defdialint){
+			   dialingIntervalTime.options[i].selected = true;
+			  }
+			 }
+			 
+			 if(defdme == 1){
+					dialPlanEnable.checked = true;
+			 }
+			 else{
+				  dialPlanEnable.checked = false;
+			 }
+			 
+			 if(defpe == 1){
+					poundEnable.checked = true;
+			 }
+			 else{
+				  poundEnable.checked = false;
+			 }
+			if(spainsetting !='1'){   			  
+				 if(defphcfgcr.indexOf('(null)')==-1){
+						callReturn.value = defphcfgcr ;
+				 }
+				 
+				 if(defphcfgcaa.indexOf('(null)')==-1){
+				 oneShotCallidDisplay.value = defphcfgcaa;
+				 }
+				 if(defphcfgcad.indexOf('(null)')==-1){
+				 oneShotCallerHiddenCall.value =defphcfgcad;
+				 }
+				 
+				 if(defphcfgcwa.indexOf('(null)')==-1){
+				 CallWaitingEnable.value = defphcfgcwa;
+				 }
+				 if(defphcfgcwd.indexOf('(null)')==-1){
+				 CallWaitingDisable.value = defphcfgcwd;
+				 }
+				 /*
+				 if(defphcfgivr.indexOf('(null)')==-1){
+					IVR.value = defphcfgivr;
+				 }
+				 */
+				 if(defphcfginternal.indexOf('(null)')==-1){
+				 InternalCall.value = defphcfginternal;
+				 }         
+				 if(defphcfgtransfer.indexOf('(null)')==-1){
+				 CallTransfer.value = defphcfgtransfer;
+				 }
+				 /*
+				 if(phcfgcpa.indexOf('(null)')==-1){
+				 CallPark.value = phcfgcpa;
+				 }
+				 if(phcfgcpr.indexOf('(null)')==-1){
+				 CallParkRetreive.value = phcfgcpr;
+				 }
+				 */
+				 
+				 if(defphcfgcfua.indexOf('(null)')==-1){
+				 unCallForwardEnable.value = defphcfgcfua;
+				 }
+				 if(defphcfgcfud.indexOf('(null)')==-1){
+				 unCallForwardDisable.value = defphcfgcfud;
+				 }
+				 if(defphcfgcfnra.indexOf('(null)')==-1){
+				 noCallForwardEnable.value = defphcfgcfnra;
+				 }
+				 if(defphcfgcfnrd.indexOf('(null)')==-1){
+				 noCallForwardDisable.value = defphcfgcfnrd;
+				 }
+				 if(defphcfgcfba.indexOf('(null)')==-1){
+				 BusyCallForwardEnable.value = defphcfgcfba;
+				 }
+				 if(defphcfgcfbd.indexOf('(null)')==-1){
+				 BusyCallForwardDisable.value = defphcfgcfbd;
+				 }
+				 
+				 // aircheng add for one shot call waiting enable/disable
+				 if(defphcfgoscwa.indexOf('(null)')==-1){
+				 oneShotCallWaitingEnable.value = defphcfgoscwa;
+				 }
+				 if(defphcfgoscwd.indexOf('(null)')==-1){
+				 oneShotCallWaitingDisable.value = defphcfgoscwd;
+				 }
+				 
+				 if(defphcfgdnde.indexOf('(null)')==-1){
+				 dndenable.value = defphcfgdnde;
+				 }
+				 if(defphcfgdndd.indexOf('(null)')==-1){
+				 dnddisable.value = defphcfgdndd;
+				 }
+				 /*
+				 if(phcfgcpa.indexOf('(null)')==-1){
+				 CallPark.value = phcfgcpa;
+				 }
+				 if(phcfgcpr.indexOf('(null)')==-1){
+				 CallParkRetreive.value = phcfgcpr;
+				 }
+				 */		
+
+				 /*Mask CCBS setting on GUI, because its function not ready now, KeyYang@MSTC 20120830*/			
+				 /*
+				 if(defphcfgccbsd.indexOf('(null)')==-1){
+				 ccbsDeactive.value = defphcfgccbsd;
+				 }
+				 */
+
+				 // aircheng add for outgoing sip
+				 if(defphcfgos.indexOf('(null)')==-1){
+				 outgoingSip.value = defphcfgos;
+				 }
+			} 
+
+		}
+      }
+}
+
+/*Jason ,*/
+function checkchars(field, maxchar) {
+//var strtmp = field.value.replace(/[\r\n]/g,'');
+//alert( strtmp + " hello!");
+if (field.value.length > maxchar) {
+alert( maxchar + " characters can only be set!");
+field.focus();
+return false;
+   }
+return true;  
+}
+
+function hideFaxPassthroughCodec(hide) {
+   var status = 'visible';
+
+   if ( hide == 1 )
+      status = 'hidden';
+   if (document.getElementById)  // DOM3 = IE5, NS6
+      document.getElementById('faxcodec').style.visibility = status;
+   else {
+      if (document.layers == false) // IE4
+         document.all.faxcodec.style.visibility = status;
+   }
+   
+}
+// done hiding -->
+</script>
+</head>
+<body onload="loadPreprocess()">
+<form name="sipServer" method="post" target="buttom">
+<table border="0" cellspacing="0" cellpadding="0" width="100%">
+   <table border="0" cellspacing="0" cellpadding="0" width="100%">
+	<div class="left">
+		<div class="right">
+		<div class="headline">Service Provider Selection</div>			
+		  <div class="root">
+			  <form id="serverSelectForm" name="serverSelectForm" method="post" enctype="multipart/form-data" action="voip_sip_server.cgi">
+			    <table width="100%" border="0">
+                    <tr>
+                      <td width="3%">&nbsp;</td>
+                      <td width="28%">Service Provider Selection </td>
+						<td width="35%"><select id='SPSelect' name='SPSelect' onchange='frmLoad()'>
+						<script language="javascript">
+							printSPSelectList()
+						</script>
+							</select></td>	
+						<td width="30%">
+						<input type='button' onClick="btnDeleteProfile('voip_sip_server')" value='Delete' ID="DeleteButton" disabled="false">
+						</td>			  
+                    </tr>
+                  </table>
+			  </form>	
+			</div>			
+			<form id="SipServerForm" name="sipServerForm" method="post" enctype="multipart/form-data" action="voip_sip_server.cgi" onsubmit="return formCheck()" 
+			<!-- configuration beginning -->
+			    <input type="hidden" name="sipServerSelect"/>
+			    <div class="headline">General</div>
+			<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+              	<tr>
+              		<td nowrap="nowrap">&nbsp;</td>
+              	  	<td>SIP Service Provider Name</td>
+              	  	<td><input type="text" id="vpName" maxlength="63" name="vpName"/></td>
+              	</tr>
+				<tr>
+                	<td width="3%" nowrap="nowrap">&nbsp;</td>
+                	<td width="30%">SIP Local Port</td>
+                	<td width="67%"><input name="localPort" type="text" id="localPort" value="5060" onchange="javascript:rangeCheck(1025,65535,5060,this,1,1)" size="10" disabled="disabled"/>
+                  <span class="hint">(1025-65535)</span></td>
+		   	  	</tr>
+              	<tr>
+              		<td nowrap="nowrap">&nbsp;</td>
+              	  	<td>SIP Server Address</td>
+              	  	<td><input type="text" id="proxyAddr" maxlength="63" name="proxyAddr"/></td>
+              	</tr>
+              	<tr>
+                	<td nowrap="nowrap" >&nbsp;</td>
+                	<td>SIP Server Port</td>
+                	<td><input id="proxyPort" name="proxyPort" type="text" size="10" value="5060" onchange="javascript:rangeCheck(1025,65535,5060,this,1,1)" disabled="disabled"/>
+                  	<span class="hint">(1025-65535)</span></td>
+              	</tr>
+              	<tr>
+                	<td nowrap="nowrap">&nbsp;</td>
+                	<td>REGISTER Server Address</td>
+                	<td><input type="text" id="regAddr" name="regAddr" maxlength="63" /></td>
+              	</tr>
+              	<tr>
+                	<td nowrap="nowrap">&nbsp;</td>
+                	<td>REGISTER Server Port</td>
+                	<td><input id="regPort" name="regPort" type="text" size="10" value="5060" onchange="javascript:rangeCheck(1025,65535,5060,this,1,1)" disabled="disabled" />
+                  	<span class="hint">(1025-65535)</span></td>
+              	</tr>
+              	<tr>
+              	  	<td nowrap="nowrap">&nbsp;</td>
+              	  	<td>SIP Service Domain</td>
+                	<td><input id="domainName" type="text" maxlength="63" name="domainName"/></td>
+              	</tr>
+            </table>
+		<div style="display:none;" id="advanced">
+			<div class="headline">RFC support</div>
+			<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+                
+            </table>			
+			<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+				<tr> 
+					<td>
+						<input type='checkbox' size="10" name='support3263' id='support3263' onClick='rfc3263_showPort()'/> Support Locating SIP Server (RFC 3263) 
+					</td>                    
+                </tr>    			
+				<tr> 
+					<td>
+					<input type='checkbox' size="10" name='support3262' id='support3262' /> RFC 3262 (Require: 100rel)
+					</td>                    
+                </tr>                    
+            </table>	
+			<div class="headline">VoIP IOP Flags</div>
+			<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+                
+            </table>			
+			<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+				<tr> 
+					<td>
+						<input type='checkbox' size="10" name='voipiop' id='voipiop'/> Replace dial digit '#' to '%23' in SIP messages 
+					</td>                    
+                </tr>    			
+				<tr> 
+					<td>
+					<input type='checkbox' size="10" name='voipiop' id='voipiop' /> Remove ':5060' and 'transport=udp' from request-uri in SIP messages
+					</td>                    
+                </tr>  
+				<tr> 
+					<td>
+					<input type='checkbox' size="10" name='voipiop' id='voipiop' /> Remove the 'Route' header in SIP messages
+					</td>                    
+                </tr>	
+				<tr> 
+					<td>
+					<input type='checkbox' size="10" name='voipiop' id='voipiop' /> Don't send re-Invite to the remote party when there are multiple codecs answered in the SDP
+					</td>                    
+                </tr>				
+            </table>			
+			<div class="headline">Bound Interface Name</div>
+		    <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+              <tr>
+                <td width="33%" nowrap="nowrap">Bound Interface Name </td>
+                <td width="67%">
+                	<input name='ifName' type='radio' onClick='hideMultiIf()'>LAN
+					<input name='ifName' type='radio' onClick='hideMultiIf()'>Any_WAN
+					<input name='ifName' type='radio' onClick='showMultiIf()'>Multi_WAN
+					<script language="javascript">
+                     printInterfaceListBox()
+					</script>
+                 </td>
+              </tr>              
+            </table>
+		    <div class="headline">Outbound Proxy</div>
+		    <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+			 <div class="warning" id="dpTag">
+			  	<div class="title">NOTE:</div>
+				<p> Use Outbound Proxy if "Outbound Proxy Address" isn't empty .</p>
+			</div>			
+              	<tr>
+                	<td width="3%" nowrap="nowrap">&nbsp;</td>
+              	  	<td width="30%">Outbound Proxy Address</td>
+              	  	<td width="67%"><input type="text" id="obProxyAddr" maxlength="63" name="obProxyAddr"/></td>
+              	</tr>
+              	<tr>
+                	<td nowrap="nowrap" >&nbsp;</td>
+                	<td>Outbound Proxy Port</td>
+                	<td><input id="obProxyPort" name="obProxyPort" type="text" size="10" value="5060" onchange="javascript:rangeCheck(1025,65535,5060,this,1,1)" />
+                  	<span class="hint">(1025-65535)</span></td>
+              	</tr>
+            </table>			
+		    <div class="headline">RTP Port Range</div>
+		    <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+			 <div class="warning" id="dpTag">
+			  	<div class="title">caution:</div>
+				<p> RTP "Start port" and "End Port" shall be configured as even port.</p>
+			</div>
+              <tr>
+                <td width="33%" nowrap="nowrap">Start Port </td>
+                <td width="67%"><input id="rtpPortMin" name="rtpPortMin" type="text"  size="10" />
+                    <span class="hint">(1026-65494)</span></td>
+              </tr>
+              <tr>
+                <td nowrap="nowrap">End Port</td>
+                <td><input id="rtpPortMax" name="rtpPortMax" type="text" size="10" />
+                    <span class="hint">(1032-65500)</span></td>
+              </tr>
+            </table>
+			
+		    <script language="javascript">
+                  var enblSrtp = '<%ejGetVoice(EnableSRTP)%>';
+                   if (enblSrtp =='1'){
+		  document.writeln('	<div class="headline">SRTP Support</div>');
+		  document.writeln('  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">');			
+                  document.writeln(" <tr>");
+                  document.writeln('   <td width="33%" nowrap="nowrap">');
+		  document.writeln('		  	<input type="checkbox" size="10" name="supportSRTP" id="supportSRTP" /> SRTP Support</td>');
+                  document.writeln('  <td width="67%"></td>');
+                  document.writeln("    </tr>");
+                  document.writeln("    <tr>");
+                  document.writeln('  <td nowrap="nowrap">Crypto Suite</td>');
+                  document.writeln('  <td><select id="SRTPCryptoSuite" name="SRTPCryptoSuite">');
+                  document.writeln('<option value="AES_CM_128_HMAC_SHA1_80" selected>AES_CM_128_HMAC_SHA1_80</option>');
+                  document.writeln('<option value="AES_CM_128_HMAC_SHA1_32">AES_CM_128_HMAC_SHA1_32</option>');
+		  document.writeln('		  <option value="AES_CM_128_NULL">AES_CM_128_NULL</option>');
+	          document.writeln('			  <option value="NULL_CIPHER_HMAC_SHA1_80">NULL_CIPHER_HMAC_SHA1_80</option>');
+                  document.writeln("  </select>");
+		  document.writeln('		<span class="hint">(Encryption and Authentication type)</span>');
+		  document.writeln("		</td>");
+                  document.writeln("    </tr>");
+                  document.writeln("      </table>");
+                  	}
+		   </script>
+		   
+		    <div class="headline">DTMF Mode</div>
+		    <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+              <tr>
+                <td width="33%" nowrap="nowrap">DTMF Mode</td>
+                <td width="67%">
+                	<select id="dtmfRelay" name="dtmfRelay">
+                  <option value="RFC2833" selected>RFC2833</option>
+                  <option value="InBand">InBand</option>
+                  <option value="SIPInfo">SIPInfo</option>
+                </select></td>
+              </tr>
+            </table>
+
+		<script language="javascript">
+		<!--
+			if(spainsetting =='1'){
+				document.writeln("<td width='67%'><select id='sipTransport' name='sipTransport' style='display:none'>");
+		          	document.writeln("<option value='UDP' selected>UDP</option>");
+				document.writeln("<option value='TCP'>TCP</option>");
+		            	document.writeln("</select></td>");
+			}
+			else{
+				document.writeln("<div class='headline'>Transport Type</div>");
+			    	document.writeln("<table width='90%' border='0' align='center' cellpadding='0' cellspacing='0' class='cfgpadding'>");
+		            	document.writeln("<tr>");
+		            	document.writeln("<td width='33%' nowrap='nowrap'>Transport Type</td>");
+		            	document.writeln("<td width='67%'><select id='sipTransport' name='sipTransport'>");
+		          	document.writeln("<option value='UDP' selected>UDP</option>");
+		          	document.writeln("<option value='TCP'>TCP</option>");
+		            	document.writeln("</select></td>");
+		          	document.writeln("</tr>");
+		        	document.writeln("</table>");
+			}
+            -->
+            </script>
+				
+			<div class="headline">FAX Option </div>
+		    <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+              <tr>
+                <td width="50%">
+				  <input type="radio" name="VoIP_FaxRelay" value="0" onclick='hideFaxPassthroughCodec(0)'>
+				  G.711 Fax Passthrough 
+				</td>
+                <td width="50%">
+				  <input type="radio" name="VoIP_FaxRelay" value="1" onclick='hideFaxPassthroughCodec(1)'>
+				  T.38 Fax Relay 
+               </td>
+              </tr>			  
+            </table>
+			<div id='faxcodec'>		
+			<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">			
+              <tr>
+				<td width="50%">				
+				  Fax Passthrough Codec 
+				</td>
+			  </tr>
+			  <tr>
+                <td width="50%">
+				  <input type="radio" name="faxPassCodec" value="pcmu">
+				  G.711Mulaw 
+				</td>
+			  </tr>
+			  <tr>
+                <td width="50%">
+				  <input type="radio" name="faxPassCodec" value="pcma">
+				  G.711Alaw
+               </td>
+              </tr>
+			  </table>
+			  </div>
+			
+			
+			
+			<div class="headline">QoS Tag</div>
+		    <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+              <tr>
+                <td width="33%" nowrap="nowrap">SIP DSCP Mark Setting </td>
+                <td width="67%"><input id="tosByteSip" name="tosByteSip" type="text"  size="2" onchange="rangeCheck(0,63,0,this,1,1)"/>
+                    <span class="hint">(0-63)</span></td>
+              </tr>
+              <tr>
+                <td nowrap="nowrap">RTP DSCP Mark Setting</td>
+                <td><input id="tosByteRtp" name="tosByteRtp" type="text" size="2" onchange="rangeCheck(0,63,0,this,1,1)"/>
+                    <span class="hint">(0-63)</span></td>
+              </tr>
+            </table>
+			
+			<div class="headline">Timer Setting</div>
+			<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+              <tr>
+                <td width="33%" nowrap="nowrap">Expiration Duration</td>
+                <td width="67%"><input id="regExpTmr" name="regExpTmr" type="text" size="10" onchange="rangeCheck(20,65535,3600,this,1,1)"/>
+                <span class="hint">(20-65535) second</span></td>
+              </tr>
+              <tr>
+                <td nowrap="nowrap">Register Re-send timer</td>
+                <td><input id="regRetryInt" name="regRetryInt" type="text" size="10" onchange="rangeCheck(1,65535,180,this,1,1)"/>
+                    <span class="hint">(1-65535) second </span></td>
+              </tr>
+              <tr>
+                <td nowrap="nowrap">Session Expires</td>
+                <td><input id="inviteExpTmr" name="inviteExpTmr" type="text" size="10" onchange="rangeCheck(91,3600,180,this,1,1)"/>
+                    <span class="hint">(91-3600) second </span></td>
+              </tr>
+              <tr>
+                <td nowrap="nowrap">Min-SE</td>
+                <td><input id="minSE" name="minSE" type="text" size="10"  onchange="rangeCheck(90,1800,120,this,1,1)"/>
+                    <span class="hint">(90-1800) second </span></td>
+              </tr>
+            </table>
+<!-- Mask Feature Key setting on GUI, for Telefonica Spain-->
+<!--  
+         <div class="headline">Phone Key Config</div>
+			<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+              <tr>
+                <td width="33%" nowrap="nowrap">Call Return</td>
+                <td width="67%"><input id="callReturn" name="callReturn" type="text" size="4" maxlength="4" />
+                <span class="hint"></span></td>
+              </tr>
+              <tr>
+                <td width="33%" nowrap="nowrap">One Shot Caller Display Call</td>
+                <td width="67%"><input id="oneShotCallidDisplay" name="oneShotCallidDisplay" type="text" size="4" maxlength="4"/>
+                <span class="hint"></span></td>
+              </tr>
+               <tr>
+                <td width="33%" nowrap="nowrap">One Shot Caller Hidden Call</td>
+                <td width="67%"><input id="oneShotCallerHiddenCall" name="oneShotCallerHiddenCall" type="text" size="4" maxlength="4"/>
+                <span class="hint"></span></td>
+              </tr>
+              
+               <tr>
+                <td width="33%" nowrap="nowrap">Call Waiting Enable</td>
+                <td width="67%"><input id="CallWaitingEnable" name="CallWaitingEnable" type="text" size="4" maxlength="4"/>
+                <span class="hint"></span></td>
+              </tr>
+                             <tr>
+                <td width="33%" nowrap="nowrap">Call Waiting Disable</td>
+                <td width="67%"><input id="CallWaitingDisable" name="CallWaitingDisable" type="text" size="4" maxlength="4"/>
+                <span class="hint"></span></td>
+              </tr> 
+-->            
+              <!--
+              <tr>
+                <td width="33%" nowrap="nowrap">IVR</td>
+                <td width="67%"><input id="IVR" name="IVR" type="text" size="4" maxlength="4"/>
+                <span class="hint"></span></td>
+              </tr>     
+              -->
+<!-- Mask Feature Key setting on GUI, for Telefonica Spain-->
+<!--            
+              <tr>
+                <td width="33%" nowrap="nowrap">Internal Call</td>
+                <td width="67%"><input id="InternalCall" name="InternalCall" type="text" size="4" maxlength="4"/>
+                <span class="hint"></span></td>
+              </tr>                  
+-->
+              <tr>
+              <script language="javascript">
+                if(spainsetting !='1'){                      
+ 				document.writeln("<div class='headline'>Phone Key Config</div>");
+				document.writeln("<table width='90%' border='0' align='center' cellpadding='0' cellspacing='0' class='cfgpadding'>");
+
+				document.writeln("<tr>");
+                		document.writeln("<td width='33%' nowrap='nowrap'>Call Return</td>");
+                		document.writeln("<td width='67%'><input id='callReturn' name='callReturn' type='text' size='4' maxlength='4'/>");
+                		document.writeln("<span class='hint'></span></td>");
+				document.writeln("</tr>");
+
+				document.writeln("<tr>");
+                		document.writeln("<td width='33%' nowrap='nowrap'>One Shot Caller Display Call</td>");
+                		document.writeln("<td width='67%'><input id='oneShotCallidDisplay' name='oneShotCallidDisplay' type='text' size='4' maxlength='4'/>");
+                		document.writeln("<span class='hint'></span></td>");
+				document.writeln("</tr>");
+
+				document.writeln("<tr>");
+                		document.writeln("<td width='33%' nowrap='nowrap'>One Shot Caller Hidden Call</td>");
+                		document.writeln("<td width='67%'><input id='oneShotCallerHiddenCall' name='oneShotCallerHiddenCall' type='text' size='4' maxlength='4'/>");
+                		document.writeln("<span class='hint'></span></td>");
+				document.writeln("</tr>");
+
+				document.writeln("<tr>");
+                		document.writeln("<td width='33%' nowrap='nowrap'>Call Waiting Enable</td>");
+                		document.writeln("<td width='67%'><input id='CallWaitingEnable' name='CallWaitingEnable' type='text' size='4' maxlength='4'/>");
+                		document.writeln("<span class='hint'></span></td>");
+				document.writeln("</tr>");
+
+				document.writeln("<tr>");
+                		document.writeln("<td width='33%' nowrap='nowrap'>Call Waiting Disable</td>");
+                		document.writeln("<td width='67%'><input id='CallWaitingDisable' name='CallWaitingDisable' type='text' size='4' maxlength='4'/>");
+                		document.writeln("<span class='hint'></span></td>");
+				document.writeln("</tr>");
+
+				document.writeln("<tr>");
+                		document.writeln("<td width='33%' nowrap='nowrap'>Internal Call</td>");
+                		document.writeln("<td width='67%'><input id='InternalCall' name='InternalCall' type='text' size='4' maxlength='4'/>");
+                		document.writeln("<span class='hint'></span></td>");
+				document.writeln("</tr>");
+				
+				document.writeln("<tr>");
+                		document.writeln("<td width='33%' nowrap='nowrap'>Call Transfer</td>");
+                		document.writeln("<td width='67%'><input id='CallTransfer' name='CallTransfer' type='text' size='4' maxlength='4'/>");
+                		document.writeln("<span class='hint'></span></td>");
+				document.writeln("</tr>");
+
+				document.writeln("<tr>");
+                		document.writeln("<td width='33%' nowrap='nowrap'>Unconditional Call Forward Enable</td>");
+                		document.writeln("<td width='67%'><input id='unCallForwardEnable' name='unCallForwardEnable' type='text' size='4' maxlength='4'/>");
+                		document.writeln("<span class='hint'></span></td>");
+				document.writeln("</tr>");
+
+				document.writeln("<tr>");
+                		document.writeln("<td width='33%' nowrap='nowrap' >Unconditional Call Forward Disable</td>");
+                		document.writeln("<td width='67%' ><input id='unCallForwardDisable' name='unCallForwardDisable' type='text' size='4' maxlength='4'/>");
+                		document.writeln("<span class='hint'></span></td>");
+				document.writeln("</tr>");
+
+				document.writeln("<tr>");
+                		document.writeln("<td width='33%' nowrap='nowrap' >No Answer Call Forward Enable</td>");
+                		document.writeln("<td width='67%' ><input id='noCallForwardEnable' name='noCallForwardEnable' type='text' size='4' maxlength='4'/>");
+                		document.writeln("<span class='hint'></span></td>");
+				document.writeln("</tr>");
+
+				document.writeln("<tr>");
+                		document.writeln("<td width='33%' nowrap='nowrap' >No Answer Call Forward Disable</td>");
+                		document.writeln("<td width='67%' ><input id='noCallForwardDisable' name='noCallForwardDisable' type='text' size='4' maxlength='4'/>");
+                		document.writeln("<span class='hint'></span></td>");
+				document.writeln("</tr>");
+
+				document.writeln("<tr>");
+                		document.writeln("<td width='33%' nowrap='nowrap' >Call Forward When Busy Enable</td>");
+                		document.writeln("<td width='67%' ><input id='BusyCallForwardEnable' name='BusyCallForwardEnable' type='text' size='4' maxlength='4'/>");
+                		document.writeln("<span class='hint'></span></td>");
+				document.writeln("</tr>");
+
+				document.writeln("<tr>");
+                		document.writeln("<td width='33%' nowrap='nowrap' >Call Forward When Busy Disable</td>");
+                		document.writeln("<td width='67%' ><input id='BusyCallForwardDisable' name='BusyCallForwardDisable' type='text' size='4' maxlength='4'/>");
+                		document.writeln("<span class='hint'></span></td>");
+				document.writeln("</tr>");
+
+				document.writeln("<tr>");
+                		document.writeln("<td width='33%' nowrap='nowrap' >One Shot Call Waiting Enable</td>");
+                		document.writeln("<td width='67%' ><input id='oneShotCallWaitingEnable' name='oneShotCallWaitingEnable' type='text' size='4' maxlength='4'/>");
+                		document.writeln("<span class='hint'></span></td>");
+				document.writeln("</tr>");
+
+				document.writeln("<tr>");
+                		document.writeln("<td width='33%' nowrap='nowrap' >One Shot Call Waiting Disable</td>");
+                		document.writeln("<td width='67%' ><input id='oneShotCallWaitingDisable' name='oneShotCallWaitingDisable' type='text' size='4' maxlength='4'/>");
+                		document.writeln("<span class='hint'></span></td>");
+				document.writeln("</tr>");
+
+				document.writeln("<tr>");
+                		document.writeln("<td width='33%' nowrap='nowrap' >Do Not Disturb Enable</td>");
+                		document.writeln("<td width='67%' ><input id='CallTransfer' name='CallTransfer' type='text' size='4' maxlength='4'/>");
+                		document.writeln("<span class='hint'></span></td>");
+				document.writeln("</tr>");
+
+				document.writeln("<tr>");
+                		document.writeln("<td width='33%' nowrap='nowrap' >Do Not Disturb Disable</td>");
+                		document.writeln("<td width='67%' ><input id='dnddisable' name='dnddisable' type='text' size='4' maxlength='4'/>");
+                		document.writeln("<span class='hint'></span></td>");
+				document.writeln("</tr>");
+
+				document.writeln("<tr>");
+                		document.writeln("<td width='33%' nowrap='nowrap' >Outgoing SIP</td>");
+                		document.writeln("<td width='67%' ><input id='outgoingSip' name='outgoingSip' type='text' size='4' maxlength='4'/>");
+                		document.writeln("<span class='hint'></span></td>");
+				document.writeln("</tr>");
+				
+				document.writeln("</table>");
+				document.writeln("<div class='headline'>Dial Plan</div>");					
+						
+                }
+              </script>
+              </tr>
+<!-- Mask Feature Key setting on GUI, for Telefonica Spain-->
+<!--
+              <tr>
+                <td width="33%" nowrap="nowrap">Unconditional Call Forward Enable</td>
+                <td width="67%"><input id="unCallForwardEnable" name="unCallForwardEnable" type="text" size="4" maxlength="4"/>
+                <span class="hint"></span></td>
+              </tr>      
+              <tr>
+                <td width="33%" nowrap="nowrap">Unconditional Call Forward Disable</td>
+                <td width="67%"><input id="unCallForwardDisable" name="unCallForwardDisable" type="text" size="4" maxlength="4"/>
+                <span class="hint"></span></td>
+              </tr>  
+              <tr>
+                <td width="33%" nowrap="nowrap">No Answer Call Forward Enable</td>
+                <td width="67%"><input id="noCallForwardEnable" name="noCallForwardEnable" type="text" size="4" maxlength="4"/>
+                <span class="hint"></span></td>
+              </tr>      
+              <tr> 
+              <tr>
+                <td width="33%" nowrap="nowrap">No Answer Call Forward Disable</td>
+                <td width="67%"><input id="noCallForwardDisable" name="noCallForwardDisable" type="text" size="4" maxlength="4"/>
+                <span class="hint"></span></td>
+              </tr>     
+                            <tr>
+                <td width="33%" nowrap="nowrap">Call Forward When Busy Enable</td>
+                <td width="67%"><input id="BusyCallForwardEnable" name="BusyCallForwardEnable" type="text" size="4" maxlength="4"/>
+                <span class="hint"></span></td>
+              </tr>      
+              <tr> 
+              <tr>
+                <td width="33%" nowrap="nowrap">Call Forward When Busy Disable</td>
+                <td width="67%"><input id="BusyCallForwardDisable" name="BusyCallForwardDisable" type="text" size="4" maxlength="4"/>
+                <span class="hint"></span></td>
+              </tr>    
+			  <tr>
+                <td width="33%" nowrap="nowrap">One Shot Call Waiting Enable</td>
+                <td width="67%"><input id="oneShotCallWaitingEnable" name="oneShotCallWaitingEnable" type="text" size="4" maxlength="4"/>
+                <span class="hint"></span></td>
+              </tr>	
+			  <tr>
+                <td width="33%" nowrap="nowrap">One Shot Call Waiting Disable</td>
+                <td width="67%"><input id="oneShotCallWaitingDisable" name="oneShotCallWaitingDisable" type="text" size="4" maxlength="4"/>
+                <span class="hint"></span></td>
+              </tr>	
+               <tr>
+                <td width="33%" nowrap="nowrap">Do Not Disturb Enable</td>
+                <td width="67%"><input id="dndenable" name="dndenable" type="text" size="4" maxlength="4"/>
+                <span class="hint"></span></td>
+              </tr>   
+                            <tr>
+                <td width="33%" nowrap="nowrap">Do Not Disturb Disable</td>
+                <td width="67%"><input id="dnddisable" name="dnddisable" type="text" size="4" maxlength="4"/>
+                <span class="hint"></span></td>
+              </tr>     
+-->
+<!-- Mask CCBS setting on GUI, because its function not ready now, KeyYang@MSTC 20120830-->
+<!--
+				<tr>
+                <td width="33%" nowrap="nowrap">Call Completion on Busy Subscriber (CCBS) Deactivate</td>
+                <td width="67%"><input id="ccbsDeactive" name="ccbsDeactive" type="text" size="4" maxlength="4"/>
+                <span class="hint"></span></td>
+              </tr>			  
+-->
+<!-- Mask Feature Key setting on GUI, for Telefonica Spain-->
+<!--
+			  <tr>
+                <td width="33%" nowrap="nowrap">Outgoing SIP</td>
+                <td width="67%"><input id="outgoingSip" name="outgoingSip" type="text" size="4" maxlength="4"/>
+                <span class="hint"></span></td>
+              </tr>			  
+            </table>
+            
+         <div class="headline">Dial Plan</div>
+-->
+			<div class="warning" id="dpTag">
+			  	<div class="title">Warning:</div>
+				<p> Wrong Dial-Plan rule setting will cause wrong VoIP behavior .</p>
+		  </div>
+			<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+									 <tr> 
+									 	<td>
+									 		<input type='checkbox' size="10" name='dialPlanEnable' /> Dial Plan Enable
+									 	</td>
+                              <td> 
+                              <script language="javascript">
+                              <!--
+                              if(spainsetting =='1'){  
+                                document.writeln("<textarea id='iddialPlan' name='dialPlan' wrap='VIRTUAL' rows='5' cols='60' onBlur='checkchars(this,512)'> Change Me </textarea>");
+                              }
+                              else{
+                                document.writeln("<textarea id='iddialPlan' name='dialPlan' wrap='VIRTUAL' rows='5' cols='60' onBlur='checkchars(this,256)'> Change Me </textarea>");
+                              }
+                              -->
+                              </script>
+                              </td>
+                              <td><span class="cfig_word"> </span></td>
+                            </tr>
+                            <tr> 
+                              <td>&nbsp; </td>
+                              <td>&nbsp; </td>
+                            </tr>
+            </table>
+			
+			 <div class="headline">Dialing Interval Selection</div>
+		    <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+              <tr>
+                <td width="33%" nowrap="nowrap">Dialing Interval Selection</td>
+                <td width="67%"><select id="dialingIntervalTime" name="dialingIntervalTime">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3" selected="selected">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                  </select>
+                    <span class="hint">Second</span></td>
+              </tr>
+            </table>		
+        <div class="headline">Immediate Dial Enable</div>
+			<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+									 <tr> 
+									 	<td>
+									 		<input type='checkbox' size="10" name='poundEnable' id='poundEnable' /> Immediate Dial Enable
+									 	</td>                    
+                    </tr>                    
+            </table>
+		    			
+		    <p>&nbsp;</p>
+		</div>
+		   <table width="90%" align="center" border="0" cellpadding="1" cellspacing="0">
+              <tbody>
+                <tr class="tabcolor1" align="center">
+                  <td width="39%"></td>
+                  <td width="39%"></td>
+                  <td width="24%" align="right">
+                  <input type='button' onClick="javascript:showtab()" value='Advanced' ID="showWord" onmousedown="enableAdvanceItem()">
+                  <!--<a href="javascript:showtab();"><span id="showWord" onmousedown="enableAdvanceItem()">Advanced</span></a>-->
+                  </td>
+                </tr>
+              </tbody>
+          	</table>  
+		    <div class="btn-block"> 
+			  <input type='button' onClick="btnStartSip('voip_sip_server')" value='Apply' ID="StartButton" disabled="false">
+			  <input onclick="btnDefaultSip('voip_sip_server')"  value="Cancel" id="DefaultButton" disabled="false" type="button">
+			</div>
+			</form>
+			<!-- configuration ending -->
+			
+			<br class="clearfloat" />
+		</div>
+		<br class="clearfloat" />
+  </div>
+</div>
+   </table>
+</table>
+</form>
+</body>
+</html>

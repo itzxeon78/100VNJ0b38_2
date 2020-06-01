@@ -1,0 +1,60 @@
+<html>
+<head>
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="x-frame-options" content="sameorigin">
+<title>Broadband Router</title>
+<script language="javascript">
+window.onload = function() {
+var empty = '<%ejGetOther(memInfo, isDataEmpty)%>';
+var pageinfo = getUrlParameter('pageinfo');
+
+if ( empty == '1' )
+    src = "vpivci";
+else
+    src = "info";
+
+  document.getElementsByName("basefrm")[0].src = src + ".html";
+	
+if(pageinfo=="firewall"){
+	src = "firewall-frwlGnrl.cmd";
+	document.getElementsByName("basefrm")[0].src = src;
+}
+else if(pageinfo=="wancfg"){
+	src = "wancfg.cmd";
+	document.getElementsByName("basefrm")[0].src = src;
+}
+  
+}
+
+function getUrlParameter(sParam)
+{
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++) 
+    {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam) 
+        {
+            return sParameterName[1];
+        }
+    }
+} 
+
+</script>
+</head>
+<frameset cols='204,*' frameborder='0' border='0'>");
+   <frameset rows='105,*' border='0' frameborder='0' framespacing='0'>");
+      <frame src='logo.html' name='logofrm' frameborder='no' border='0' scrolling='no' target='_self' marginwidth='0' marginheight='0' noresize>");
+      <frame src='menu.html' name='menufrm' frameborder='no' border='0' scrolling='no' target='_self' marginwidth='0' marginheight='0' noresize>");
+   </frameset>");
+   <frameset rows='75,*,40' border='0' frameborder='0' framespacing='0'>");
+      <frame src='header.html' name='header' frameborder='no' border='0' scrolling='no' target='_self' marginwidth='0' marginheight='0' noresize>");
+      <frameset cols='30,*,30' border='0' frameborder='0' framespacing='0'>");
+         <frame src='left.html' name='left' frameborder='no' border='0' scrolling='no' target='_self' marginwidth='0' marginheight='0' noresize>");
+         <frame name='basefrm' frameborder='no' border='0' scrolling='auto' target='_self' marginwidth='0' marginheight='10' noresize>
+         <frame src='right.html' name='right' frameborder='no' border='0' scrolling='no' target='_self' marginwidth='0' marginheight='0' noresize>");
+      </frameset>");
+      <frame src='footer.html' name='footerfrm' frameborder='no' border='0' scrolling='no' target='_self' marginwidth='0' marginheight='0' noresize>");
+   </frameset>");
+</frameset>");
+</html>

@@ -1,0 +1,326 @@
+<html><head>
+<meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+<link rel=stylesheet href='../stylemain.css' type='text/css'>
+<link rel=stylesheet href='../colors.css' type='text/css'>
+<script type="text/JavaScript" src="../util.js" ></script>
+<script language="javascript">
+<!-- hide 
+var voiceRunning = '<%ejGetVoice(voiceStatus)%>';
+var tmppbname   = '<%ejGetVoice(phbookname)%>';
+var tmppborinum   = '<%ejGetVoice(phbookorinum)%>';
+var tmppbspdnum   = '<%ejGetVoice(phbookspdnum)%>';
+var tmppbflags   = '<%ejGetVoice(phbookflags)%>';
+var sessionkey = '<%ejGetOther(sessionKey)%>';
+
+
+function addParamsToQuery( loc_init, current_view) {
+	var loc = loc_init;
+	var pbstr, pbSpeedNum;
+	var pbForceSipUri=' ';
+	var pbFlags='SDActive'
+	var pbType = 'SDSipProxy';
+	loc += 'currentview=' + current_view; 
+	with ( document.forms[0] ) {
+		for(var i=0;i<SetPbSpeedNum.length;i++){
+			if(SetPbSpeedNum.options[i].selected){
+				pbstr=i+1;
+				pbSpeedNum=SetPbSpeedNum.options[i].value;
+				break;
+			}
+	  }
+	  
+	  pbstr+= "," + encodeUrl(SetPbOrigNum.value);	  
+	  pbstr+= "," + escape(pbSpeedNum);
+	  pbstr+= "," + encodeUrl(SetPbName.value);
+	  pbstr+= "," + pbFlags;
+	  pbstr+= "," + pbType;
+	  pbstr+= "," + pbForceSipUri;
+	  
+	  loc += '&phbook='+pbstr;  
+	  
+	  return loc;
+  }
+}
+
+function btnStartSip(current_view) {
+	with ( document.forms[0] ) {
+		if(SetPbName.value.length ==0 || SetPbOrigNum.value.length ==0){
+			alert('Cannot Add empty value');
+			return;
+		}
+
+		var str_SetPbOrigNum = new String(document.getElementById("SetPbOrigNum").value);
+		var length_SetPbOrigNum = document.getElementById("SetPbOrigNum").value.length;
+
+		for (var i = 0;i<length_SetPbOrigNum;i++) {
+			if((str_SetPbOrigNum.charAt(i) == '*') || (str_SetPbOrigNum.charAt(i) =='#') || 
+				((str_SetPbOrigNum.charAt(i) >= '0') && (str_SetPbOrigNum.charAt(i) <='9'))){
+			}else {
+				alert('Number "' + str_SetPbOrigNum.charAt(i) + '" is invalid.');
+				return false;
+			}
+		}
+	}
+
+	var voiceRunning='<%ejGetVoice(voiceInUse)%>';	 
+	if(parseInt(voiceRunning)==1){
+		alert("  Your settings will take effect after the end of the call  \n");
+	}	
+	
+   var loc = 'voicesipstart.cmd?';
+   loc = addParamsToQuery( loc, current_view );
+   
+   //Stripping quotes and spaces
+   loc = loc.replace(/['" ]/g,'');
+   loc += '&sessionKey='+sessionkey;
+   var code = 'location="' + loc + '"';
+   eval(code);
+}
+
+function deleteParamsToQuery(i, loc_init, current_view) {
+	var loc = loc_init;
+	var pbstr, pbSpeedNum;
+	var pbForceSipUri=' ';
+	var pbFlags='SDConfigure'
+	var pbType = 'SDSipProxy';
+	loc += 'currentview=' + current_view; 
+	with ( document.forms[0] ) {
+		
+	  pbSpeedNum=SetPbSpeedNum.options[i-1].value;
+	  pbstr=i;
+	  pbstr+= ", "; 
+	  pbstr+= "," + escape(pbSpeedNum);
+	  pbstr+= ", ";
+	  pbstr+= "," + pbFlags;
+	  pbstr+= "," + pbType;
+	  pbstr+= "," + pbForceSipUri;
+	  
+	  loc += '&phbook='+pbstr;  
+	  
+	  return loc;
+  }
+}
+
+function btnDeleteItem(item) {
+   var loc = 'voicesipstart.cmd?';
+   var current_view='voip_phone_book';
+   loc = deleteParamsToQuery( item, loc, current_view );
+   
+   loc += '&sessionKey='+sessionkey;
+   var code = 'location="' + loc + '"';
+   eval(code);
+   
+}
+
+function btnClearItem() {
+   var loc = 'voicephonebookclear.cmd?currentview=voip_phone_book';
+   loc = loc.replace(/['" ]/g,'');
+   loc += '&sessionKey='+sessionkey;
+   var code = 'location="' + loc + '"';
+   eval(code);
+   
+}
+
+function enableButtons(){
+   var buttonStart = document.getElementById("StartButton");
+
+
+   if ( voiceRunning == 1 ) {
+      buttonStart.disabled = true;
+   } else {
+      buttonStart.disabled = false;
+   }
+}
+
+var tmpname = tmppbname.split(',');
+var	tmporinum = tmppborinum.split(',');
+var	tmpspdnum = tmppbspdnum.split(',');
+var	tmpflags = tmppbflags.split(',');
+
+function frmLoad() {
+	enableButtons();
+	
+	var pbtable;
+	var maxPhBook = 10;
+	var pbname, pborignum, pbspeednum;
+	
+	var tableHtmlOutput = "<table id='phoneBookTable' border='1'><tbody id='perLineTbody1'>";
+	
+	
+	for (var j = 0; (tmpname.length > 1) && (j < tmpname.length) ; j++)
+  {
+  	var k = j+1;
+  	pbname = document.getElementById("pbname"+k);
+  	pborignum = document.getElementById("pborignum"+k);
+  	pbspeedgnum = document.getElementById("pbspeednum"+k);
+  	
+  	if(tmpname[j].indexOf('(null)') == -1){
+  	   pbname.innerHTML = tmpname[j];
+    }
+    if(tmporinum[j].indexOf('(null)') == -1){
+  	   pborignum.innerHTML = tmporinum[j];
+    }
+    if(tmpspdnum[j].indexOf('(null)') == -1){
+  		pbspeedgnum.innerHTML = tmpspdnum[j];  	
+    }
+  }
+}
+
+function loadItem(i){
+	with ( document.forms[0] ) {
+		for(var j=0;j<SetPbSpeedNum.length;j++){
+			if(SetPbSpeedNum.options[j].value == tmpspdnum[i-1]){
+			SetPbSpeedNum.options[j].selected = true;
+			}
+		}
+		SetPbOrigNum.value = tmporinum[i-1];
+		SetPbName.value = tmpname[i-1];
+	}
+}
+// done hiding -->
+</script>
+</head>
+<body onload="frmLoad()">
+<div class="config-block">
+	<div class="left">
+	  <div class="right">
+		  <!-- configuration beginning -->
+	<form id="form2" name="form2" method="post" action="voip_speed_dial.cgi">
+	<div class="headline">Speed Dial</div>
+	<table width="90%" border="1" align="center" cellpadding="1" cellspacing="0" class="t-border" bordercolor="#FFFFFF">
+              <tr>
+                <td width="18%" class="t-title">#</td>
+                <td width="32%" class="t-title">Number</td>
+                <td width="33%" class="t-title">Description</td>
+                <td width="17%" class="t-title">&nbsp;</td>
+              </tr>
+              <tr>
+                <td class="t-row1"><select name="SetPbSpeedNum" id="SetPbSpeedNum">
+                  <option value="#01">#01</option>
+                  <option value="#02">#02</option>
+                  <option value="#03">#03</option>
+                  <option value="#04">#04</option>
+                  <option value="#05">#05</option>
+                  <option value="#06">#06</option>
+                  <option value="#07">#07</option>
+                  <option value="#08">#08</option>
+                  <option value="#09">#09</option>
+                  <option value="#10">#10</option>
+                </select></td>
+                <td class="t-row1"><input type="text" id = "SetPbOrigNum" maxlength="32" name="SetPbOrigNum" /></td>
+                <td class="t-row1"><input type="text" id = "SetPbName" maxlength="32" name="SetPbName"/></td>
+                <td class="t-row1"><input type='button' onClick="btnStartSip('voip_phone_book')" value='Add' ID="StartButton" disabled="true"></td>
+              </tr>
+            </table>
+			<div class="headline">Phone Book</div>
+			<table width="90%" border="1" align="center" cellpadding="1" cellspacing="0" class="t-border" bordercolor="#FFFFFF">
+              <tr>
+                <td width="10%" class="t-title">#</td>
+                <td width="25%" class="t-title">Number</td>
+                <td width="25%" class="t-title">Description</td>
+                <td width="10%" class="t-title">Modify</td>
+              </tr>
+              <tr>
+                <td class="t-row1" id="pbspeednum1">#01</td>
+                <td class="t-row1" id="pborignum1"></td>
+                <td class="t-row1" id="pbname1"></td>
+                <td class="t-row1">
+				<input type = "button" value = "Edit" onClick="loadItem(1)">
+				<input type = "button" value = "Delete" onClick="btnDeleteItem(1)">
+				</td>
+              </tr>
+              <tr>
+                <td class="t-row2" id="pbspeednum2">#02</td>
+                <td class="t-row2" id="pborignum2">&nbsp;</td>
+                <td class="t-row2" id="pbname2">&nbsp;</td>
+                <td class="t-row1">
+				<input type = "button" value = "Edit" onClick="loadItem(2)">
+				<input type = "button" value = "Delete" onClick="btnDeleteItem(2)">
+				</td>
+              </tr>
+              <tr>
+                <td class="t-row1" id="pbspeednum3">#03</td>
+                <td class="t-row1" id="pborignum3">&nbsp;</td>
+                <td class="t-row1" id="pbname3">&nbsp;</td>
+				<td class="t-row1">
+				<input type = "button" value = "Edit" onClick="loadItem(3)">
+				<input type = "button" value = "Delete" onClick="btnDeleteItem(3)">
+				</td>
+              </tr>
+              <tr>
+                <td class="t-row2" id="pbspeednum4">#04</td>
+                <td class="t-row2" id="pborignum4">&nbsp;</td>
+                <td class="t-row2" id="pbname4">&nbsp;</td>
+                <td class="t-row1">
+				<input type = "button" value = "Edit" onClick="loadItem(4)">
+				<input type = "button" value = "Delete" onClick="btnDeleteItem(4)">
+				</td>
+              </tr>
+              <tr>
+                <td class="t-row1" id="pbspeednum5">#05</td>
+                <td class="t-row1" id="pborignum5">&nbsp;</td>
+                <td class="t-row1" id="pbname5">&nbsp;</td>
+                <td class="t-row1">
+				<input type = "button" value = "Edit" onClick="loadItem(5)">
+				<input type = "button" value = "Delete" onClick="btnDeleteItem(5)">
+				</td>
+              </tr>
+              <tr>
+                <td class="t-row2" id="pbspeednum6">#06</td>
+                <td class="t-row2" id="pborignum6">&nbsp;</td>
+                <td class="t-row2" id="pbname6">&nbsp;</td>
+                <td class="t-row1">
+				<input type = "button" value = "Edit" onClick="loadItem(6)">
+				<input type = "button" value = "Delete" onClick="btnDeleteItem(6)">
+				</td>
+              </tr>
+              <tr>
+                <td class="t-row1" id="pbspeednum7">#07</td>
+                <td class="t-row1" id="pborignum7">&nbsp;</td>
+                <td class="t-row1" id="pbname7">&nbsp;</td>
+                <td class="t-row1">
+				<input type = "button" value = "Edit" onClick="loadItem(7)">
+				<input type = "button" value = "Delete" onClick="btnDeleteItem(7)">
+				</td>
+              </tr>
+              <tr>
+                <td class="t-row2" id="pbspeednum8">#08</td>
+                <td class="t-row2" id="pborignum8">&nbsp;</td>
+                <td class="t-row2" id="pbname8">&nbsp;</td>
+                <td class="t-row1">
+				<input type = "button" value = "Edit" onClick="loadItem(8)">
+				<input type = "button" value = "Delete" onClick="btnDeleteItem(8)">
+				</td>
+              </tr>
+              <tr>
+                <td class="t-row1" id="pbspeednum9">#09</td>
+                <td class="t-row1" id="pborignum9">&nbsp;</td>
+                <td class="t-row1" id="pbname9">&nbsp;</td>
+                <td class="t-row1">
+				<input type = "button" value = "Edit" onClick="loadItem(9)">
+				<input type = "button" value = "Delete" onClick="btnDeleteItem(9)">
+				</td>
+              </tr>
+              <tr>
+                <td class="t-row2" id="pbspeednum10">#10</td>
+                <td class="t-row2" id="pborignum10">&nbsp;</td>
+                <td class="t-row2" id="pbname10">&nbsp;</td>
+                <td class="t-row1">
+				<input type = "button" value = "Edit" onClick="loadItem(10)">
+				<input type = "button" value = "Delete" onClick="btnDeleteItem(10)">
+				</td>
+              </tr>
+            </table>
+			<div class="btn-block">
+			  <input type="button" name="Submit" value="Clear" class="btnstyle" onclick="btnClearItem()" />
+			</div>
+		</form>
+			<!-- configuration ending -->
+			<br class="clearfloat" />
+	  </div>
+		<br class="clearfloat" />
+	</div>
+</div>
+<div class="config-bottom"><br class="clearfloat" /></div><br />
+</body>
+</html>

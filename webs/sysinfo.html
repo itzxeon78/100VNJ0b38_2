@@ -1,0 +1,351 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="x-frame-options" content="sameorigin">
+<meta name="viewport" content="width=device-width; initial-scale=1.0;" />
+<title>movistar</title>
+<link href="/mhs/css/style.css" rel="stylesheet" type="text/css" />
+<!--<script src="/mhs/js/jquery.1.4.2-min.js" type="text/javascript"></script>-->
+<!--<script src="/mhs/js/jquery-page.js" type="text/javascript"></script>-->
+<!--Botton-->
+<link type="text/css" rel="stylesheet" href="/mhs/css/ui.switchbutton.min.css" />
+<!--<link type="text/css" rel="stylesheet" href="css/demo.css" />-->
+<script type="text/javascript" src="/mhs/js/jquery-1.6.3.min.js"></script>
+<script type="text/javascript" src="/mhs/js/jquery.tmpl.min.js"></script>
+<script type="text/javascript" src="/mhs/js/jquery-ui-1.8.16.custom.min.js"></script>
+<script type="text/javascript" src="/mhs/js/jquery.switchbutton.min.js"></script>
+<script type="text/javascript" src="/mhs/js/main.js"></script>
+<!--<script type="text/javascript" src="/mhs/js/demo.js"></script>-->
+<!--<script type="text/javascript" src="/mhs/js/index.js"></script>-->
+<!--<script type="text/javascript" src="/mhs/APIS/api_fake.js"></script>-->
+<script type="text/javascript" src="/mhs/js/jquery.utils.homestation.min.js"></script>
+<!--<script type="text/javascript" src="/mhs/js/languages.js"></script>-->
+<!--<script type="text/javascript" src="/mhs/js/jquery.json-2.2.js"></script>-->
+<script type="text/javascript" src="/mhs/js/networkMap/wifi.js"></script>
+<script type="text/javascript" src="/mhs/js/networkMap/wifi5g.js"></script>
+<!--<script type="text/javascript" src="/mhs/js/networkMap/applications.js"></script>-->
+<script type="text/javascript" src="/mhs/js/jquery.qrcode.min.js"></script>
+<script type="text/javascript">
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+</script>
+</head>
+
+<body onload="MM_preloadImages('/mhs/img/x3.png')">
+ <!--top-->
+  <!--wrapper-->
+<div class="wrapper">
+<div class="wrapper2">
+	<div id="pageloading" style="display: none" >
+		<div id="loadingimg"><img src="/mhs/images/loading.gif" width="102" height="116" /></div>
+	</div>
+     <div class="topBorder">
+            <div class="top_LLBox"><div id="home"><img src="/mhs/img/meun.png" width="45" height="45" /></div><div id="menu" class="toptitle2">MENÚ</div>
+            	<div id="pagemenu" class="menuList">
+                	<ul>
+                    	<!--li><a href="InicioLogout.cmd">Inicio</a></li-->
+                        <li><a href="mhs.html">WiFi</a></li>
+                        <li><a href="wifi5g.html">WiFi Plus</a></li>
+                        <li><a href="wifisecond.html">WiFi Invitados</a></li>
+                        <li><a href="PortForwardWizard.cmd?page=1">Puertos</a></li>
+                        <li class="sec"><a href="#">Red local&nbsp;></a>
+                        	<ul>
+                            	<li><a href="networkmap.html">Mapa de red local</a></li>
+                                <li><a href="lan_v4.html">Red Local</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="multipuesto.html">Multipuesto / Monopuesto</a></li>
+                        <li><a href="lan_v6.html">IPv6</a></li>
+                        <li><a href="changepasswd.html">Cambio contraseña del router</a></li>
+                        <li><a href="firmwareupgrad.html">Actualizaciones Firmware</a></li>
+                        <li><a href="configsetting.html">Otras funcionalidades</a></li>
+                        <li class="sec"><a href="#">Ayuda&nbsp;></a>
+                        	<ul>
+                            	<li><a href="wizard_help.html">Ayuda configurador web</a></li>
+                                <li><a href="sysinfo.html">Acerca de</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="advancedsettings.html">Configuración avanzada</a></li>
+                    </ul></div>
+                </div>
+            <div class="top_CBox toptitle">Acceso al Configurador Router</div>
+            <div class="top_RRBox logoBox_in"><img src="/mhs/img/logo.png"/></div>
+    </div><!--top END-->
+    <!--stlye_mins-->
+    	<div class="topBorder2">
+            <div class="toptitle2">Acceso al Configurador Router</div>
+    	</div>
+    <!--stlye_mins end-->
+    <div class="mainBorder"><div class="items"><a href="javascript:void(0)" onclick="logoutBtu();">Cerrar sesión</a></div></div>
+    <!--location-->
+    <div class="locationTitle">Acerca de...</div><!--location end-->
+    
+    <!--MAIN-->
+<div class="mainBorder">
+	<div id="logout" class="finBox">
+    	<div class="artBox">¿Está seguro de que desea cerrar la sesión?<br/>
+            </div>
+            <div class="artBox">
+              <div class="leftBtu"><input type="button" name="button" id="button" value="Cancelar" class="checkBtu" onclick="closeDiv();"/></div>
+              <div class="rightBtu"><input type="button" name="button" id="button" value="Aceptar" class="checkBtu" onclick="javascript:location.href='logout.cmd'"/></div>
+            </div>
+    </div>
+    
+   	<div class="artBox black2">En el siguiente mapa de información de un solo vistazo se muestra la información relevante acerca de la configuración de tu Router y tu conexión. Si aparecen subrayadas significa que podrás modificarlas y haciendo clic sobre ellas te llevarán a la sección del configurador donde se pueden realizar los cambios.</div>
+
+		<div class="artBox_nM">
+        
+       	  <div class="tabBorder_46 sub22H">
+          	<span class="sub">Información de equipo</span><br/><br/>
+
+            Nombre del equipo: <%ejGetOther(deviceInfo, teamName)%><br/>
+            
+            Modelo: <%ejGetOther(deviceInfo, model)%><br/>
+            
+            Serial Number: <%ejGetOther(deviceInfo, serialNumber)%><br/>
+            
+            Versión Hardware: <%ejGetOther(deviceInfo, hwVersion)%><br/>
+            
+            Versión Software: <%ejGetOther(deviceInfo, swVersion)%><br/>
+            
+            Versión Firmware: <%ejGetOther(deviceInfo, swVersion)%><br/>
+            
+            Estado:  <span id="wanStatus"></span> 
+            
+          </div>
+          
+          <div class="tabBorder_46 sub22H">
+          	<span class="sub">Información WAN</span><br/><br/>
+
+            <a onClick="redirectToAdv();"><span class="subblue">Dirección IP WAN (Internet)</span></a><br/>
+            
+<!--            Velocidad de sincronismo (bajada)(Mbps): N/A<br/>-->
+            
+<!--            Velocidad de sincronismo (subida)(Mbps): N/A<br/>-->
+
+          </div>
+		</div>
+        
+        <div class="artBox_nM">
+        	<div class="tabBorder_46 sub22H">
+            <span class="sub">Información Red Local</span><br/><br/>
+            <a href="lan_v4.html">
+             <span class="subblue">Dirección IP (Gateway): <% ejGet(ethIpAddress) %><br/>
+            
+             Máscara de subred: <% ejGet(ethSubnetMask) %><br/>
+            
+             DHCP: <span id="dhcpStatus"></span><br/>
+            
+             Servidor DNS1: <% ejGet(dhcpDnsPrimary) %><br/>
+            
+             Servidor DNS2: <% ejGet(dhcpDnsSecondary) %></span>
+            </a>
+          </div>
+          
+          <div class="tabBorder_46 sub22H">
+          	<span class="sub">Información Red Inalámbrica</span><br/><br/>
+            <a href="mhs.html">
+             <span class="subblue">Estado Wifi: <span id="wlStatus"></span><br/>
+            
+             Identificador Red Inalámbrica (SSID): <%ejGetWl(wlSsid_wl0v0)%><br/>
+            
+             Oculto SSID: <span id="hideSSID"></span><br/>
+            
+             Tipo cifrado: <span id="wlAuthMode"></span><br/>
+            
+             Encriptación: <span id="wlEncrypt"></span></span>
+            </a>
+          </div>
+          
+        </div>
+        
+        <div class="artBox_nM">
+        	<div class="tabBorder_46 sub22H">
+            <span class="sub">Información Movistar TV</span><br/><br/>
+
+            Servicio contratado: <span id="iptvmode"></span><br/>
+            
+            <div id="address"><span name="address">Tipo de direccionamiento: </span><span id="addressType"></span></div><br/>
+            
+            <div id="wanip"><span name="wanip">Dirección IP WAN Router: </span><span id="iptvWanIP"></span></div><br/>
+            
+            <div id="lanip"><span name="lanip">Dirección IP acceso Imagenio: </span><span id="iptvLanIP"></div></span>
+          </div>
+          
+          <div class="tabBorder_46 sub22H">
+            <span class="sub">Información de acceso</span><br/><br/>
+            
+            ID_ONT: <%ejGetOther(deviceInfo, OntId)%><br/>
+            
+          </div>
+        </div>
+        
+    </div><!--mainBorder END--> 
+</div><!--main END-->  
+    
+<!--footer-->
+    <div class="footerBorder">
+    © Telefónica de España S.A.U. Todos los derechos reservados v 1.1
+    </div><!--footer END-->
+	
+</div></div><!--wrapper END-->
+
+</body>
+<script type="text/javascript">
+$( document ).ready(function() {
+	
+
+    frmLoad();
+	
+});
+
+function frmLoad()
+{
+  showWAN();
+  showLAN();
+  showWLAN();
+  showIPTV();
+}
+
+function redirectToAdv()
+{
+  var gSessionKey=<% ejGetOther(sessionKey)%>;
+	var sslMode = '<%ejGet(sslMode)%>';
+
+	if (sslMode == "1"){
+  var jumpUrl = "https://"+"<% ejGet(ethIpAddress) %>/main.cgi?pageinfo=wancfg&sessionKey="+gSessionKey;
+	}
+	else
+	{
+  		var jumpUrl = "http://"+"<% ejGet(ethIpAddress) %>/main.cgi?pageinfo=wancfg&sessionKey="+gSessionKey;
+	}
+	
+  window.location.href = jumpUrl;
+}
+
+function showWAN()
+{
+  var internet = '<%ejGetOther(sysInfo, wanStatus)%>';
+  if(internet == '0'){
+    document.getElementById("wanStatus").innerHTML= "Con conexión a Internet";
+  }
+  else{
+    document.getElementById("wanStatus").innerHTML= "Sin conexión a Internet";
+  } 
+}
+
+function showLAN()
+{
+  var dhcpServer = <%ejGet(enblDhcpSrv)%>;
+  if(dhcpServer){
+     document.getElementById("dhcpStatus").innerHTML= "Activado";
+  }
+  else{
+     document.getElementById("dhcpStatus").innerHTML= "Desactivado";
+  }
+}
+
+function showWLAN()
+{
+   var enbl = '<%ejGetWl(wlEnbl_wl0v0)%>';
+   var hide = '<%ejGetWl(wlHide_wl0v0)%>';
+   var mode = '<%ejGetWl(wlAuthMode)%>';
+   var wpa = '<%ejGetWl(wlWpa)%>';
+
+   if ( enbl == '1' ) {
+     document.getElementById("wlStatus").innerHTML= "Activado";
+   }
+   else{
+     document.getElementById("wlStatus").innerHTML= "Desactivado";
+   }
+   
+   if(hide == "0" ){
+        document.getElementById("hideSSID").innerHTML= " No";
+   }else{
+		document.getElementById("hideSSID").innerHTML= " Sí";
+   }
+
+   	switch(mode){
+		case "open":
+			document.getElementById("wlAuthMode").innerHTML = "Sin seguridad";
+			break;
+		case "shared":
+			document.getElementById("wlAuthMode").innerHTML = "Bajo (WEP-128Bits)";
+			break;
+		case "wpa":
+			document.getElementById("wlAuthMode").innerHTML = "WPA-PSK";
+			break;
+		case "psk2":
+			document.getElementById("wlAuthMode").innerHTML = "WPA2-PSK";
+			break;
+		case "psk psk2":
+			document.getElementById("wlAuthMode").innerHTML = "WPA/WPA2 PSK mixed";
+			break;
+	}
+	
+	switch(wpa){
+		case "tkip":
+			document.getElementById("wlEncrypt").innerHTML = "TKIP";
+			break;
+		case "aes":
+			document.getElementById("wlEncrypt").innerHTML = "AES";
+			break;
+		case "tkip+aes":
+			document.getElementById("wlEncrypt").innerHTML = "TKIPAES MIX";
+			break;
+	}
+}
+
+function showIPTV()
+{
+  var iptv = '<%ejGet(mhsinsIPTV)%>';
+  var nat = '<%ejGet(mhsinsNAT)%>';
+  var Secondarylanip = '<%ejGet(mhsSecondaryLanIp)%>';
+  
+  if(iptv==1){
+    document.getElementById("iptvmode").innerHTML = "Trío";
+    document.getElementById("iptvWanIP").innerHTML = '<%ejGet(mhsIptvWanIp)%>';
+  } else{
+    document.getElementById("iptvmode").innerHTML = "Dúo";
+    document.getElementById("iptvWanIP").innerHTML = "0.0.0.0";
+	$("#address").hide();
+	$("#wanip").hide();
+	$("#lanip").hide();
+  }
+
+  if(nat == 1){
+    document.getElementById("addressType").innerHTML = "Dinámico (NAT-PAT)";
+    document.getElementById("iptvLanIP").innerHTML = "0.0.0.0";
+  }
+  else{
+    document.getElementById("addressType").innerHTML = "Estático";
+    if(Secondarylanip == "")
+      document.getElementById("iptvLanIP").innerHTML = "0.0.0.0";
+    else
+      document.getElementById("iptvLanIP").innerHTML = Secondarylanip;
+  }
+}
+
+</script>
+
+</html>

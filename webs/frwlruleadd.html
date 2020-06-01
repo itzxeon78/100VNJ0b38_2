@@ -1,0 +1,751 @@
+<html>
+<head>
+<meta http-equiv='content-type' content='text/html;charset=iso-8859-1'>
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="x-frame-options" content="sameorigin">
+<meta name="generator" content="GoLive CyberStudio 3">
+<title> Web Configurator </title>
+
+<link rel=stylesheet href='stylemain.css' type='text/css'>
+<link rel=stylesheet href='colors.css' type='text/css'>
+<script language="javascript" src="util.js"></script>
+<script language="JavaScript">
+<!-- 
+var interfaces = '<%ejGetOther(enabledFrwlIntf)%>';
+
+function btnApply() {
+   var loc = 'firewall-frwlRule.cmd?action=add';
+
+   with ( document.forms[0] ) {    
+	  
+	  if( rulename.value.length > 16){
+	     msg = 'Rule name could not enter over 16 character.';
+		 alert(msg);
+		 return;
+	  }
+	  
+      //Add new v6 parameter
+      if ( srcv6ip.value == "" && srcPrefixLen.value == "" && srcip.value == "" && srcmask.value == "" && srcstartport.disabled == false && srcstartport.value == "" &&
+           dstip.value == "" && dstmask.value == "" && dstv6ip.value == "" && dstPrefixLen.value == "" && dststartport.disabled == false && dststartport.value == "" &&
+           protocol.selectedIndex == 0 ) {
+         msg = 'At least one condition must be specified.'
+         alert(msg);
+         return;
+      }      
+      //Add new v6 parameter
+      if ( srcv6ip.value != "" && isValidIpAddress6(srcv6ip.value) == false ) {
+         msg = 'Source address "' + srcv6ip.value + '" is invalid IPv6 address.';
+         alert(msg);
+         return;
+      }
+  
+      if ( dstv6ip.value != "" && isValidIpAddress6(dstv6ip.value) == false ) {
+         msg = 'Destination address "' + dstv6ip.value + '" is invalid IPv6 address.';
+         alert(msg);
+         return;
+      }
+  
+      if ( srcPrefixLen.value != '' && isValidPrefixLength(srcPrefixLen.value) == false) {
+         msg = 'Source Prefix Length "' + srcPrefixLen.value + '" is invalid.';
+         alert(msg);
+         return;
+      }
+
+      if ( dstPrefixLen.value != '' && isValidPrefixLength(dstPrefixLen.value) == false) {
+         msg = 'Destination Prefix Length "' + dstPrefixLen.value + '" is invalid.';
+         alert(msg);
+         return;
+      }
+
+      if ( srcv6ip.value == "" && srcPrefixLen.value != "" ) {
+         msg = 'Cannot set source IPv6 prefix length without source IPv6 address.';
+         alert(msg);
+         return;
+      }
+
+      if ( dstv6ip.value == "" && dstPrefixLen.value != "" ) {
+         msg = 'Cannot set destination IPv6 prefix length without destination IPv6 address.';
+         alert(msg);
+         return;
+      }
+
+      if ( srcip.value != "" && isValidIpAddress(srcip.value) == false ) {
+         msg = 'Source address "' + srcip.value + '" is invalid IP address.';
+         alert(msg);
+         return;
+      }
+
+      if ( srcmask.value != "" && isValidSubnetMask(srcmask.value) == false ) {
+         msg = 'Source subnet mask "' + srcmask.value + '" is invalid subnet mask.';
+         alert(msg);
+         return;
+      }
+
+      if ( srcip.value == "" && srcmask.value != "" ) {
+         msg = 'Cannot have source subnet mask without source IP address.';
+         alert(msg);
+         return;
+      }
+
+      if (srcstartport.disabled == false && srcstartport.value != "" && isValidPort(srcstartport.value) == false ) {
+         msg = 'Source start port "' + srcstartport.value + '" is invalid port number or port range.';
+         alert(msg);
+         return;
+      }
+
+	  if (srcstartport.disabled == false && srcstartport.value == "" && srcendport.value != ""){
+		 msg = 'Cannot have source end port without source start port.';
+         alert(msg);
+         return;	
+	  }
+
+	  if (srcstartport.disabled == false && srcstartport.value != "" && srcendport.value != "" && isValidPort(srcendport.value) == false ){
+		 msg = 'Source end port "' + srcendport.value + '" is invalid port number or port range.';
+         alert(msg);
+         return;	
+	  }
+	  
+      if ( dstip.value != "" && isValidIpAddress(dstip.value) == false ) {
+         msg = 'Destination address "' + dstip.value + '" is invalid IP address.';
+         alert(msg);
+         return;
+      }
+
+      if ( dstmask.value != "" && isValidSubnetMask(dstmask.value) == false ) {
+         msg = 'Destination subnet mask "' + dstmask.value + '" is invalid subnet mask.';
+         alert(msg);
+         return;
+      }
+
+      if ( dstip.value == "" && dstmask.value != "" ) {
+         msg = 'Cannot have destination subnet mask without destination IP address.';
+         alert(msg);
+         return;
+      }
+
+      if ( dststartport.disabled == false && dststartport.value != "" && isValidPort(dststartport.value) == false ) {
+         msg = 'Destination start port "' + dststartport.value + '" is invalid port number or port range.';
+         alert(msg);
+         return;
+      }
+
+	  if ( dststartport.disabled == false && dststartport.value == "" && dstendport.value != ""){
+		 msg = 'Cannot have destination end port without destination start port.';
+         alert(msg);
+         return;	
+	  }
+
+	  if ( dststartport.disabled == false && dststartport.value != "" && dstendport.value != "" && isValidPort(dstendport.value) == false ){
+		 msg = 'dstination end port "' + dstendport.value + '" is invalid port number or port range.';
+         alert(msg);
+         return;	
+	  }
+      if ( ((srcstartport.disabled == false && srcstartport.value != "") || (dststartport.disabled == false && dststartport.value != "")) && 
+           (protocol.options[protocol.selectedIndex].value != 'TCP' && protocol.options[protocol.selectedIndex].value != 'UDP' && protocol.options[protocol.selectedIndex].value != 'TCPorUDP') ) {
+         msg = 'TCP or UDP Protocol must be selected together with port number';
+		 alert(msg);
+		 return;
+      }       
+	  
+	  if(srcstartport.disabled == false && srcstartport.value != '' && srcendport.value != '' 
+	     && srcstartport.value > srcendport.value){
+	     msg = 'Source start port can not greater than source end port.';
+		 alert(msg);
+		 return;
+      }	  
+	  
+	  if(dststartport.disabled == false && dststartport.value != '' && dstendport.value != '' 
+	     && dststartport.value > dstendport.value){
+	     msg = 'Destination start port can not greater than destination end port.';
+		 alert(msg);
+		 return;
+	  }
+	  
+	  if(srcip.value == '' && dstip.value == '' && 
+	     protocol.options[protocol.selectedIndex].value == '' ){
+		 msg = 'Can not create firewall rule without any condition.';
+		 alert(msg);
+		 return;
+      }		 
+
+      /* protect illegal situation for IPv6 firewall. */
+      if ( protocol.options[protocol.selectedIndex].value == 'ICMPv6'
+      && (srcip.value != "" || dstip.value != ""
+      || srcmask.value != "" || dstmask.value != "")
+        )
+      {
+         msg = 'Add IPv4 Firewall rule can not select ICMPv6 protocol';
+         alert(msg);
+         return;
+      }
+
+      /* protect illegal situation for IPv6 firewall. */
+      if ( protocol.options[protocol.selectedIndex].value == 'ICMP'
+      && (srcv6ip.value != "" || srcPrefixLen.value != ""
+      || dstv6ip.value != "" || dstPrefixLen.value != "")
+        )
+      {
+         msg = 'Add IPv6 Firewall rule can not select ICMP protocol';
+         alert(msg);
+         return;
+      }	
+
+      /* protect illegal situation for IPv6 firewall. */
+      if ((srcip.value != "" || dstip.value != "" || srcmask.value != "" || dstmask.value != "") && 
+	  (srcv6ip.value != "" || srcPrefixLen.value != "" || dstv6ip.value != "" || dstPrefixLen.value != "")
+         )
+      {
+         msg = 'Do not set both IPv4 and IPv6 condition for a firewall rule';
+         alert(msg);
+         return;
+      }
+
+	  // active
+	  if(ruleenbl.checked == true)
+	    loc += '&ruleEnbl=' + 1;
+	  else
+	  	loc += '&ruleEnbl=' + 0;
+	  
+      // rule name
+      loc += '&ruleName=' + encodeUrl(rulename.value);
+
+      // wan interface	
+      loc += '&ruleIntf=' + ruleintf.options[ruleintf.selectedIndex].value;
+
+	  // direction
+	  loc += '&direction=' + direction.options[direction.selectedIndex].value;
+	  
+      // protocol
+      if(protocol.options[protocol.selectedIndex].value != '')
+         loc += '&protocol=' + protocol.options[protocol.selectedIndex].value;
+	  	 
+      // ICMP type
+	  if(protocol.options[protocol.selectedIndex].value == 'ICMP')
+	  	 loc += '&icmpType=' + icmptype.options[icmptype.selectedIndex].value;
+	  
+      //Add IPv6 Firewall Parameters
+      // ICMPv6 type
+	  if(protocol.options[protocol.selectedIndex].value == 'ICMPv6')
+	  	 loc += '&icmpv6Type=' + icmpv6type.options[icmpv6type.selectedIndex].value;
+      
+      //Add IPv6 Firewall Parameters
+      // source IPv6 address
+      if ( srcv6ip.value != "" )
+         loc += '&srcIPv6Addr=' + srcv6ip.value;
+      
+      // source IPv6 Prefix Length
+      if ( srcPrefixLen.value != "" )
+         loc += '&srcPrefixLen=' + srcPrefixLen.value;
+      
+      // source address
+      if ( srcip.value != "" )
+         loc += '&srcAddr=' + srcip.value;
+
+      // source subnet mask
+      if ( srcmask.value != "" )
+         loc += '&srcMask=' + srcmask.value;
+
+      // source start port
+      if ( srcstartport.disabled == false && srcstartport.value != "" )
+         loc += '&srcStartPort=' + srcstartport.value;
+
+	  // source end port
+	  if ( srcstartport.disabled == false && srcstartport.value != "" && srcendport.value != "")
+         loc += '&srcEndPort=' + srcendport.value;
+
+      //Add IPv6 Firewall Parameters
+      // destination IPv6 address
+      if ( dstv6ip.value != "" )
+         loc += '&dstIPv6Addr=' + dstv6ip.value;
+      
+      // destination IPv6 Prefix Length
+      if ( dstPrefixLen.value != "" )
+         loc += '&dstPrefixLen=' + dstPrefixLen.value;
+      
+      // destination address
+      if ( dstip.value != "" )
+         loc += '&dstAddr=' + dstip.value;
+
+      // destination subnet mask
+      if ( dstmask.value != "" )
+         loc += '&dstMask=' + dstmask.value;
+
+      // destination start port
+      if ( dststartport.disabled == false && dststartport.value != "" )
+         loc += '&dstStartPort=' + dststartport.value;
+
+	  // destination end port
+      if ( dststartport.disabled == false && dststartport.value != "" && dstendport.value != "")
+         loc += '&dstEndPort=' + dstendport.value;
+
+	  // action
+	  loc += '&actionType=' + actiontype.options[actiontype.selectedIndex].value;
+
+	  // reject type
+	  if(actiontype.options[actiontype.selectedIndex].value == 'Reject')
+	  {
+	     loc += '&rejectType=' + rejecttype.options[rejecttype.selectedIndex].value;
+	     // reject ipv6 type
+	     loc += '&rejectv6Type=' + rejectv6type.options[rejectv6type.selectedIndex].value;
+	  }
+	  loc += '&sessionKey=<%ejGetOther(sessionKey)%>';
+   }
+
+   var code = 'location="' + loc + '"';
+   eval(code);
+}
+function frmLoad(){
+    with ( document.forms[0] ) {
+		showhide("icmpType1",0);
+		showhide("icmpType2",0);
+		showhide("icmpv6Type1", 0);
+		showhide("icmpv6Type2", 0);
+		showhide("icmpSpace", 0);
+		showhide("rejectType1", 0);
+		showhide("rejectType2", 0);
+		showhide("rejectv6Type1", 0);
+		showhide("rejectv6Type2", 0);
+		srcstartport.disabled = true;
+		srcendport.disabled = true;
+		dststartport.disabled = true;
+		dstendport.disabled = true;
+		reject.innerHTML = "<select name='rejecttype' size='1'>" + 
+			                 "<option value='1' selected>icmp-net-unreachable" + 
+			                 "<option value='2'>icmp-host-unreachable" +
+			                 "<option value='3'>icmp-proto-unreachable" + 
+			                 "<option value='4'>icmp-port-unreachable" + 
+			                 "<option value='5'>icmp-net-prohibited" + 
+			                 "<option value='6'>icmp-host-prohibited" + 
+			               "</select>";
+		rejectv6.innerHTML = "<select name='rejectv6type' size='1'>" + 
+			                 "<option value='1' selected>no-route" + 
+			                 "<option value='2'>adm-prohibited" +
+			                 "<option value='3'>addr-unreach" + 
+			                 "<option value='4'>port-unreach" + 
+			                 "<option value='5'>tcp-reset" + 
+			               "</select>";
+		changeIntf();
+	}
+}
+function changeProtocol(){
+    with ( document.forms[0] ) {
+		showhide("icmpType1",0);
+		showhide("icmpType2",0);
+		showhide("icmpv6Type1", 0);
+		showhide("icmpv6Type2", 0);
+		showhide("icmpSpace", 0);
+		srcstartport.disabled = true;
+		srcendport.disabled = true;
+		dststartport.disabled = true;
+		dstendport.disabled = true;
+		reject.innerHTML = "<select name='rejecttype' size='1'>" + 
+			                 "<option value='1' selected>icmp-net-unreachable" + 
+			                 "<option value='2'>icmp-host-unreachable" +
+			                 "<option value='3'>icmp-proto-unreachable" + 
+			                 "<option value='4'>icmp-port-unreachable" + 
+			                 "<option value='5'>icmp-net-prohibited" + 
+			                 "<option value='6'>icmp-host-prohibited" + 
+			               "</select>";
+		rejectv6.innerHTML = "<select name='rejectv6type' size='1'>" + 
+			                 "<option value='1' selected>no-route" + 
+			                 "<option value='2'>adm-prohibited" +
+			                 "<option value='3'>addr-unreach" + 
+			                 "<option value='4'>port-unreach" + 
+			                 "<option value='5'>tcp-reset" + 
+			               "</select>";
+	    if(protocol.options[protocol.selectedIndex].value == 'ICMP'){
+		showhide("icmpType1",1);
+		showhide("icmpType2",1);
+			showhide("icmpSpace", 1);
+		}
+	    else if(protocol.options[protocol.selectedIndex].value == 'ICMPv6'){
+		    showhide("icmpv6Type1", 1);
+		    showhide("icmpv6Type2", 1);
+		    showhide("icmpSpace", 1);
+	    }
+		else if(protocol.options[protocol.selectedIndex].value == 'TCP' || protocol.options[protocol.selectedIndex].value == 'UDP' || protocol.options[protocol.selectedIndex].value == 'TCPorUDP'){
+			srcstartport.disabled = false;
+			srcendport.disabled = false;
+			dststartport.disabled = false;
+			dstendport.disabled = false;
+			if(protocol.options[protocol.selectedIndex].value == 'TCP'){
+				reject.innerHTML = "<select name='rejecttype' size='1'>" + 
+				                     "<option value='1' selected>icmp-net-unreachable" + 
+				                     "<option value='2'>icmp-host-unreachable" +
+				                     "<option value='3'>icmp-proto-unreachable" + 
+				                     "<option value='4'>icmp-port-unreachable" + 
+				                     "<option value='5'>icmp-net-prohibited" + 
+				                     "<option value='6'>icmp-host-prohibited" + 
+				                     "<option value='7'>tcp-reset" +
+				                   "</select>";
+				rejectv6.innerHTML = "<select name='rejectv6type' size='1'>" + 
+			                 "<option value='1' selected>no-route" + 
+			                 "<option value='2'>adm-prohibited" +
+			                 "<option value='3'>addr-unreach" + 
+			                 "<option value='4'>port-unreach" + 
+			                 "<option value='5'>tcp-reset" + 
+			               "</select>";
+			}
+		}
+	}
+}
+function changeAction(){
+    with ( document.forms[0] ) {
+	    showhide("rejectType1", 0);
+	    showhide("rejectType2", 0);
+	    showhide("rejectv6Type1", 0);
+	    showhide("rejectv6Type2", 0);
+	    if(actiontype.value == 'Reject'){
+		    showhide("rejectType1", 1);
+		    showhide("rejectType2", 1);
+		    showhide("rejectv6Type1", 1);
+		    showhide("rejectv6Type2", 1);
+		}
+	}
+}
+function changeIntf(){
+	with ( document.forms[0]) {
+		var intfs = interfaces.split('|');
+		
+		if(intfs.length > 0){
+			for(i = 0; i < intfs.length -1; i++){
+				var intfInfo = intfs[i].split('/');
+				if(ruleintf.options[ruleintf.selectedIndex].value == intfInfo[0]){
+			
+					if(intfInfo[1] == 1){
+						filterType.innerHTML = "<select name='direction' size='1' ><option value='In'>Incoming&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</select>";
+					}
+					else if(intfInfo[1] == 2){
+						filterType.innerHTML = "<select name='direction' size='1' ><option value='Out'>Outgoing&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</select>";
+					}
+					else{
+						filterType.innerHTML = "<select name='direction' size='1' ><option value='In'>Incoming&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<option value='Out'>Outgoing&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</select>";
+					}
+				}
+			}
+		}
+	}
+}
+function btnBack(){
+    var code = 'location="firewall-frwlRule.cmd?action=view"';
+    eval(code);
+}
+
+
+// -->
+</script>
+ <style type="text/css">
+<!--
+body {
+	background-attachment: fixed;
+	background-image: url(../../../images/config_bg.gif);
+}
+-->
+</style>
+</head>
+<body onLoad="frmLoad()">
+<form action="" method="post" enctype="multipart/form-data" name="theform" id="theform">
+	<table width="100%"  border="0" cellspacing="0" cellpadding="0">
+	<tr>
+       <td width="42" align="center">&nbsp;</td>
+       <td><table width="99%" border="0" cellspacing="0" cellpadding="0" >
+         <tr>
+           <td class="BG4"><!-- 3D -->
+               <table width="100%"  border="0" cellspacing="0" cellpadding="0">
+                 <tr>
+                   <td><!-- 3D -->
+                     <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                       <tr>
+                         <td class="cTitle">
+                         <b>  
+                  Add Firewall Rule
+                         </b>
+                         </td>
+                       </tr>
+                     </table>
+                    <table width="100%" border="0" align="center" cellspacing="0">
+                      </tr>
+                      <tr> 
+                        <td width="2%"><div align="center"> 
+                            <p> 
+                              <input type="checkbox" name="ruleenbl" value="checkbox">
+                            </p>
+                          </div></td>
+                        <td width="36%">Active</td>
+                      </tr>
+                      <tr> 
+                        <td > &nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td >Rule Name:</td>
+                        <td colspan="7"> <input type='text' size="23" name="rulename" > 
+                        </td>
+                      </tr>
+                      <tr> 
+                        <td > &nbsp;&nbsp;&nbsp;</td>
+                        <td >Interface:</td>
+                        <td colspan="2" align="left"> <div align="left"><b><font face="Arial, Helvetica, sans-serif" size="2"> 
+                            <select name="ruleintf" size="1" id="interface" onChange="changeIntf()">
+							  <script language="JavaScript">
+                            	var i=0;
+                      			var frwlRuleIntf = interfaces.split('|');
+								
+                      			if(frwlRuleIntf.length>0){  
+                      				for ( i = 0; i < frwlRuleIntf.length - 1; i++ ) {
+										    var ifName = frwlRuleIntf[i].split('/');
+                        	   				document.write("  <option value='" + ifName[0] + "'>");
+                               				document.writeln(ifName[0]);
+                       				}
+                      			} 
+                              </script>
+                            </select>
+                            </font></b> </div></td>
+                        <td width="2%" align="left"><b><font face="Arial, Helvetica, sans-serif" size="2"> 
+                          </font></b></td>
+                        <td width="3%"> <div align="center"> </div>
+                          <div align="center"> </div></td>
+                        <td width="18%" align="left"> <div align="center"><b><font face="Arial, Helvetica, sans-serif" size="2"> 
+                            </font></b></div></td>
+                      </tr>
+                      <tr> 
+                        <td > &nbsp;&nbsp;&nbsp;</td>
+                        <td >Direction: </td>
+                        <td colspan="7"> 
+                             <span id="filterType"></span>
+                        </td>
+                      </tr>
+                      <tr> 
+                        <td>&nbsp;&nbsp;</td>
+                        <td>Protocol:</td>
+                        <td colspan="7">
+                            <select name='protocol' size="1" onChange="changeProtocol()">
+                            <option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+                            <option value="TCP"> TCP 
+                            <option value="UDP"> UDP 
+							   <option value="TCPorUDP"> TCP or UDP
+                            <option value="ICMP"> ICMP  
+                            <option value="ICMPv6"> ICMPv6 
+                            </select> 
+                        </td>
+                        <td rowspan="2">&nbsp;</td>
+                        <td rowspan="2">&nbsp;</td>
+                        <td rowspan="2">&nbsp;</td>
+                      </tr>
+                      <tr> 
+                        <td>&nbsp; </td>
+                        <td><div id="icmpType1">ICMP (Type-Code):</div></td>
+                        <td colspan="7"><div id="icmpType2">
+			  <select name='icmptype' size="1">
+                            <option value='-1'>any 
+                            <option value='0-0'>(0-0) echo-reply (pong) 
+                            <option value='3'>(3) destination-unreachable 
+                            <option value='3-0'>(3-0) network-unreachable 
+                            <option value='3-1'>(3-1) host-unreachable 
+                            <option value='3-2'>(3-2) protocol-unreachable 
+                            <option value='3-3'>(3-3) port-unreachable 
+                            <option value='3-4'>(3-4) fragmentation-needed 
+                            <option value='3-5'>(3-5) source-route-failed 
+                            <option value='3-6'>(3-6) network-unknown 
+                            <option value='3-7'>(3-7) host-unknown 
+                            <option value='3-9'>(3-9) network-prohibited 
+                            <option value='3-10'>(3-10) host-prohibited 
+                            <option value='3-11'>(3-11) TOS-network-unreachable 
+                            <option value='3-12'>(3-12) TOS-host-unreachable 
+                            <option value='3-13'>(3-13) communication-prohibited 
+                            <option value='3-14'>(3-14) host-precedence-violation 
+                            <option value='3-15'>(3-15) precedence-cutoff 
+                            <option value='4-0'>(4-0) source-quench 
+                            <option value='5'>(5) redirect 
+                            <option value='5-0'>(5-0) network-redirect 
+                            <option value='5-1'>(5-1) host-redirect 
+                            <option value='5-2'>(5-2) TOS-network-redirect 
+                            <option value='5-3'>(5-3) TOS-host-redirect 
+                            <option value='8-0'>(8-0) echo-request (ping) 
+                            <option value='9-0'>(9-0) router-advertisement 
+                            <option value='10-0'>(10-0) router-solicitation 
+                            <option value='11'>(11) time-exceeded (ttl-exceeded) 
+                            <option value='11-0'>(11-0) ttl-zero-during-transit 
+                            <option value='11-1'>(11-1) ttl-zero-during-reassembly 
+                            <option value='12'>(12) parameter-problem 
+                            <option value='12-0'>(12-0) ip-header-bad 
+                            <option value='12-1'>(12-1) required-option-missing 
+                            <option value='13-0'>(13-0) timestamp-request 
+                            <option value='14-0'>(14-0) timestamp-reply 
+                            <option value='17-0'>(17-0) address-mask-request 
+                            <option value='18-0'>(18-0) address-mask-reply 
+			  </select> 
+			</div></td>
+                      </tr>
+                      <!-- Add IPv6 Firewall -->
+                      <tr>
+                        <td>&nbsp; </td>
+                        <td><div id="icmpv6Type1">ICMPv6 (Type-Code):</div></td>
+                        <td colspan="7"><div id="icmpv6Type2">
+			  <select name='icmpv6type' size="1">
+                            <option value='1'>(1) Destination Unreachable
+                            <option value='2'>(2) Packet Too Big
+                            <option value='3'>(3) Time Exceeded
+                            <option value='4'>(4) Parameter Problem
+                            <option value='128'>(128) Echo Request
+                            <option value='129'>(129) Echo Reply 
+                            <option value='133'>(133) Router Solicitation 
+                            <option value='134'>(134) Router Advertisement 
+                            <option value='135'>(135) Neighbour Solicitation 
+                            <option value='136'>(136) Neighbour Advertisement 
+                            <option value='137'>(137) Redirect
+                          </select>
+                        </div></td>
+                      </tr>
+                      <tr id="icmpSpace"> 
+                        <td width="0%" >&nbsp;</td>
+                        <td width="0%" >&nbsp;</td>
+                        <td width="8%">&nbsp;</td>
+                      </tr>
+                      <tr> 
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>Source IP Address:</td>
+                        <td colspan="7"><input type='text' size="23" name="srcip"></td>
+                      </tr>
+                      <tr> 
+                        <td>&nbsp;</td>
+                        <td>Source Subnet Mask:</td>
+                        <td colspan="7"><input type='text' size="23" name="srcmask"></td>
+                      </tr>
+		      <!-- Add IPv6 Firewall -->
+                      <tr> 
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>Source IPv6 Address:</td>
+                        <td colspan="7"><input type='text' size="23" name="srcv6ip"></td>
+                      </tr>
+                      <tr> 
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>Source IPv6 Prefix Length:</td>
+                        <td colspan="7"><input type='text' size="23" name="srcPrefixLen"></td>
+                      </tr>
+                      <tr> 
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>Source Port (port or port:port):</td>
+                        <td width="4%"> <div align="center"> 
+                            <input type='text' size="7" name="srcstartport">
+                          </div></td>
+                        <td width="9%"><div align="center"><strong>:</strong></div></td>
+                        <td colspan="3"> <div align="center"></div>
+                          <strong> 
+                          <input type='text' size="7" name="srcendport">
+                          </strong> <div align="center"> </div></td>
+                        <td width="2%">&nbsp;</td>
+                        <td width="16%">&nbsp;</td>
+                      </tr>
+                      <tr> 
+                        <td>&nbsp;&nbsp;&nbsp;</td>
+                        <td>Destination IP Address:</td>
+                        <td colspan="7"><input type='text' size="23" name="dstip"></td>
+                      </tr>
+                      <tr> 
+                        <td>&nbsp;&nbsp;&nbsp;</td>
+                        <td>Destination Subnet Mask:</td>
+                        <td colspan="7"><input type='text' size="23" name="dstmask"></td>
+                      </tr>
+		      <!-- Add IPv6 Firewall -->
+                      <tr> 
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>Destination IPv6 Address:</td>
+                        <td colspan="7"><input type='text' size="23" name="dstv6ip"></td>
+                      </tr>
+                      <tr> 
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>Destination IPv6 Prefix Length:</td>
+                        <td colspan="7"><input type='text' size="23" name="dstPrefixLen"></td>
+                      </tr>
+                      <tr> 
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>Destination Port (port or port:port):</td>
+                        <td><div align="center"> 
+                            <input type='text' size="7" name="dststartport">
+                          </div></td>
+                        <td><div align="center"><strong>:</strong></div></td>
+                        <td colspan="3"><div align="center"></div>
+                          <strong> 
+                          <input type='text' size="7" name="dstendport">
+                          </strong> <div align="center"> </div></td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr> 
+                        <td >&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td >Action</td>
+                        <td colspan="7"> <select name='actiontype' size="1" onChange="changeAction()">
+                            <option value="Permit" selected>Permit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                            <option value="Drop">Drop 
+                            <option value="Reject">Reject </select> </td>
+                      </tr>
+                      <tr> 
+                        <td >&nbsp;</td>
+                        <td ><div id="rejectType1">Reject Type</div></td>
+                        <td colspan="7">
+                          <div id="rejectType2">
+                           <span id="reject"></span>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr> 
+                        <td >&nbsp;</td>
+                        <td ><div id="rejectv6Type1">Reject IPv6 Type</div></td>
+                        <td colspan="7">
+                          <div id="rejectv6Type2">
+                           <span id="rejectv6"></span>
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+                    <br>
+                    <br>
+					
+					<table border="0" cellspacing="0" cellpadding="0" width="300" align="center">
+                       <tr>
+			 <td>&nbsp;</td>
+                         <td>&nbsp;</td>
+                       </tr>
+                       <tr align="center">
+			
+                         <td colspan='2' background="../../../images/wg_dotline.gif">&nbsp;</td>
+                       </tr>
+                       <tr>
+			<td align="center">
+                            <input type='button' onClick='btnBack()' value='Back'>
+                         </td>
+                         <td align="center">
+			    <input type='button' onClick='btnApply()' value='Apply'>
+                         </td>
+
+                       </tr>
+                       <tr>
+                         <td height="35">&nbsp;</td>
+                       </tr>
+                     </table>
+					
+                   </td>
+                 </tr>
+                 <tr>
+                   <td height="3" background="../../../images/config_bo_b.gif"><img src="../../../images/dotspacer.gif" width="1" height="1"></td>
+                 </tr>
+               </table>
+           </td>
+         </tr>
+       </table></td>
+     </tr>
+   </table>
+ </form>
+ <p>&nbsp;</p>
+</body>
+<!-- WaterMark Begin -->
+<script language="JavaScript">    
+<!--
+markW=33;   // pixels wide
+markH=354;   // pixels high
+markRefresh=10;   // milliseconds
+
+//showFullPath('Firewall > Rules ');
+
+//-->
+</script>
+<!-- WaterMark End -->
+</html>

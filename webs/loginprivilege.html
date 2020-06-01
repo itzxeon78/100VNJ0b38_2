@@ -1,0 +1,731 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="x-frame-options" content="sameorigin">
+        <link rel=stylesheet href='stylemain.css' type='text/css'>
+	    <link rel=stylesheet href='colors.css' type='text/css'>
+        <!--<link rel=stylesheet href='jquery.checktree.css' type='text/css'> -->
+        <!--<script language='javascript' src="jquery-1.3.2.min.js"></script> -->
+        <!--<script language='javascript' src="jquery.checktree.js"></script> -->
+        <!--<script language='javascript' src="jquery.updateWithJSON.min.js"></script> -->
+        
+    </head>
+    <body>        
+        <script language="javascript" type="text/javascript">
+        <!-- hide    
+            var choseninput = new Array();
+            var setting = new Array();
+            var usergroupinfo = '<%ejGetOther(userGroupInfo)%>';
+			var groupname = new Array();
+            var currgroupname = "Supervisor";
+            var splitstring = new Array();
+            var groupstring = new Array();
+            var group;
+
+			//$(document).ready(function(){
+			//	$("ul.tree").checkTree();
+			//	});
+
+           // var $checktree;
+           // $(function(){
+           //    $checktree = $("ul.tree").checkTree();
+           // });
+          optioninfo(usergroupinfo);
+                        
+            function optioninfo(string) {
+                    var numIdx = 0;
+                    var i = 0;
+  
+                    splitstring=string.split("|");
+                    while(splitstring[numIdx]!=null)
+                    {
+                          	groupstring[numIdx]=new Array();
+                          	groupstring[numIdx][1]=new Array();
+                            numIdx += 1;
+                    }
+          
+                    for(i=0; i<numIdx; i++)
+                    {
+      	                    groupstring[i]=splitstring[i].split("/");
+                            groupname[i]=groupstring[i][0];
+      	                    groupstring[i][1]=groupstring[i][1].split("");  	          	
+                    }
+       
+            }
+      
+            function sendPrivilegeConfig (URL)
+            {
+	             var objXMLHTTP = null;
+
+				if (window.XMLHttpRequest)  {
+					objXMLHTTP=new XMLHttpRequest();
+				}// code for IE
+				else if (window.ActiveXObject)  {
+					objXMLHTTP=new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				else {
+					alert("The browser no support XMLHttp Object");
+					return;
+				}
+				
+				if ( objXMLHTTP != null ) {
+					objXMLHTTP.open("POST","./"+URL,true);
+					objXMLHTTP.onreadystatechange = function()
+				{
+				}
+					objXMLHTTP.send(null);
+				}      	 
+            }
+      
+            function checkprivilege(grouptype) {
+	            var result = '';
+				var privilegePageCnt = <%ejGetOther(privilegePageCnt)%>;          
+				for(checkindex=0; checkindex< privilegePageCnt ; checkindex++)
+	      		{
+	      			if(document.loginprivilegetree.choseninput[checkindex].checked==true)
+	      			{
+	      				result += '1';
+	      				groupstring[grouptype][1][checkindex]='1';
+	      			}
+	      			else
+      				{
+      					result += '0';
+      					groupstring[grouptype][1][checkindex]='0';
+      				}
+	      		}
+	      		return result;
+            }     
+      
+            function btnApply() {
+	            var saveresult='';
+	            var loc = 'loginPrivilege-privilege.cmd?action=viewcfg';
+	            if (currgroupname != "Supervisor") {
+		      		loc += "&isPrivilege=1";
+		      		loc += "&groupName=" + currgroupname;
+		      		if(currgroupname=="Administrator")
+		      		{
+		      			saveresult=checkprivilege(1);
+		      		}
+		      		else
+		      			saveresult=checkprivilege(2);
+			
+	      			loc += "&privilege=" + saveresult;	      		
+	            }
+	             alert(loc);
+	            sendPrivilegeConfig(loc);
+            }
+     
+            function clearAll(){
+         		  // $checktree.clear();
+        		  // $checktree.update();
+            }
+            function changegroup(curr){  
+			var privilegePageCnt = <%ejGetOther(privilegePageCnt)%>;     
+			for(k=0; k<privilegePageCnt; k++)
+			{
+				var setvalue = groupstring[curr][1][k];
+				if(setvalue == '1')
+				{ 
+					document.loginprivilegetree.choseninput[k].checked=true;
+				} 
+				else
+				{ 	
+					document.loginprivilegetree.choseninput[k].checked=false;
+				}
+			} 
+			//$checktree.update();
+	     } 
+
+		function hideprivilegeset(){
+			var chosenoption = account[account.selectedIndex].value;
+			//alert("chosenoption.value:"+chosenoption);
+			if (chosenoption != 'Supervisor'){ 
+				var status = 'visible';
+				document.getElementById('loginprivilege').style.visibility = status;
+				if(chosenoption == 'Administrator'){  
+					changegroup(1);
+					currgroupname=groupname[1];
+				}else{	
+					changegroup(2);
+					currgroupname=groupname[2];
+				}
+			} 
+			else{ 
+				var status = 'hidden';
+				document.getElementById('loginprivilege').style.visibility = status;
+				currgroupname='Supervisor';
+			}
+		}
+
+		// done hiding -->        
+        </script>
+        
+        <P>
+       	
+               <b>Privilege Setting</b><br>
+               <br>                                 
+               <div id="accountset" style='margin-left:24px;'>
+                  <lable><b>Group :</b></lable>
+                  <select name="select" id="account" onChange="hideprivilegeset()">
+                     <option value="Supervisor">Supervisor</option>
+                     <option value="Administrator">Administrator</option>
+                     <option value="User">User</option>
+                  </select> 
+               </div>
+               <br>
+               <center><input type='button' onClick='btnApply()' value='Save/Apply'></center> 
+
+        </P>       
+        <Hr Width="95%"><br>
+      
+      <form id=loginprivilege name=loginprivilegetree>
+      	<div style='margin-right:24px;'>
+      	<script language='javascript'>
+	        <!-- hide		
+	   	    document.getElementById('loginprivilege').style.visibility = 'hidden';
+			// done hiding -->
+   	    </script>
+			<!--<a href="javascript:;" id=clearAllcheckbox onclick="clearAll()" >ClearAll</a> 	<br><br> -->
+            
+            <ul class="tree" name='setting[0]' id='DeviceInfo'>
+            <li>
+                <input type="checkbox" name='choseninput'>              
+                <label>Device Info</label> 
+                  <ul>
+                  <li>
+                  	  <input type='checkbox' name='choseninput'>
+                      <label>Summary</label> 
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                  	  <input type='checkbox' name='choseninput'>
+                      <label>WAN</label> 
+                  </li>
+                  </ul>
+                  <ul>
+                  <li> 
+                      <input type='checkbox' name='choseninput'>
+                      <label>Statistics</label> 
+                            <ul>
+                            <li>
+                                <input type='checkbox' name='choseninput'>
+		                        <label>LAN</label> 
+                            </li>
+                            <li>
+                                <input type='checkbox' name='choseninput'>
+                                <label>WAN Service</label>
+                            </li>
+                            </ul>
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                      <input type='checkbox' name='choseninput'>
+                      <label>Route</label> 
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                      <input type='checkbox' name='choseninput'>
+                      <label>ARP</label> 
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                      <input type='checkbox' name='choseninput'>
+                      <label>DHCP</label> 
+                  </li>
+                  </ul>	
+            </li>
+            </ul>
+            
+            <ul class="tree" name='setting[1]' id='AdvancedSetup'>
+            <li>
+                <input type="checkbox" name='choseninput'>              
+                <label>Advanced Setup</label>                 
+                  <ul>
+                  <li> 
+                      <input type='checkbox' name='choseninput'>
+                      <label>Layer2 Interface</label>                         
+                            <ul>
+                            <li>
+		                        <input type='checkbox' name='choseninput'>
+		                        <label>GPON Service</label>
+                            </li>
+                            <li>
+		                        <input type='checkbox' name='choseninput'>
+		                        <label>ETH Interface</label> 
+                            </li>
+                            </ul>
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                      <input type='checkbox' name='choseninput'>
+                      <label>WAN Service</label> 
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                      <input type='checkbox' name='choseninput'>
+                      <label>LAN</label> 
+                            <ul>
+                            <li>
+		                        <input type='checkbox' name='choseninput'>
+		                        <label>Additional Subset</label> 
+                            </li>
+                            <li>
+		                        <input type='checkbox' name='choseninput'>
+		                        <label>Lan VLAN Setting</label> 
+                            </li>
+                            <li>
+		                        <input type='checkbox' name='choseninput'>
+		                        <label>IPv6 Autoconfig</label> 
+                            </li>
+                            </ul>	
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                      <input type='checkbox' name='choseninput'>
+                      <label>VPN</label> 
+                            <ul>
+                            <li>
+		                        <input type='checkbox' name='choseninput'>
+		                        <label>L2TP Client</label> 
+                            </li>
+                            </ul>	
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                      <input type='checkbox' name='choseninput'>
+                      <label>NAT</label> 
+                            <ul>
+                            <li>
+                                <input type='checkbox' name='choseninput'>
+		                        <label>Virtual Servers</label> 
+                            </li>
+                            <li>
+                                <input type='checkbox' name='choseninput'>
+		                        <label>Port Triggering</label> 
+                            </li>
+                            <li>
+                                <input type='checkbox' name='choseninput'>
+		                        <label>DMZ Host</label> 
+                            </li>
+                            </ul>
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                      <input type='checkbox' name='choseninput'>
+                      <label>Security</label> 
+                            <ul>
+                            <li>
+                                <input type='checkbox' name='choseninput'>
+		                        <label>IP Filtering</label> 
+                            </li>
+                            <li>
+                                <input type='checkbox' name='choseninput'>
+		                        <label>MAC Filtering</label> 
+                            </li>
+                            </ul>
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                      <input type='checkbox' name='choseninput'>
+                      <label>Parental Control</label>                       
+                            <ul>
+                            <li>
+                                <input type='checkbox' name='choseninput'>
+		                        <label>Time Restriction</label> 
+                            </li>							         
+                            <li>
+                                <input type='checkbox' name='choseninput'>
+		                        <label>Url Filter</label> 
+                            </li>				
+                            </ul>
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                      <input type='checkbox' name='choseninput'>
+                      <label>Quality of Service</label> 
+                            <ul>
+                            <li>
+                                <input type='checkbox' name='choseninput'>
+		                        <label>QoS Queue</label> 
+                            </li>
+                            <li>
+                                <input type='checkbox' name='choseninput'>
+		                        <label>QoS Classification</label> 
+                            </li>
+                            </ul>
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                      <input type='checkbox' name='choseninput'>
+                      <label>Routing</label> 
+                            <ul>
+                            <li>
+                                <input type='checkbox' name='choseninput'>
+		                        <label>Default Gateway</label> 
+                            </li>
+                            <li>
+                                <input type='checkbox' name='choseninput'>
+		                        <label>Static Route</label> 
+                            </li>
+                            <li>
+                                <input type='checkbox' name='choseninput'>
+		                        <label>Policy Routing</label> 
+                            </li>
+                            </ul>
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                      <input type='checkbox' name='choseninput'>
+                      <label>DNS</label> 
+                            <ul>
+                            <li>
+                                <input type='checkbox' name='choseninput'>
+                                <label>DNS Server</label> 
+                            </li>
+                            <li>
+                                <input type='checkbox' name='choseninput'>
+		                        <label>Dynamic DNS</label> 
+                            </li>
+                            </ul>
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                      <input type='checkbox' name='choseninput'>
+                      <label>UPnP</label> 
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                      <input type='checkbox' name='choseninput'>
+                      <label>DNS Proxy</label> 
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                      <input type='checkbox' name='choseninput'>
+                      <label>Print Server</label> 
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                      <input type='checkbox' name='choseninput'>
+                      <label>DLNA</label> 
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                      <input type='checkbox' name='choseninput'>
+                      <label>Storage Service</label> 
+                            <ul>
+                            <li>
+							    <input type='checkbox' name='choseninput'>
+		                        <label>Storage Device Info</label> 
+                            </li>
+                            <li>
+							    <input type='checkbox' name='choseninput'>
+		                        <label>User Accounts</label> 
+                            </li>
+                            </ul>
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                      <input type='checkbox' name='choseninput'>
+                      <label>Interface Grouping</label> 
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                      <input type='checkbox' name='choseninput'>
+                      <label>IP Tunnel</label> 
+                            <ul>
+                            <li>
+                                <input type='checkbox' name='choseninput'>
+		                        <label>IPv6inIPv4</label> 
+                            </li>
+                            <li>
+                                <input type='checkbox' name='choseninput'>
+		                        <label>IPv4inIPv6</label> 
+                            </li>
+                            </ul>
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                      <input type='checkbox' name='choseninput'>
+                      <label>IPSec</label> 
+                  </li>
+                  </ul>               
+                  <ul>
+                  <li>
+                      <input type='checkbox' name='choseninput'>
+                      <label>Certificate</label> 
+                            <ul>
+                            <li>
+                                <input type='checkbox' name='choseninput'>
+		                        <label>Local</label> 
+                            </li>
+                            <li>
+                                <input type='checkbox' name='choseninput'>
+		                        <label>Trusted CA</label>
+                            </li>
+                            </ul>
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                      <input type='checkbox' name='choseninput'>
+                      <label>Power Management</label> 
+                  </li>
+                  </ul>   
+                  <ul>
+                  <li>
+                      <input type='checkbox' name='choseninput'>
+                      <label>Multicast</label> 
+                  </li>
+                  </ul>  
+            </li>
+            </ul>
+            
+            <ul class="tree" name='setting[2]' id='Wireless'>
+            <li>
+                <input type="checkbox" name='choseninput'>              
+                <label>Wireless</label>           
+                  <ul>
+                  <li> 
+                      <input type='checkbox' name='choseninput'>
+                      <label>Basic</label> 
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                      <input type='checkbox' name='choseninput'>
+                      <label>Security</label> 
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                      <input type='checkbox' name='choseninput'>
+                      <label>MAC Filter</label> 
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                      <input type='checkbox' name='choseninput'>
+                      <label>Wireless Bridge</label>
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                      <input type='checkbox' name='choseninput'>
+                      <label>Advanced</label>
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                  	  <input type='checkbox' name='choseninput'>
+                      <label>Station Info</label> 
+                  </li>
+                  </ul>          
+            </li>
+            </ul>
+            
+            <ul class="tree" name='setting[3]' id='VoIP'>
+            <li>
+                <input type="checkbox" name='choseninput'>              
+                <label>Voice</label> 
+                  <ul>
+                  <li> 
+                      <input type='checkbox' name='choseninput'>
+                      <label>SIP Account</label> 
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                  	  <input type='checkbox' name='choseninput'>
+                      <label>SIP Server</label> 
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                  	  <input type='checkbox' name='choseninput'>
+                      <label>Phone</label> 
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                  	  <input type='checkbox' name='choseninput'>
+                      <label>Call Rule</label>
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                  	  <input type='checkbox' name='choseninput'>
+                      <label>Summary</label>
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                  	  <input type='checkbox' name='choseninput'>
+                      <label>Outgoing</label> 
+                  </li>
+                  </ul>          
+                  <ul>
+                  <li>
+                  	  <input type='checkbox' name='choseninput'>
+                      <label>Incomming</label> 
+                  </li>
+                  </ul>   
+            </li>
+            </ul>
+            
+            <ul class="tree" name='setting[4]' id='Diagnostics'>
+            <li>
+                <input type="checkbox" name='choseninput'>              
+                <label>Diagnostics Node</label>                 
+                  <ul>
+                  <li>
+                      <input type="checkbox" name='choseninput'>              
+                      <label>Diagnostics</label>                 
+                  </li>
+                  <li>
+                      <input type="checkbox" name='choseninput'>              
+                      <label>Ping&Traceroute&Nslookup</label>                 
+                  </li>
+                  </ul>
+            </ul>
+            
+            <ul class="tree" name='setting[5]' id='Management'>
+            <li>
+                <input type="checkbox" name='choseninput'>              
+                <label>Management</label>                 
+                  <ul>
+                  <li> 
+                      <input type='checkbox' name='choseninput'>
+                      <label>Settings</label> 
+                            <ul>
+                            <li>
+		                        <input type='checkbox' name='choseninput'>
+		                        <label>Backup</label> 
+                            </li>
+                            <li>
+		                        <input type='checkbox' name='choseninput'>
+		                        <label>Update</label>
+                            </li>
+                            <li>
+		                        <input type='checkbox' name='choseninput'>
+		                        <label>Restore Default</label>   
+                            </li>
+                            </ul>
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                  	  <input type='checkbox' name='choseninput'>
+                      <label>System Log</label> 
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                  	  <input type='checkbox' name='choseninput'>
+                      <label>Security Log</label> 
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                  	  <input type='checkbox' name='choseninput'>
+                      <label>TR-069 Clientt</label> 
+                  </li>
+                  </ul>
+                  <ul>
+                  <li> 
+                      <input type='checkbox' name='choseninput'>
+                      <label>OMCI Configuration</label> 
+                            <ul>
+                            <li>
+		                        <input type='checkbox' name='choseninput'>
+		                        <label>Get/Set/Reboot</label> 
+                            </li>
+                            <li>
+		                        <input type='checkbox' name='choseninput'>
+		                        <label>Create</label>
+                            </li>
+                            <li>
+		                        <input type='checkbox' name='choseninput'>
+		                        <label>Get Next</label>   
+                            </li>
+                            <li>
+		                        <input type='checkbox' name='choseninput'>
+		                        <label>Macro</label>
+                            </li>
+                            <li>
+		                        <input type='checkbox' name='choseninput'>
+		                        <label>Download</label>   
+                            </li>
+                            <li>
+		                        <input type='checkbox' name='choseninput'>
+		                        <label>System</label>   
+                            </li>
+                            </ul>
+                  </li>
+                  </ul>                  
+                  <ul>
+                  <li>
+                  	  <input type='checkbox' name='choseninput'>
+                      <label>Internet Time</label> 
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                  	  <input type='checkbox' name='choseninput'>
+                      <label>Access Control</label> 
+                            <ul>
+                            <li>
+		                        <input type='checkbox' name='choseninput'>
+		                        <label>Passwords</label> 
+                            </li>
+                            </ul>
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                  	  <input type='checkbox' name='choseninput'>
+                      <label>Update Software</label> 
+                  </li>
+                  </ul>
+				  <ul>
+                  <li>
+                  	  <input type='checkbox' name='choseninput'>
+                      <label>GPON Password</label> 
+                  </li>
+                  </ul>
+                  <ul>
+                  <li>
+                  	  <input type='checkbox' name='choseninput'>
+                      <label>Reboot</label> 
+                  </li>
+                  </ul>
+            </li>
+            </ul>
+
+           
+        <br style="clear:both"/>
+      </div>
+      </form>
+    </body>
+</html>

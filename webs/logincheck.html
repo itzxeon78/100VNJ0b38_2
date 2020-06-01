@@ -1,0 +1,48 @@
+<html>
+   <head>
+    <meta HTTP-EQUIV="Expires" CONTENT="-1">
+  	<meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+	<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
+	<meta HTTP-EQUIV="Expires" CONTENT="Wed, 10 Jul 1996 08:21:57 GMT">
+	<meta http-equiv="x-frame-options" content="sameorigin">
+		<link rel=stylesheet href='stylemain.css' type='text/css'>
+		<link rel=stylesheet href='colors.css' type='text/css'>
+    <title></title>
+    <script language="javascript">
+		var sslMode = '<%ejGet(sslMode)%>';
+		   </script>
+   </head>
+   <body>
+         <form action='http'>
+		<script language="javascript">
+				document.write("<br>Redirecting to Main Page Now. Please Wait...</br> ");
+		</script>
+          </form>
+   </body>
+	<script language="javascript">
+	var interfaceIP;
+	if (sslMode == "1")
+		interfaceIP = 'https://' + '<%ejGet(ethIpAddress)%>';
+	else
+		interfaceIP = 'http://' + '<%ejGet(ethIpAddress)%>';
+	setTimeout("doForwardMHS()",1000);
+	        
+    function createXMLObject() {
+      try {
+        if (window.XMLHttpRequest) {
+          xmlhttp = new XMLHttpRequest();
+        }
+        // code for IE
+        else if (window.ActiveXObject) {
+          xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+      } catch (e) {
+        xmlhttp=false
+      }
+      return xmlhttp;
+    }
+	function doForwardMHS(){
+			top.location.href = interfaceIP;
+	}
+	</script>
+</html>

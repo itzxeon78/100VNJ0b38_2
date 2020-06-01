@@ -1,0 +1,255 @@
+<html>
+<head>
+<meta http-equiv='content-type' content='text/html;charset=iso-8859-1'>
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="x-frame-options" content="sameorigin">
+<meta name="generator" content="GoLive CyberStudio 3">
+<title> Web Configurator </title>
+
+<link rel=stylesheet href='stylemain.css' type='text/css'>
+<link rel=stylesheet href='colors.css' type='text/css'>
+<script language="javascript" src="util.js"></script>
+<script language="JavaScript">
+<!-- 
+var frwlEnable = '<%ejGet(frwlEnable)%>';
+var frwlName = '<%ejGet(frwlName)%>';
+var frwlIf = '<%ejGet(frwlIf)%>'; 
+var frwlType = '<%ejGet(frwlType)%>';
+var frwlDefaultAction = '<%ejGet(frwlDefaultAction)%>';
+
+function frmLoad(){
+	with ( document.forms[0] ) {
+		if(frwlEnable == 1){
+			frwlenbl.checked = true;
+		}
+		else{
+			frwlenbl.checked = false;
+		}
+
+		frwlname.value = frwlName;
+
+		
+		for(i=1;i<frwlintf.length;i++){
+		   if (frwlintf.options[i].value == frwlIf)
+		     frwlintf.selectedIndex = i;
+	    }
+
+		for(i=1;i<type.length;i++){
+			if (type.options[i].value == frwlType)
+			   type.selectedIndex = i;
+		}
+
+		for(i=1;i<defaultaction.length;i++){
+			if (defaultaction.options[i].value == frwlDefaultAction)
+			   defaultaction.selectedIndex = i;
+		}
+	}
+}
+
+function btnApply() {
+   var loc = 'firewall-frwlGnrl.cmd?action=edit';
+   var okChk = 0;
+
+   with ( document.forms[0] ) {
+      if ( frwlname.value == '' ) {
+         msg = 'Please enter firewall name.';
+         alert(msg);
+         return;
+      }
+      
+      if ( isValidName(frwlname.value) == false ) {
+         msg = 'Please enter valid firewall name: No special characters.';
+         alert(msg);
+         return;
+      }            
+
+      if(type.value == '' && defaultaction.value == ''){
+	  	 msg = 'At least on criteria must be configured.';
+         alert(msg);
+         return;
+      }
+
+	  /* enable */
+	  if(frwlenbl.checked)
+	  	loc += '&frwlEnbl=' + 1;
+	  else
+	  	loc += '&frwlEnbl=' + 0;
+	  
+      /* firewall name */
+      loc += '&frwlName=' + frwlname.value;
+
+
+      /* firewall interface */
+	  loc += '&frwlIntf=' + frwlintf.value;
+	  	
+      /* type */
+      loc += '&type=' + type.value;
+      
+	  /* type */
+      loc += '&defaultAction=' + defaultaction.value;
+
+	  loc += '&sessionKey=<%ejGetOther(sessionKey)%>';
+   }
+
+   var code = 'location="' + loc + '"';
+   eval(code);
+}
+
+function btnBack(){
+    var code = 'location="firewall-frwlGnrl.cmd?action=view"';	
+    eval(code);
+}
+
+// -->
+</script>
+ <style type="text/css">
+<!--
+body {
+	background-attachment: fixed;
+	background-image: url(../../../images/config_bg.gif);
+}
+-->
+</style>
+</head>
+<body onLoad="frmLoad()">
+<form action="" method="post" enctype="multipart/form-data" name="theform" id="theform">
+	<table width="100%"  border="0" cellspacing="0" cellpadding="0">
+	<tr>
+	   <td height="1" colspan="2" bgcolor="#A7A7A7"><img src="../../../images/dotspacer.gif" width="1" height="1"></td>
+     </tr>
+     <tr>
+       <td width="42" align="center">&nbsp;</td>
+       <td><table width="99%" border="0" cellspacing="0" cellpadding="0" >
+         <tr>
+           <td height="18">&nbsp;</td>
+         </tr>
+         <tr>
+           <td><!-- 3D -->
+               <table border="0" cellspacing="0" cellpadding="0">
+                 <tr>
+                   <td width="14" height="24">
+                 </tr>
+               </table>
+           </td>
+         </tr>
+         <tr>
+           <td class="BG4"><!-- 3D -->
+               <table width="100%"  border="0" cellspacing="0" cellpadding="0">
+                 <tr>
+                   <td><!-- 3D -->
+                     <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                       <tr>
+                         <td colspan="2">&nbsp;</td>
+                       </tr>
+					   <tr>
+                         <td width="3%" height="19" class=cTitle>&nbsp;&nbsp;</td>
+                         <td class="cTitle">
+                         <b>  
+                  Add Interface default policy
+                         </b>
+                         </td>
+                       </tr>
+                     </table>
+                    <table width="90%" border="0" align="center" cellspacing="0">
+                      <tr> 
+                        <td colspan="3" >&nbsp;</td>
+                      </tr>
+                      <tr> 
+                        <td width="4%"><input type="checkbox" name="frwlenbl" value="Active"> 
+                        </td>
+                        <td width="41%">Active</td>
+                      </tr>
+                      <tr> 
+                        <td >&nbsp; </td>
+                        <td >Name </td>
+                        <td width="55%"> <input type='text' size="22" name="frwlname" > 
+                        </td>
+                      </tr>
+                      <tr> 
+                        <td > &nbsp;&nbsp;&nbsp;</td>
+                        <td >Interface</td>
+                        <td width="55%"> <select name='frwlintf' size="1">
+                            <option value='ALL'>ALL
+                            <option value='WAN'>All WAN
+                            <script language="JavaScript">
+                            	var i=0;
+                      			var interfaces = '<%ejGetOther(allIpInterfaceInfo)%>';
+                      			var frwlIntf = interfaces.split('|');
+                      			if(frwlIntf.length>0){  
+                      				for ( i = 0; i < frwlIntf.length - 1; i++ ) {
+                        	   				document.write("  <option value='" + frwlIntf[i] + "'>");
+                               				document.writeln(frwlIntf[i]);
+                       				}
+                      			} 
+                            </script>
+                            </select> </td>
+                      </tr>
+                      <tr> 
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>Direction:</td>
+                        <td><select name='type' size="1">
+                            <option value="In" selected>incoming&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                            <option value="Out">outgoing </select> </td>
+                      </tr>
+                      <tr> 
+                        <td>&nbsp;&nbsp;&nbsp;</td>
+                        <td>Default Action:</td>
+                        <td><select name='defaultaction' size="1">
+                            <option value="Permit" selected>Permit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                            <option value="Drop">Drop 
+                            </select> </td>
+                      </tr>
+                    </table>
+                    <br>
+                    <br>
+					
+					<table border="0" cellspacing="0" cellpadding="0" width="300" align="center">
+                       <tr>
+			 <td>&nbsp;</td>
+                         <td>&nbsp;</td>
+                       </tr>
+                       <tr align="center">
+			
+                         <td colspan='2' background="../../../images/wg_dotline.gif">&nbsp;</td>
+                       </tr>
+                       <tr>
+			<td align="center">
+                            <input type='button' onClick='btnBack();' value='Back'>
+                         </td>
+                         <td align="center">
+			    <input type='button' onClick='btnApply()' value='Apply'>
+                         </td>
+
+                       </tr>
+                       <tr>
+                         <td height="35">&nbsp;</td>
+                       </tr>
+                     </table>
+					
+                   </td>
+                 </tr>
+                 <tr>
+                   <td height="3" background="../../../images/config_bo_b.gif"><img src="../../../images/dotspacer.gif" width="1" height="1"></td>
+                 </tr>
+               </table>
+           </td>
+         </tr>
+       </table></td>
+     </tr>
+   </table>
+ </form>
+ <p>&nbsp;</p>
+</body>
+<!-- WaterMark Begin -->
+<script language="JavaScript">    
+<!--
+markW=33;   // pixels wide
+markH=354;   // pixels high
+markRefresh=10;   // milliseconds
+
+//showFullPath('Firewall > General ');
+
+//-->
+</script>
+<!-- WaterMark End -->
+</html>

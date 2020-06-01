@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <title></title>
+        <link rel="stylesheet" href='stylemain.css' type='text/css'>
+            <link rel="stylesheet" href='colors.css' type='text/css'>
+                <meta http-equiv="Pragma" content="no-cache">
+                <meta http-equiv="x-frame-options" content="sameorigin">
+                <base target="_top">     
+        <script type="text/javascript">
+		    var sslMode = '<%ejGet(sslMode)%>';
+            window.onload = function () {
+                document.getElementById("userSpan").innerHTML = '<%ejGet(curUserName)%>';
+				if (sslMode == "1")
+                   document.getElementById("logoutFrm").action = "https://" + window.location.hostname + "/logout.cmd";
+				else
+				   document.getElementById("logoutFrm").action = "http://" + window.location.hostname + "/logout.cmd";
+            }
+        </script>
+    </head>
+    <body class="headerBody" leftmargin="0" rightmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+        <div align="right">
+            <form id="logoutFrm" style="margin: 5px 0px;">
+                <span id="userSpan" style="vertical-align: middle"></span>
+                <input type='submit' style="margin: 0px 15px" value='Logout'>
+            </form>
+        </div>
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" height="30">
+            <tr>
+                <td width="30" height="30" align="right"><img src="page-frame1.gif" width="30" height="30"></td>
+                <td width="100%" height="30" align="center"><img src="page-frame2.gif" width="100%" height="30"></td>
+                <td width="30" height="30" align="left"><img src="page-frame3.gif" width="30" height="30"></td>
+            </tr>
+        </table>
+    </body>
+</html>

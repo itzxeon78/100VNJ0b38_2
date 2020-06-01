@@ -1,0 +1,1038 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="x-frame-options" content="sameorigin">
+<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+<title>movistar</title>
+<link href="/mhs/css/style.css" rel="stylesheet" type="text/css" />
+<!--Botton-->
+<link type="text/css" rel="stylesheet" href="/mhs/css/ui.switchbutton.min.css" />
+<!--<link type="text/css" rel="stylesheet" href="css/demo.css" />-->
+<script type="text/javascript" src="/mhs/js/jquery-1.6.3.min.js"></script>
+<script type="text/javascript" src="/mhs/js/jquery.tmpl.min.js"></script>
+<script type="text/javascript" src="/mhs/js/jquery-ui-1.8.16.custom.min.js"></script>
+<script type="text/javascript" src="/mhs/js/jquery.switchbutton.min.js"></script>
+<script type="text/javascript" src="/mhs/js/main.js"></script>
+<!--<script type="text/javascript" src="/mhs/js/demo.js"></script>-->
+<!--<script type="text/javascript" src="/mhs/js/networkMap/applications.js"></script>-->
+<!--<script type="text/javascript" src="/mhs/js/index.js"></script>-->
+<!--<script type="text/javascript" src="/mhs/js/commons.js"></script>-->
+<!--<script type="text/javascript" src="/mhs/js/jquery.json-2.2.js"></script>-->
+<script type="text/javascript" src="/mhs/js/jquery.utils.homestation.min.js"></script>
+<!--<script type="text/javascript" src="/mhs/js/languages.js"></script>-->
+<script language="javascript">
+	var supportSpain='<%ejGet(supportTEFSpain)%>';
+	var multipuesto = '<%ejGetOther(multipuesto, ntwkPrtcl)%>'; 
+</script>
+</head>
+
+<body id='bodyhide' style="visibility:hidden; overflow:hidden;" onload="widthCheck()">
+<!--wrapper-->
+<div class="wrapper">
+<div class="wrapper2">
+	<div id="pageloading" style="display: none" >
+		<div id="loadingimg"><img src="/mhs/images/loading.gif" width="102" height="116" /></div>
+	</div>
+ <!--top-->
+    <div class="topBorder">
+            <div class="top_LLBox"><div id="home"><img src="/mhs/img/meun.png" width="45" height="45" /></div><div id="menu" class="toptitle2">MENÚ</div>
+            	<div id="pagemenu" class="menuList">
+                	<ul>
+                    	<!--li><a href="InicioLogout.cmd">Inicio</a></li-->
+                        <li><a href="mhs.html">WiFi</a></li>
+                        <li><a href="wifi5g.html">WiFi Plus</a></li>
+                        <li><a href="wifisecond.html">WiFi Invitados</a></li>
+                        <li><a href="PortForwardWizard.cmd?page=1">Puertos</a></li>
+                        <li class="sec"><a href="#">Red local&nbsp;></a>
+                        	<ul>
+                            	<li><a href="networkmap.html">Mapa de red local</a></li>
+                                <li><a href="lan_v4.html">Red Local</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="multipuesto.html">Multipuesto / Monopuesto</a></li>
+                        <li><a href="lan_v6.html">IPv6</a></li>
+                        <li><a href="changepasswd.html">Cambio contraseña del router</a></li>
+                        <li><a href="firmwareupgrad.html">Actualizaciones Firmware</a></li>
+                        <li><a href="configsetting.html">Otras functionalidades</a></li>
+                        <li class="sec"><a href="#">Ayuda&nbsp;></a>
+                        	<ul>
+                            	<li><a href="wizard_help.html">Ayuda configurador web</a></li>
+                                <li><a href="sysinfo.html">Acerca de</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="advancedsettings.html">Configuración avanzada</a></li>
+                    </ul></div>
+                </div>
+            <div class="top_CBox toptitle">Acceso al Configurador Router</div>
+            <div class="top_RRBox logoBox_in"><img src="/mhs/img/logo.png"/></div>
+    </div><!--top END-->
+    <!--stlye_mins-->
+    	<div class="topBorder2">
+            <div class="toptitle2">Acceso al Configurador Router</div>
+    	</div>
+    <!--stlye_mins end-->
+    <div class="mainBorder"><div class="items"><a href="javascript:void(0)" onclick="logoutBtu();">Cerrar sesión</a></div></div>
+    <!--location-->
+    <div class="locationTitle">Mapa de red local</div><!--location end-->
+    
+<!--MAIN-->
+<div class="mainBorder">
+	<!--START logout-->	
+	<div id="logout" class="finBox">
+    		<div class="artBox">¿Está seguro de que desea cerrar la sesión?<br/></div>
+		<div class="artBox">
+			<div class="leftBtu"><input type="button" name="button" id="button" value="Cancelar" class="checkBtu" onclick="closeDiv();"/></div>
+			<div class="rightBtu"><input type="button" name="button" id="button" value="Aceptar" class="checkBtu" onclick="javascript:location.href='logout.cmd'"/></div>
+		</div><!--artBox-->
+	</div><!--END logout-->
+	<div class="artBox black2">A continuación te mostramos los dispositivos conectados a  tu red local. Para poder configurar cada uno de ellos, deberás pulsar sobre su icono. También podrás configurar desde aquí tu red local haciendo clic sobre el icono del router.</div>
+	
+	<div class="artBox_nM" align="center">
+		<img src="/mhs/img/map_internet.png" border="0" /><br><span class="black2">Internet</span>
+	</div>
+	<div  class="artBox_nM" align="center">
+	<img src="/mhs/img/map_line_vertical_1.png" border="0" /><br>
+	</div>
+	<div  class="artBox_nM" align="center">
+	<div >
+	<img src="/mhs/img/map_router.png"  border="0" class="imgLink" onclick="showHGU();" /><br><span class="imgLink black2">Router</span>
+	</div>
+	</div><!--ImgL-->
+	<div  class="artBox_nM" align="center">
+	<img src="/mhs/img/map_line_vertical_1.png" border="0"/><br>
+	</div><!--ImgL-->
+
+<!--Generate NetworkMap-->
+  <div class="cssTable">
+
+     <% ejGetOther(drawnetworkmapicon) %>
+
+  </div><!--cssTable-->
+<!--END Generate NetworkMap-->  
+
+</div><!--main END-->
+
+
+<div id="re" class="mainBorder">
+<!--location-->
+    <div class="locationTitle">Configura tu Red</div><!--location end-->
+<form id="networkMap_HGU" name="networkMap_HGU" method="post" action="networkmaphgu.cmd">
+
+<!--MAIN-->
+<div class="mainBorder">
+	<!--START artBox-->
+	<div class="artBox">
+    	
+		<div class="tabBorder">
+			<div class="tabID">Dirección IP (Gateway)</div>
+			<div class="tabInput">
+				<input type="text" name="uiViewIPAddrv4" id="uiViewIPAddrv4" class="chooseBox"  VALUE="<% ejGet(ethIpAddress) %>" onBlur="Checkv4IPAdress(this);getDefaultDHCPStart(uiViewIPAddrv4,StartIpv4); setDhcpAddresses();"  size="32" />
+			</div><!--tabInput-->
+		</div><!--tabBorder-->
+        
+		<div class="tabBorder">
+			<div class="tabID">Máscara de subred</div>
+			<div class="tabInput">
+				<input type="text" name="uiViewNetMaskv4" id="uiViewNetMaskv4" class="chooseBox" maxlength=15 VALUE="<% ejGet(ethSubnetMask) %>" onBlur="Subnetv4Check(this); setDhcpAddresses();" size="32"/>
+			</div><!--tabInput-->
+		</div><!--tabBorder-->
+        
+		<div class="tabBorder">
+			<div class="tabID">DHCP</div>
+			<div class="tabInput">
+			<select name="select4" class="chooseBox" id="dhcpv4_status" onchange="lanv4statusmodified(this);">
+				<option value="1">Activado</option>
+				<option value="0">Desactivado</option>
+			</select>
+			</div><!--tabInput-->
+		</div><!--tabBorder-->
+
+        <div id="lanv4Conf" style="display:none">
+		<div class="tabBorder">
+			<div class="tabID">Dirección IP inicio rango</div>
+			<div class="tabInput">
+				<input type="text" name="StartIpv4" id="StartIpv4" class="chooseBox" SIZE="32" MAXLENGTH="15" VALUE="<% ejGet(dhcpEthStart) %>" onBlur="Checkv4IPAdress(this)"/>
+			</div><!--tabInput-->
+		</div><!--tabBorder-->
+		<div class="tabBorder">
+			<div class="tabID">Dirección IP fin rango</div>
+			<div class="tabInput">
+			    <input type="text" name="EndIpv4" id="EndIpv4" class="chooseBox" SIZE="32" MAXLENGTH="15" VALUE="<% ejGet(dhcpEthEnd) %>" onBlur="Checkv4IPAdress(this)"/>
+			</div><!--tabInput-->
+		</div><!--tabBorder-->
+		</div>
+        
+        <div class="tabBorder black2">Configurador de servidores DNS (se recomienda no modificar)</div>
+        
+		<div class="tabBorder_46">
+			<div class="tabID">Servidor DNS1</div>
+			<div class="tabInput">
+	            <input type="text" name="PrimaryDnsv4" id="PrimaryDnsv4" class="chooseBox" MAXLENGTH="15" VALUE="<% ejGet(dhcpDnsPrimary) %>" onBlur="Checkv4IPAdress(this)" />
+			</div>
+		</div><!--tabBorder_46-->
+		<div class="tabBorder_46">
+			<div class="tabID">Servidor DNS2</div>
+			<div class="tabInput">
+  	            <input type="text" name="SecondDnsv4" id="SecondDnsv4" class="chooseBox"SIZE="32" MAXLENGTH="15" VALUE="<% ejGet(dhcpDnsSecondary) %>"  onBlur="Checkv4IPAdress(this)" />
+			</div>
+		</div><!--tabBorder_46-->
+        
+	<script language="javascript">
+	{
+		if (supportSpain == 1){
+			document.write("<div class='tabBorder black2' style='display:none'>Configurador Monopuesto /Multipuesto</div>");
+			document.write("<div class='tabBorder' style='display:none'>");
+			document.write("    <div class='tabID'>Multipuesto (Con NAT) (RECOMENDADO)</div>");
+			document.write("    <div class='tabInput'>");
+			document.write("        <input name='RN_SelNATMode' id='RN_SelNATMode1' type='radio' value='0' />");
+			document.write("        <label for='radio'></label>");
+			document.write("    </div>");
+			document.write("</div>");
+			document.write("<div class='tabBorder_nM' style='display:none'>Direccionamiento Dinámico</div>");
+			document.write("<div class='tabBorder' style='display:none'>");
+			document.write("    <div class='tabID2'>Usuario PPPoE</div>");
+			document.write("    <div class='tabInput'>");
+			document.write("        <input type='text' name='pppUserName' id='pppUserName' class='chooseBox'/>");
+			document.write("    </div>");
+			document.write("</div>");
+			document.write("<div class='tabBorder' style='display:none'>");
+			document.write("    <div class='tabID2'>Contraseña</div>");
+			document.write("    <div class='tabInput'>");
+			document.write("        <input type='text' name='pppPassword' id='pppPassword' class='chooseBox'/>");
+			document.write("    </div> ");
+			document.write("</div>");
+		} else {
+			document.write("<div class='tabBorder black2'>Configurador Monopuesto /Multipuesto</div>");
+			document.write("<div class='tabBorder'>");
+			document.write("    <div class='tabID'>Multipuesto (Con NAT) (RECOMENDADO)</div>");
+			document.write("    <div class='tabInput'>");
+			document.write("        <input name='RN_SelNATMode' id='RN_SelNATMode1' type='radio' value='0' />");
+			document.write("        <label for='radio'></label>");
+			document.write("    </div>");
+			document.write("</div>");
+			document.write("<div class='tabBorder_nM'>Direccionamiento Dinámico</div>");
+			document.write("<div class='tabBorder'>");
+			document.write("    <div class='tabID2'>Usuario PPPoE</div>");
+			document.write("    <div class='tabInput'>");
+			document.write("        <input type='text' name='pppUserName' id='pppUserName' class='chooseBox'/>");
+			document.write("    </div>");
+			document.write("</div>");
+			document.write("<div class='tabBorder'>");
+			document.write("<div class='tabID2'>Contraseña</div>");
+			document.write("    <div class='tabInput'>");
+			document.write("        <input type='text' name='pppPassword' id='pppPassword' class='chooseBox'/>");
+			document.write("    </div> ");
+			document.write("</div>");
+		}
+	}
+	</script>
+ <!--     
+        <div class="tabBorder black2">Configurador Monopuesto /Multipuesto</div>
+        
+		<div class="tabBorder">
+			<div class="tabID">Multipuesto (Con NAT) (RECOMENDADO)</div>
+			<div class="tabInput">
+				<input name="RN_SelNATMode" id="RN_SelNATMode1" type="radio" value="0" />
+				<label for="radio"></label>
+			</div>
+		</div>
+
+		<div class="tabBorder_nM">Direccionamiento Dinámico</div>
+		<div class="tabBorder">
+			<div class="tabID2">Usuario PPPoE</div>
+			<div class="tabInput">
+				<input type="text" name="pppUserName" id="pppUserName" class="chooseBox"/>
+			</div>
+		</div>
+		<div class="tabBorder">
+		<div class="tabID2">Contraseña</div>
+			<div class="tabInput">
+				<input type="text" name="pppPassword" id="pppPassword" class="chooseBox"/>
+			</div> 
+		</div> 		
+-->	
+
+	<div class="artBox" id="autoCalculate">
+		<div class="tabBorder_nM">Direccionamiento Estático</div>
+		<div class="tabBorder">
+			<div class="tabID2">Dirección IP (WAN)</div>
+			<div class="tabInput">
+				<input type="text" name="uiViewTVIP" id="uiViewTVIP" class="chooseBox" SIZE="15" MAXLENGTH="15" value="<%ejGet(mhsIptvWanIp)%>"/>
+			</div>
+		</div>
+		<div class="tabBorder">
+			<div class="tabID2">Máscara de subred (WAN)</div>
+			<div class="tabInput">
+				<input type="text" name="uiViewTVSubMask" id="uiViewTVSubMask" class="chooseBox" SIZE="15" MAXLENGTH="15" value="<%ejGet(mhsIptvSubnetMask)%>" />
+			</div>
+		</div>
+		<div class="tabBorder">
+			<div class="tabID2">Puerta de enlace predeterminada (WAN)</div>
+			<div class="tabInput">
+				<input type="text" name="uiViewTVGW" id="uiViewTVGW" class="chooseBox" SIZE="15" MAXLENGTH="15" value="<%ejGet(mhsIptvGatewayIp)%>" />
+			</div>
+		</div>
+	</div>
+
+	<script language="javascript">
+	{
+		var supportSpain='<%ejGet(supportTEFSpain)%>';
+		if (supportSpain == 1){
+			document.write("<div id='Monopuesto' style='display:none'> ");
+			document.write("    <div class='tabBorder'>");
+			document.write("        <div class='tabID'>Monopuesto (Sin NAT)</div>");
+			document.write("        <div class='tabInput'>");
+			document.write("            <input name='RN_SelNATMode' id='RN_SelNATMode2' type='radio' value='1' />");
+			document.write("            <label for='radio'></label>");
+			document.write("        </div>");
+			document.write("    </div>");
+			document.write("    <div class='tabBorder_nM'>Direccionamiento Dinámico</div>");
+			document.write("    <div class='grayBorder'>Es necesario disponer de un cliente PPPoE (con su correspondiente adaptador de cliente PPPoE) en su equipo de cliente. Para más información consulte el menú <span class='sub'><a href='wizard_help.html'>Ayuda</a></span>.</div>");
+			document.write("</div>");
+		} else {
+			document.write("<div id='Monopuesto'>");
+			document.write("    <div class='tabBorder'>");
+			document.write("        <div class='tabID'>Monopuesto (Sin NAT)</div>");
+			document.write("        <div class='tabInput'>");
+			document.write("            <input name='RN_SelNATMode' id='RN_SelNATMode2' type='radio' value='1' />");
+			document.write("            <label for='radio'></label>");
+			document.write("        </div>");
+			document.write("    </div>");
+			document.write("    <div class='tabBorder_nM'>Direccionamiento Dinámico</div>");
+			document.write("    <div class='grayBorder'>Es necesario disponer de un cliente PPPoE (con su correspondiente adaptador de cliente PPPoE) en su equipo de cliente. Para más información consulte el menú <span class='sub'><a href='wizard_help.html'>Ayuda</a></span>.</div>");
+			document.write("</div>");
+		}
+	}
+	</script>
+
+<!--
+	<div id="Monopuesto">
+		<div class="tabBorder">
+			<div class="tabID">Monopuesto (Sin NAT)</div>
+			<div class="tabInput">
+				<input name="RN_SelNATMode" id="RN_SelNATMode2" type="radio" value="1" />
+				<label for="radio"></label>
+			</div>
+		</div>
+
+        <div class="tabBorder_nM">Direccionamiento Dinámico</div>
+        <div class="grayBorder">Es necesario disponer de un cliente PPPoE (con su correspondiente adaptador de cliente PPPoE) en su equipo de cliente. Para más información consulte el menú <span class="sub"><a href="wizard_help.html">Ayuda</a></span>.</div>
+-->
+<!--       
+		<div class="tabBorder_nM">Direccionamiento Estático</div>
+		<div class="tabBorder">
+			<div class="tabID2">Dirección IP (gestión)</div><div class="tabInput"><input type="text" name="textfield4" id="textfield4" class="chooseBox"/></div></div>
+		<div class="tabBorder">
+			<div class="tabID2">Máscara de subred (gestión)</div><div class="tabInput"><input type="text" name="textfield4" id="textfield4" class="chooseBox"/></div> </div>
+		<div class="tabBorder">
+			<div class="tabID2">Puerta de enlace predeterminada</div><div class="tabInput"><input type="text" name="textfield4" id="textfield4" class="chooseBox"/></div> </div>
+		<div class="tabBorder">
+			<div class="tabID2">Dirección IP pública</div><div class="tabInput"><input type="text" name="textfield4" id="textfield4" class="chooseBox"/></div> </div>
+		<div class="tabBorder">
+			<div class="tabID2">Máscara de subred (LAN)</div><div class="tabInput"><input type="text" name="textfield4" id="textfield4" class="chooseBox"/></div> </div>
+		<div class="tabBorder">
+			<div class="tabID2">Puerta de enlace predeterminada (LAN)</div><div class="tabInput"><input type="text" name="textfield4" id="textfield4" class="chooseBox"/></div> </div>
+-->			
+<!--	</div> -->
+
+	</div><!--END artBox-->
+	
+	<div class="artBox_nM" align="center">
+		<div class="tabBorder_46">
+			<input name="button" id="button" value="Cancelar" class="checkBtu2" onclick="closeDiv();"/>
+		</div>
+		<div class="tabBorder_46">
+			<input name="button" id="acceptApp" value="Guardar" class="checkBtu2" onclick="submitsave()"/>
+		</div>   
+	</div><!--artBox_nM-->
+	<input type="HIDDEN" name="sessionKey" id="sessionKey">
+	<input type="HIDDEN" name="action" id="action" value="setrouter">
+
+</div><!--main END-->
+</form>
+</div><!--re--> 
+
+
+
+<div id="re2" class="mainBorder">
+	<!--location-->
+    <div class="locationTitle">Configura tu dispositivo</div><!--location end-->
+<form id="networkMap_Dev" name="networkMap_Dev" method="post" action="networkmapdev.cmd">
+<!--MAIN-->
+<div class="mainBorder">
+	<!--START artBox-->
+	<div class="artBox"><!--START artBox-->
+		
+		<div class="tabBorder">
+			<div class="tabID">Nombre</div>
+			<div class="tabInput">
+			<input type="text" name="DevName" id="DevName" class="chooseBox" value=""/>
+			</div><!--tabInput-->
+		</div><!--tabBorder-->
+        
+		<div class="tabBorder">
+			<div class="tabID">Tipo</div>
+			<div class="tabInput">
+				<select name="DevSelect" id="DevSelect" class="chooseBox">
+				<option value="0">PC Mesa</option>
+				<option value="1">Teléfono</option>
+				<option value="2">TV</option>
+				<option value="3">Minicadena</option>
+				<option value="4">Disco duro</option>
+				<option value="5">Portátil</option>
+				<option value="6">Móvil</option>
+				<option value="7">Videoconsola</option>
+				<option value="8">Impresora</option>
+				<option value="9">Otro</option>
+				<option value="10">Desconocido</option>
+				</select>
+			</div><!--tabInput-->
+		</div><!--tabBorder-->
+        
+		<div class="tabBorder">
+			<div class="tabID">Dirección IP</div>
+			<div class="tabInput">
+				<input type="text" name="DevIpaddr" id="DevIpaddr" class="chooseBox" value="" readonly/>
+			</div><!--tabInput-->
+		</div><!--tabBorder-->
+<!--       
+		<div class="tabBorder">
+			<div class="tabID">Tipo de conexión</div>
+			<div class="tabInput">
+				<input type="text" name="textfield5" id="textfield5" class="chooseBox"/>
+			</div><!--tabInput-->
+<!--		</div><!--tabBorder-->
+<!--        
+		<div class="tabBorder">
+			<div class="tabID">Puertos abiertos</div>
+			<div class="tabInput">Sií/No</div>
+		</div><!--tabBorder-->
+       
+		<div class="tabBorder_46">
+    		<div class="leftBtu">
+    			<input name="button" id="button" value="Configurar tus puertos" class="checkBtu" onclick="javascript:location.href='PortForwardWizard.cmd?page=1'"/>
+    		</div><!--leftBtu-->
+    	</div><!--tabBorder_46-->
+         
+		<div class="tabBorder_46">
+			<input name="button" id="button" value="Cancelar" class="checkBtu2" onclick="closeDiv();"/>
+			<input name="button" id="button" value="Guardar" class="checkBtu2" onclick="doSave();"/>
+		</div><!--tabBorder_46-->
+	</div><!--END artBox-->
+	<input type="HIDDEN" name="sessionKey" id="sessionKey">
+	<input type="HIDDEN" name="action" id="action" value="">
+	<input type="HIDDEN" name="MACaddr" id="MACaddr" value="">
+</div><!--main END-->
+</form>
+</div><!--re2--> 
+
+   
+<!--START footer-->
+<div class="footerBorder">
+© Telefónica de España S.A.U. Todos los derechos reservados v 1.1
+</div><!--footer END-->
+
+</div></div><!--wrapper END-->
+
+</body>
+<script type="text/javascript">
+var sessionKey='<%ejGetOther(sessionKey)%>';
+
+function hideBody(hide) {
+	var status = '';
+	
+	if ( hide == 1 )
+		status = 'hidden';
+		
+	if (document.getElementById)
+	{  // DOM3 = IE5, NS6
+		document.getElementById('bodyhide').style.visibility = status;
+		document.getElementById('bodyhide').style.overflow = status;
+	}
+	else {
+		if (document.layers == false)
+		{ // IE4
+			document.all.bodyhide.style.visibility = status;
+			document.all.bodyhide.style.overflow = status;
+		}
+	}
+}
+
+function widthCheck(){
+	
+	var screenWidth = '<%ejGetOther(screenWidth)%>';
+	if(screen.width != screenWidth){
+		hideBody(1);
+	
+		var data = "screenWidth=" + screen.width + "&sessionKey=" + sessionKey;
+		var url = "/networkmap.cgi";
+
+		$.post(url, data);
+		setTimeout("location.reload(true);",500);		
+	}else{
+		hideBody(0);
+	}
+}
+
+function showElement(devName, devType, devLanIP, devMacAddr)
+{
+	$('#re2').show();
+	$('#re').hide();
+	//alert("name:"+devName +"\nType:"+ devType+"\nIP:"+devLanIP+"\nMacAddr:"+devMacAddr);
+	document.networkMap_Dev.DevIpaddr.value = devLanIP;
+	document.networkMap_Dev.DevName.value = devName;
+	document.networkMap_Dev.MACaddr.value = devMacAddr;
+	document.getElementById("DevSelect").selectedIndex = devType;
+}
+
+function doSave()
+{	
+/*	
+	document.networkMap_Dev.action.value ="save";
+    document.networkMap_Dev.sessionKey.value = sessionKey;
+	document.networkMap_Dev.submit();
+	loadingProcess(10000);
+*/
+    var data ="action=save"
+	var DevName;
+	var DevSelect;
+	var MACaddr;
+	
+	DevName=$("#DevName").attr("value");
+	DevSelect=$("#DevSelect").attr("value");
+	MACaddr=$("#MACaddr").attr("value");
+	
+	loadingProcess(10000);
+	
+	data += "&DevName=" + DevName + "&DevSelect=" + DevSelect + "&MACaddr=" + MACaddr;
+	data+= "&sessionKey=" + sessionKey;
+	
+	var url = "/networkmapdev.cmd";
+	var callback = function(responseData, textStatus){ 
+	window.location.href="/networkmapdev.cmd";
+	};
+	$.post(url, data, callback, "cmd");
+	setTimeout("location.reload(true);",5000);
+	
+}
+
+
+var autoGenConfig = 0;
+
+$(document).ready(function() {
+	
+});
+
+function showHGU()
+{
+	$('#re').show();
+	$('#re2').hide();
+
+	var ServiceType = '<%ejGet(mhsinsIPTV)%>';
+	if (ServiceType == 1)
+	{
+		$('#Monopuesto').hide();
+	}
+
+	document.getElementById("pppUserName").value = '<%ejGetOther(multipuesto, pppUserName)%>';
+	document.getElementById("pppPassword").value = '<%ejGetOther(multipuesto, pppPassword)%>';
+	
+    var dhcpServer = <%ejGet(enblDhcpSrv)%>;
+    $.fx.speeds._default = 500;
+	jQuery.getJSON('/mhs/config.json', function(data, textStatus){
+		//STATUS = data.STATUS;
+		CONFIG = data.CONFIG;
+		configurationLoaded();
+	});	
+	
+	lanv4statusmodified(document.getElementById("dhcpv4_status"));	
+			
+	if(dhcpServer){		
+		document.getElementById("lanv4Conf").style.display="";
+		document.getElementById("dhcpv4_status").options[0].selected=true;
+	}else{
+		document.getElementById("lanv4Conf").style.display="none";
+		document.getElementById("dhcpv4_status").options[1].selected=true;		
+	}
+	
+	$('input[name="RN_SelNATMode"]').click(function(){
+		var index =  $('input[name="RN_SelNATMode"]').index(this) ;
+		if(index == 0){
+			mode_dispatcher(0);
+		}
+		else{
+			mode_dispatcher(2);
+		}
+	});
+	
+	setDhcpAddresses();	
+
+    frmLoad();
+}
+
+function frmLoad()
+{
+	var mode = '<%ejGetOther(multipuesto, ntwkPrtcl)%>';//routing or Bridge
+	
+    if(mode=="1"){
+	   mode_dispatcher(0);
+	} else {
+	   mode_dispatcher(2);
+	}
+}
+
+function mode_dispatcher(mode){
+	if(mode == 0){
+		$('input[name="RN_SelNATMode"]')[0].checked = true;	
+	}else if(mode == 2){
+		$('input[name="RN_SelNATMode"]')[1].checked = true;		
+	}
+}
+function MM_jumpMenu(targ,selObj,restore){ //v3.0
+  eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
+  if (restore) selObj.selectedIndex=0;
+}
+
+
+function getDefaultDHCPStart(sourceIP, startIP) 
+{
+	var IP = sourceIP.value;
+	IP = IP.replace(/ /g, "");
+	sourceIP.value = IP;
+	IPsplit = IP.split(".");
+	if(IPsplit.length != 4)
+	   return;
+
+    IPsplit[3]="33";
+
+	startIP.value = IPsplit[0]+"."+IPsplit[1]+"."+IPsplit[2]+"."+IPsplit[3];
+	  //alert(startIP.value);
+}	
+
+function Checkv4IPAdress(object)
+{
+	var IP = object.value;
+	IP = IP.replace(/ /g, "");
+	IPsplit = IP.split(".");
+
+	if(IPsplit.length != 4 )
+	{
+      	//alert("INVALID_IPV4_ADDRESS_MSG");
+		alert(_("INVALID_IPV4_ADDRESS_MSG"));
+		return (false);
+	}
+	for(i = 0; i < 4; i++)
+	{
+		if((isNaN(IPsplit[i])) || (IPsplit[i] == 'undefined') || (IPsplit[i] == "")) 
+		{
+      		//alert("INVALID_IPV4_ADDRESS_MSG");
+			alert(_("INVALID_IPV4_ADDRESS_MSG"));
+			return (false);
+		} 
+		else
+		{
+			if((parseInt(IPsplit[i], 10) > 255) || (parseInt(IPsplit[i], 10) < 0)) 
+			{
+      			//alert("INVALID_IPV4_ADDRESS_MSG");
+				alert(_("INVALID_IPV4_ADDRESS_MSG"));
+				return (false);
+			}
+		}
+	}
+	int_add0=parseInt(IPsplit[0], 10);
+	int_add3=parseInt(IPsplit[3], 10);			
+	if(int_add0 == 0 || int_add0 == 127 || int_add0 > 223 || int_add3 ==0 || int_add3 ==255)
+	{
+      	//alert("INVALID_IPV4_ADDRESS_MSG");
+		alert(_("INVALID_IPV4_ADDRESS_MSG"));
+		return (false);
+	}		
+	
+	var sIpv4 = $("#StartIpv4").attr("value");
+	var eIpv4 = $("#EndIpv4").attr("value");
+	if((eIpv4.split(".").pop() - sIpv4.split(".").pop()) < 0)
+	{
+		//alert("end value is less than start.");
+		alert(_("INVALID_IPV4_ADDRESS_MSG"));
+	}
+	
+	return (true);
+}
+
+function Subnetv4Check(object)
+{	
+	var mask=object.value;
+	if ( !((mask == "0.0.0.0")||
+	(mask == "128.0.0.0")||
+	(mask == "192.0.0.0")||
+	(mask == "224.0.0.0")||
+	(mask == "240.0.0.0")||
+	(mask == "248.0.0.0")||
+	(mask == "252.0.0.0")||
+	(mask == "254.0.0.0")||
+	(mask == "255.0.0.0")||
+	(mask == "255.128.0.0")||
+	(mask == "255.192.0.0")||
+	(mask == "255.224.0.0")||
+	(mask == "255.240.0.0")||
+	(mask == "255.248.0.0")||
+	(mask == "255.252.0.0")||
+	(mask == "255.254.0.0")||
+	(mask == "255.255.0.0")||
+	(mask == "255.255.128.0")||
+	(mask == "255.255.192.0")||
+	(mask == "255.255.224.0")||
+	(mask == "255.255.240.0")||
+	(mask == "255.255.248.0")||
+	(mask == "255.255.252.0")||
+	(mask == "255.255.254.0")||
+	(mask == "255.255.255.0")||
+	(mask == "255.255.255.128")||
+	(mask == "255.255.255.192")||
+	(mask == "255.255.255.224")||
+	(mask == "255.255.255.240")||
+	(mask == "255.255.255.248")||
+	(mask == "255.255.255.252")||
+	(mask == "255.255.255.254")||
+	(mask == "255.255.255.255")) )
+	{
+		alert(_("INVALID_IPV4_ADDRESS_MSG"));
+		return (false);
+	}    
+	return (true);
+}
+
+function setDhcpAddresses() 
+{
+   var ipArr = [0, 0, 0, 0],  maskArr = [0, 0, 0, 0], startArr = [0, 0, 0, 0],  endArr = [0, 0, 0, 0];
+   var tmpStartArr, tmpEndArr;
+   var poolaccount= getIPv4DHCPPoolCount();
+   
+      lanIp = $("#StartIpv4").attr("value");
+      subnetMask = $("#uiViewNetMaskv4").attr("value");
+      if ( checkIPFormat(lanIp) == false ) {
+         //alert('Address "' + lanIp + '" is invalid IP address.');		 
+         return;
+      }
+      if ( SubnetCheck(subnetMask) == false ) {
+         //alert('Address "' + subnetMask + '" is invalid IP address.');
+         return;
+      }      
+      addrParts = lanIp.split('.');
+      maskParts = subnetMask.split('.');       
+      if ( addrParts.length != 4 || maskParts.length != 4) {
+         //alert('Invalid ip/subnetMask');
+         return;
+      }         
+      for (i = 0; i < 4; i++) {
+        ipArr[i] = parseInt(addrParts[i]);
+        startArr[i] = parseInt(addrParts[i]);
+        endArr[i] = parseInt(addrParts[i]);
+        maskArr[i] = parseInt(maskParts[i]);
+      }
+      m3 = maskArr[3];
+      bcast = 255;
+      n3 = 0;
+      if (maskArr[0] == 255 && maskArr[1] == 0 &&  maskArr[2] == 0 && maskArr[3] == 0) {
+        /* 255.0.0.0 is only class A supported */
+        endArr[1] = 255;
+        endArr[2] = 255;
+      }
+      else if (maskArr[0] == 255 && maskArr[1] == 255 &&  maskArr[2] == 0 && maskArr[3] == 0) 
+        /* 255.255.0.0 is only class B supported */
+        endArr[2] = 255;
+      else if ((maskArr[0] == 255 && maskArr[1] == 255 &&  maskArr[2] == 255 ) &&
+               (m3 == 0 || m3 == 128 || m3 == 192 || m3 == 224 || m3== 240 || m3 == 248 ||  m3 == 252)) {
+        /* 255.255.255.0/128/192... class C supported */
+        n3 = ipArr[3] & m3;
+        hosts = 255 - m3;
+        bcast = n3 + hosts;
+      }
+      else {
+        //alert("Only support subnet mask: Class A: 255.0.0.0; Class B: 255.255.0.0 and Class C: 255.255.255.0/255.255.255.128/255.255.255.192/255.255.255.224/255.255.255.240/255.255.255.248/255.255.255.252.");
+		alert("Only support subnet mask: Class A: 255.0.0.0; Class B: 255.255.0.0 and Class C: 255.255.255.0/255.255.255.128/255.255.255.192/255.255.255.224/255.255.255.240/255.255.255.248/255.255.255.252.");
+        return;         
+      }
+      if (ipArr[3] == bcast) {
+        //alert('Ip address cannot be same as the broadcast ip address.');
+		alert("Ip address cannot be same as the broadcast ip address.");
+        return;
+      }
+      tmpStartArr = tmpEndArr = "";      	 
+      for (i = 0; i < 3; i++) {
+         tmpStartArr =  tmpStartArr + startArr[i] + ".";
+         tmpEndArr = tmpEndArr + endArr[i] + ".";
+      }
+      if (ipArr[3] == (bcast-1)) {
+        startArr[3] = n3 + 1;
+        endArr[3] = bcast -2;
+      }
+      else {
+        startArr[3] = ipArr[3] + 1;
+        //endArr[3] = bcast -1;
+		endArr[3] =ipArr[3] + poolaccount - 1;
+      } 
+	  tmpStartArr = tmpStartArr + startArr[3];
+	  tmpEndArr = tmpEndArr + endArr[3];	  
+     
+      $("#EndIpv4").attr("value",tmpEndArr);   	  
+}
+
+
+function trim(s)
+{
+    var l=0; var r=s.length -1;
+    while(l < s.length && s[l] == ' ')
+    {     l++; }
+    while(r > l && s[r] == ' ')
+    {     r-=1;     }
+    return s.substring(l, r+1);
+} 
+
+var lanv4warningsactived = false;
+
+function lanv4statusmodified(check){
+	switch(check.selectedIndex)
+	{
+		case 0:
+			setTimeout("activedLANv4();", 0);
+			break;
+		case 1:
+			if (lanv4warningsactived) {
+				showInfoDialog($("#wifi_alert1").html(), false, true, function(resp){
+					if (resp == true) 
+						setTimeout('deactivedLANv4();', 0);
+					else {
+						$('#wifi_status').attr('checked', true).change();
+					}
+				});
+			}
+			else 
+				setTimeout("deactivedLANv4();", 0);
+			break;
+		default:		
+			alert(_("error!"));
+	}
+}
+
+function activedLANv4(){
+    $("#lanv4Conf").css('display', 'block');
+    $("#lanv4Conf").show();
+}
+
+function deactivedLANv4(){
+    $("#lanv4Conf").hide();
+}
+
+function checkIPFormat(address)
+{
+	var IP = address;
+	IP = IP.replace(/ /g, "");
+	address = IP;
+	IPsplit = IP.split(".");
+	if(IPsplit.length != 4 )
+	{
+		return (false);
+	}
+	for(i = 0; i < 4; i++)
+		if((isNaN(IPsplit[i])) || (IPsplit[i] == 'undefined') || (IPsplit[i] == "")) 
+		{
+			return (false);
+		} 
+		else
+		{
+			if((parseInt(IPsplit[i], 10) > 255) || (parseInt(IPsplit[i], 10) < 0)) 
+			{
+				return (false);
+			}
+		}
+		
+	int_add0=parseInt(IPsplit[0], 10);
+	int_add3=parseInt(IPsplit[3], 10);			
+	if(int_add0 == 0 || int_add0 == 127 || int_add0 > 223 || int_add3 ==0 || int_add3 ==255)
+	{
+		return (false);
+	}		
+	return (true);
+}
+
+function SubnetCheck(mask)
+{	
+	if ( !((mask == "0.0.0.0")||
+	(mask == "128.0.0.0")||
+	(mask == "192.0.0.0")||
+	(mask == "224.0.0.0")||
+	(mask == "240.0.0.0")||
+	(mask == "248.0.0.0")||
+	(mask == "252.0.0.0")||
+	(mask == "254.0.0.0")||
+	(mask == "255.0.0.0")||
+	(mask == "255.128.0.0")||
+	(mask == "255.192.0.0")||
+	(mask == "255.224.0.0")||
+	(mask == "255.240.0.0")||
+	(mask == "255.248.0.0")||
+	(mask == "255.252.0.0")||
+	(mask == "255.254.0.0")||
+	(mask == "255.255.0.0")||
+	(mask == "255.255.128.0")||
+	(mask == "255.255.192.0")||
+	(mask == "255.255.224.0")||
+	(mask == "255.255.240.0")||
+	(mask == "255.255.248.0")||
+	(mask == "255.255.252.0")||
+	(mask == "255.255.254.0")||
+	(mask == "255.255.255.0")||
+	(mask == "255.255.255.128")||
+	(mask == "255.255.255.192")||
+	(mask == "255.255.255.224")||
+	(mask == "255.255.255.240")||
+	(mask == "255.255.255.248")||
+	(mask == "255.255.255.252")||
+	(mask == "255.255.255.254")||
+	(mask == "255.255.255.255")) )
+	{
+		return (false);
+	}    
+	return (true);
+}
+
+function getIPv4DHCPPoolCount(){
+	var startIP=$("#StartIpv4").attr("value");
+	var endIP=$("#EndIpv4").attr("value");
+		
+	sIPsplit = startIP.split(".");
+	eIPsplit = endIP.split(".");
+	
+	poolaccount=eIPsplit[3] - sIPsplit[3] + 1;
+	
+	return poolaccount;
+}
+
+function prepareLANJSON(){
+	var key = new Object();
+    var lanv4 = new Object();
+	lanv4.IPAddr = $("#uiViewIPAddrv4").attr("value");
+	lanv4.Mask = $("#uiViewNetMaskv4").attr("value");
+	var dhcpv4 = new Object();
+    dhcpv4.status = parseInt($("#dhcpv4_status").val());
+	
+	//alert("dhcpv4.status:"+dhcpv4.status +"dhcpv4_status"+$("#dhcpv4_status").val());
+	/*
+    if (dhcpv4.status == 0){
+		dhcpv4.status = 1;
+	}
+	else
+	{
+		dhcpv4.status = 0;
+	}
+	*/
+	
+	if (dhcpv4.status) {
+        dhcpv4.poolStart = $("#StartIpv4").attr("value");
+		//dhcpv4.PoolSize = getIPv4DHCPPoolCount();		
+		dhcpv4.PoolEnd = $("#EndIpv4").attr("value");		
+    }	
+    var dnsv4 = new Object();
+	dnsv4.PrimaryDns = $("#PrimaryDnsv4").attr("value");
+	dnsv4.SecondDns = $("#SecondDnsv4").attr("value");
+ 
+    var LANJSON = new Object();
+	LANJSON.KEY = key;
+    LANJSON.LANV4 = lanv4;
+    LANJSON.DHCPV4 = dhcpv4;
+    LANJSON.DNSV4 = dnsv4;
+
+    var LANJSONstring = $.toJSON(LANJSON);
+    return LANJSONstring;
+}
+
+function checkIPandIPv4IPFormat(LANJSON){
+	var postData = eval ("(" + LANJSON + ")");
+			
+	if(SubnetCheck(postData.LANV4.Mask)==false || checkIPFormat(postData.LANV4.IPAddr)==false)
+	{
+      	alert(_("INVALID_IPV4_ADDRESS_MSG"));
+        return false;
+     }
+	if(postData.DHCPV4.status){
+		if(checkIPFormat(postData.DNSV4.PrimaryDns)==false || checkIPFormat(postData.DNSV4.SecondDns)==false
+			|| checkIPFormat(postData.DHCPV4.poolStart)==false){
+      	alert(_("INVALID_IPV4_ADDRESS_MSG"));
+        return false;
+     }
+	}	
+	
+	return true;
+}
+
+function submitsave(){
+    lanv4warningsactived = false;
+    var LANJSON = prepareLANJSON();
+    var wanType;
+    var index =$('input[name=RN_SelNATMode]:checked').val();
+    var pppUserName;
+    var pppPassword;
+   	var postData = eval ("(" + LANJSON + ")");
+   	var dhcpstatusv4= postData.DHCPV4.status;
+    var data ="action=setrouter"
+			
+	if(checkIPandIPv4IPFormat(LANJSON)==false)
+		return;
+
+	loadingProcess(15000);
+	
+    if(dhcpstatusv4)
+	{
+		postData.DHCPV4.status=1;
+		data += "&IPAddrv4=" + postData.LANV4.IPAddr + "&Maskv4=" + postData.LANV4.Mask + "&dhcpstatusv4=" + postData.DHCPV4.status;
+		data += "&poolStartv4=" + postData.DHCPV4.poolStart + "&PoolEndv4=" + postData.DHCPV4.PoolEnd + "&PrimaryDnsv4=" + postData.DNSV4.PrimaryDns + "&SecondDnsv4=" + postData.DNSV4.SecondDns;
+	}
+	else
+	{
+		postData.DHCPV4.status=0;
+		data += "&IPAddrv4=" + postData.LANV4.IPAddr + "&Maskv4=" + postData.LANV4.Mask + "&dhcpstatusv4=" + postData.DHCPV4.status;
+		data += "&PrimaryDnsv4=" + postData.DNSV4.PrimaryDns + "&SecondDnsv4=" + postData.DNSV4.SecondDns;
+	}
+
+	if (supportSpain == '1'){
+		if(multipuesto == '1'){
+			wanType= 0;//pppoe
+			pppUserName=$("#pppUserName").attr("value");
+			pppPassword=$("#pppPassword").attr("value");
+			data += "&pppUserName=" + pppUserName + "&pppPassword=" + pppPassword + "&wanType=" + wanType;
+		}else{
+			wanType= 1;//bridge
+			data += "&wanType=" + wanType;
+		}
+	} else {
+	if(index == '0'){
+		wanType= 0;//pppoe
+		pppUserName=$("#pppUserName").attr("value");
+		pppPassword=$("#pppPassword").attr("value");
+		data += "&pppUserName=" + pppUserName + "&pppPassword=" + pppPassword + "&wanType=" + wanType;
+	}else{
+		wanType= 1;//bridge
+		data += "&wanType=" + wanType;
+	}
+	}      		
+
+
+	data+= "&sessionKey=" + sessionKey;
+
+	var url = "/networkmaphgu.cmd";
+	var callback = function(responseData, textStatus){ 
+	window.location.href="/networkmaphgu.cmd";
+	};
+	$.post(url, data, callback, "cmd");
+	setTimeout("location.reload(true);",5000);
+}
+
+function loadingProcess(second){
+	$("#pageloading").css("display","block");
+	$("#pageloading").fadeOut(second);
+}
+	
+</script>
+</html>

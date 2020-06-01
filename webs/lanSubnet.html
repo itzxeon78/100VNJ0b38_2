@@ -1,0 +1,154 @@
+<html>
+   <head>
+      <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+      <meta http-equiv="x-frame-options" content="sameorigin">
+      <link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>
+            <script language="javascript" src="util.js"></script>
+            <script language="javascript">
+<!-- hide
+var sessionKey='<%ejGetOther(sessionKey)%>';
+var state = '<%ejGet(lanRefresh)%>';
+if ( state == '1' ) {
+   var loc = 'lancfg2.cgi?lanRefresh=0';
+   loc += '&sessionKey=' + sessionKey;
+   var code = 'location="' + loc + '"';
+   eval(code);
+}
+
+// unnumbered mode
+var isBlockOfStaticIP = '<%ejGetOther(unnumberedInfo, isSetup)%>';
+var isUsePublic = '<%ejGet(usePublicIP)%>';
+var isArpPublicIP = '<%ejGet(enableArpPublicIP)%>';
+var publiclanAddr = '<%ejGet(publiclanIpAddress)%>';
+var publiclanMask = '<%ejGet(publiclanSubnetMask)%>';
+
+function PublicLANClick() {
+   with (document.forms[0]) {
+      if (enblPublic.checked) {
+         publiclanIpAddress.disabled = false;
+         publiclanSubnetMask.disabled = false;
+         lanAddrType.disabled = false;
+         enblArpPublic.disabled = false;
+      } else {
+         publiclanIpAddress.disabled = true;
+         publiclanSubnetMask.disabled = true;
+         lanAddrType.disabled = true;
+         enblArpPublic.disabled = true;
+      }  
+   }
+}
+
+function frmLoad() {
+   with ( document.forms[0] ) {
+      lanAddrType.disabled = false;
+      enblPublic.disabled = false;
+      enblArpPublic.disabled = false;
+	  
+      // unnumber mode
+      if (isBlockOfStaticIP == '1') {
+         enblPublic.checked = true;
+         publiclanIpAddress.value = publiclanAddr;
+         publiclanSubnetMask.value = publiclanMask;
+      } else {
+         enblPublic.checked = false;
+      }
+      PublicLANClick();
+
+      if (isUsePublic == '1') {
+         lanAddrType.checked = true;
+      } else {
+         lanAddrType.checked = false;
+      }
+
+      if (isArpPublicIP == '1') {
+         enblArpPublic.checked = true;
+      } else {
+         enblArpPublic.checked = false;
+      }
+   }
+}
+
+function btnSave() {
+   var loc = 'lanSubnet.cgi?';
+
+   with ( document.forms[0] ) {
+      if ( isValidIpAddress(publiclanIpAddress.value) == false ) {
+         alert('Address "' + publiclanIpAddress.value + '" is invalid IP address.');
+         return;
+      }
+      if ( isValidIpAddress(publiclanSubnetMask.value) == false ) {
+         alert('Subnet mask "' + publiclanSubnetMask.value + '" has invalid IP address.');
+         return;
+      }
+      loc += 'publiclanIpAddress=' + publiclanIpAddress.value;
+      loc += '&publiclanSubnetMask=' + publiclanSubnetMask.value;
+
+      if ( enblPublic.checked == true )
+         loc += '&enblPublicLan=1';
+      else
+         loc += '&enblPublicLan=0';
+
+      if ( lanAddrType.checked == true )
+         loc += '&usePublicIP=1';
+      else
+         loc += '&usePublicIP=0';
+
+      if ( enblArpPublic.checked == true )
+         loc += '&enableArpPublicIP=1';
+      else
+         loc += '&enableArpPublicIP=0';
+ 
+   }
+   loc += '&sessionKey=' + sessionKey;
+   var code = 'location="' + loc + '"';
+   eval(code);
+}
+
+
+
+// done hiding -->
+</script>
+</head>
+   <body onLoad='frmLoad()'>
+      <blockquote>
+         <form>
+            <b>Additional Subnet</b><br>
+            <br>
+			This page lets you configure the public static IP.</td><br>
+            <br>
+            <table border="0" cellpadding="0" cellspacing="0">
+               <tr>
+                  <td><input type='checkbox' name='enblPublic' onClick='PublicLANClick()'>&nbsp;&nbsp;Active</td>
+               </tr>
+            </table>			
+            <table border="0" cellpadding="0" cellspacing="0">
+               <tr>
+                  <td width="150">IP Address:</td>
+                  <td><input maxlength="15" size="15" value="0.0.0.0" name="publiclanIpAddress" /></td>
+               </tr>
+               <tr>
+                  <td>Subnet Mask:</td>
+                  <td><input maxlength="15" size="15" value="0.0.0.0" name="publiclanSubnetMask" /></td>
+               </tr>
+            </table>
+            <br>
+            <table border="0" cellpadding="0" cellspacing="0">
+               <tr>
+                  <td><input type="checkbox" name="lanAddrType" value="1"/>&nbsp;&nbsp;Offer Public IP by DHCP</td>
+               </tr>
+            </table>
+            <table border="0" cellpadding="0" cellspacing="0">
+               <tr>
+                  <td><input type='checkbox' name="enblArpPublic" />&nbsp;&nbsp;Enable ARP Proxy</td>
+               </tr>
+            </table>			
+
+            <center>
+               <p align="center">
+                  <input type='button' onClick='btnSave()' value='Apply/Save'>
+            </center>
+         </form>
+      </blockquote>
+   </body>
+</html>

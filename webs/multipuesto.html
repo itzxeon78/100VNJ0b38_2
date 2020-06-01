@@ -1,0 +1,248 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="x-frame-options" content="sameorigin">
+<meta name="viewport" content="width=device-width; initial-scale=1.0;" />
+<title>movistar</title>
+<link href="/mhs/css/style.css" rel="stylesheet" type="text/css" />
+<!--<script src="/mhs/js/jquery.1.4.2-min.js" type="text/javascript"></script>-->
+<!--<script src="/mhs/js/jquery-page.js" type="text/javascript"></script>-->
+<!--Botton-->
+<link type="text/css" rel="stylesheet" href="/mhs/css/ui.switchbutton.min.css" />
+<!--<link type="text/css" rel="stylesheet" href="css/demo.css" />-->
+<script type="text/javascript" src="/mhs/js/jquery-1.6.3.min.js"></script>
+<script type="text/javascript" src="/mhs/js/jquery.tmpl.min.js"></script>
+<script type="text/javascript" src="/mhs/js/jquery-ui-1.8.16.custom.min.js"></script>
+<script type="text/javascript" src="/mhs/js/jquery.switchbutton.min.js"></script>
+<!--<script type="text/javascript" src="/mhs/js/demo.js"></script>-->
+<script type="text/javascript" src="/mhs/js/main.js"></script>
+<!--<script type="text/javascript" src="/mhs/js/index.js"></script>-->
+<!--<script type="text/javascript" src="/mhs/APIS/api_fake.js"></script>-->
+<script type="text/javascript" src="/mhs/js/jquery.utils.homestation.min.js"></script>
+<!--<script type="text/javascript" src="/mhs/js/languages.js"></script>
+<!--<script type="text/javascript" src="/mhs/js/jquery.json-2.2.js"></script>-->
+<script type="text/javascript" src="/mhs/js/networkMap/wifi.js"></script>
+<script type="text/javascript" src="/mhs/js/networkMap/wifi5g.js"></script>
+<!--<script type="text/javascript" src="/mhs/js/networkMap/applications.js"></script>-->
+<script type="text/javascript" src="/mhs/js/jquery.qrcode.min.js"></script>
+<script type="text/javascript">
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+</script>
+</head>
+
+<body onload="MM_preloadImages('/mhs/img/x3.png')">
+ <!--top-->
+ <!--wrapper-->
+<div class="wrapper">
+<div class="wrapper2">
+	<div id="pageloading" style="display: none" >
+		<div id="loadingimg"><img src="/mhs/images/loading.gif" width="102" height="116" /></div>
+	</div>
+    <div class="topBorder">
+            <div class="top_LLBox"><div id="home"><img src="/mhs/img/meun.png" width="45" height="45" /></div><div id="menu" class="toptitle2">MENÚ</div>
+            	<div id="pagemenu" class="menuList">
+                	<ul>
+                    	<!--li><a href="InicioLogout.cmd">Inicio</a></li-->
+                        <li><a href="mhs.html">WiFi</a></li>
+                        <li><a href="wifi5g.html">WiFi Plus</a></li>
+                        <li><a href="wifisecond.html">WiFi Invitados</a></li>
+                        <li><a href="PortForwardWizard.cmd?page=1">Puertos</a></li>
+                        <li class="sec"><a href="#">Red local&nbsp;></a>
+                        	<ul>
+                            	<li><a href="networkmap.html">Mapa de red local</a></li>
+                                <li><a href="lan_v4.html">Red Local</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="multipuesto.html">Multipuesto / Monopuesto</a></li>
+                        <li><a href="lan_v6.html">IPv6</a></li>
+                        <li><a href="changepasswd.html">Cambio contraseña del router</a></li>
+                        <li><a href="firmwareupgrad.html">Actualizaciones Firmware</a></li>
+                        <li><a href="configsetting.html">Otras funcionalidades</a></li>
+                        <li class="sec"><a href="#">Ayuda&nbsp;></a>
+                        	<ul>
+                            	<li><a href="wizard_help.html">Ayuda configurador web</a></li>
+                                <li><a href="sysinfo.html">Acerca de</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="advancedsettings.html">Configuración avanzada</a></li>
+                    </ul></div>
+                </div>
+            <div class="top_CBox toptitle">Acceso al Configurador Router</div>
+            <div class="top_RRBox logoBox_in"><img src="/mhs/img/logo.png"/></div>
+    </div><!--top END-->
+    <!--stlye_mins-->
+    	<div class="topBorder2">
+            <div class="toptitle2">Acceso al Configurador Router</div>
+    	</div>
+    <!--stlye_mins end-->
+    <div class="mainBorder"><div class="items"><a href="javascript:void(0)" onclick="logoutBtu();">Cerrar sesión</a></div></div>
+    <!--location-->
+    <div class="locationTitle">Multipuesto / Monopuesto</div><!--location end-->
+    
+    <!--MAIN-->
+<div class="mainBorder">
+<div id="logout" class="finBox">
+    	<div class="artBox">¿Está seguro de que desea cerrar la sesión?<br/>
+            </div>
+            <div class="artBox">
+              <div class="leftBtu"><input type="button" name="button" id="button" value="Cancelar" class="checkBtu" onclick="closeDiv();"/></div>
+              <div class="rightBtu"><input type="button" name="button" id="button" value="Aceptar" class="checkBtu" onclick="javascript:location.href='logout.cmd'"/></div>
+            </div>
+    </div>
+		<div class="artBox">
+        <div class="tabBorder">
+            <div class="tabInput4">
+              <input name="RN_SelNATMode" id="RN_SelNATMode1" type="radio" value="0" />
+            </div>
+            <div class="tabID">Multipuesto (Con NAT) (RECOMENDADO)</div><!--div class="tabInput">
+              <input name="RN_SelNATMode" id="RN_SelNATMode1" type="radio" value="0" />
+            </div-->
+  		</div>
+        
+          <div class="tabBorder_nM">Direccionamiento Dinámico</div>
+          <div class="tabBorder"><div class="tabID2">Usuario PPPoE</div><div class="tabInput"><input type="text" name="pppUserName" id="pppUserName" readonly="true" class="chooseBox"/></div></div>
+          <div class="tabBorder"><div class="tabID2">Contraseña</div><div class="tabInput"><input type="text" name="pppPassword" id="pppPassword" readonly="true" class="chooseBox"/></div> </div> 		
+       
+       	<div class="tabBorder">
+       	    <div class="tabInput4">
+              <input name="RN_SelNATMode" id="RN_SelNATMode2" type="radio" value="1" />
+            </div>
+            <div class="tabID">Monopuesto (Sin NAT)</div><!--div class="tabInput">
+              <input name="RN_SelNATMode" id="RN_SelNATMode2" type="radio" value="1" />
+            </div-->
+  		</div>
+        
+        <div class="tabBorder_nM">Direccionamiento Dinámico</div>
+        <div class="grayBorder">Es necesario disponer de un cliente PPPoE (con su correspondiente adaptador de cliente PPPoE) en su equipo de cliente. Para más información consulte el menú <span class="sub"><a href="wizard_help.html#multi">Ayuda</a></span>.</div>
+       
+       </div>
+       
+       <div class="tabBorder">
+			<input type="hidden" name="sessionKey" id="sessionKey" value="<% ejGetOther(sessionKey)%>">
+            <div class="rightBtu"><input type="submit" name="accept_icon" id="accept_icon" value="Aplicar Cambios" class="checkBtu" onclick="loadingProcess(); submitsave();"/></div>
+       </div>
+       <div id="tab1" class="finBox">
+            <div class="artBox">Al seleccionar el modo Monopuesto, se va a proceder a reiniciar tu equipo. ¿Deseas continuar?<br/>
+            </div>
+            <div class="artBox">
+                <div class="leftBtu2"><input  name="button" id="button" value="Cancelar" class="checkBtu2" onclick="closeDiv();"/></div>
+                <div class="rightBtu2"><input name="button" id="button" value="Aceptar" class="checkBtu2" onclick="loadingProcess(); submitsave();"/></div>
+            </div>
+        </div><!-- #tab1 finBox end-->
+</div><!--main END-->
+    
+    <!--footer-->
+    <div class="footerBorder">
+    © Telefónica de España S.A.U. Todos los derechos reservados v 1.1
+    </div><!--footer END-->
+	
+</div></div><!--wrapper END-->
+
+</body>
+<script type="text/javascript">
+$( document ).ready(function() {
+	
+	$('input[name="RN_SelNATMode"]').click(function(){
+		var index =  $('input[name="RN_SelNATMode"]').index(this) ;
+		if(index == 0){
+			mode_dispatcher(0);
+		}
+		else{
+			mode_dispatcher(2);
+		}
+	});
+
+    frmLoad();
+	
+});
+
+function alertpop() {
+	$('#tab1').fadeIn();
+}
+
+function frmLoad()
+{
+	var mode = '<%ejGetOther(multipuesto, ntwkPrtcl)%>';//routing or Bridge
+	
+    if(mode=="1"){
+	   mode_dispatcher(0);
+	}
+	else {
+	   mode_dispatcher(2);
+	}
+}
+
+function mode_dispatcher(mode){
+	if(mode == 0){
+		$('input[name="RN_SelNATMode"]')[0].checked = true;	
+		document.getElementById("pppUserName").value = '<%ejGetOther(multipuesto, pppUserName)%>';
+	    document.getElementById("pppPassword").value = '<%ejGetOther(multipuesto, pppPassword)%>';
+	}
+	else if(mode == 2){
+		$('input[name="RN_SelNATMode"]')[1].checked = true;		
+	}
+}
+function MM_jumpMenu(targ,selObj,restore){ //v3.0
+  eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
+  if (restore) selObj.selectedIndex=0;
+}
+
+
+function submitsave(){
+
+		var wanType;
+        var index =$('input[name=RN_SelNATMode]:checked').val();
+        var key="<%ejGetOther(sessionKey)%>";
+        var pppUserName;
+        var pppPassword;
+		var data="action=submit";
+		data += "&sessionKey=" + key;
+		if(index == '0'){
+			wanType= 0;//pppoe
+			pppUserName=$("#pppUserName").attr("value");
+		    pppPassword=$("#pppPassword").attr("value");
+		    data += "&pppUserName=" + pppUserName + "&pppPassword=" + pppPassword;
+		}
+		else{
+			wanType= 1;//bridge
+		}
+
+		data += "&wanType=" + wanType;
+		
+	   var url = "/multipuesto.cmd";
+	   var callback = function(responseData, textStatus){ 
+	    	window.location.href="/multipuesto.cmd";
+	   };
+	   $.post(url, data, callback, "cmd");
+
+	   setTimeout("location.reload(true);",5000);
+}
+
+function loadingProcess(){	
+	$("#pageloading").css("display","block");
+	$("#pageloading").fadeOut(15000);	
+}
+</script>
+
+</html>

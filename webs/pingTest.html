@@ -1,0 +1,148 @@
+<html><head>
+<link rel=stylesheet href='stylemain.css' type='text/css'>
+<link rel=stylesheet href='colors.css' type='text/css'>
+<meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+<meta http-equiv="x-frame-options" content="sameorigin">
+<title></title>
+<script language="javascript" src="util.js"></script>
+<script language="javascript">
+var dstAddr = '<%ejGet(diagAddr)%>';
+var status = '<%ejGet(diagState)%>';
+var diagTypeVar = '<%ejGet(diagTestType)%>';
+var sessionKey='<%ejGetOther(sessionKey)%>';
+
+var objXMLHTTP = null;
+function diagnosticStart() {
+	var url = "pingTestResult.html";
+	initRequest(url);
+	/* set callback function*/
+	objXMLHTTP.onreadystatechange = processPollRequest;
+	objXMLHTTP.send(null);
+}
+
+function initRequest(url) {
+	if (window.XMLHttpRequest) {
+		objXMLHTTP = new XMLHttpRequest();
+	} else if (window.ActiveXObject) {
+		objXMLHTTP = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+
+	if (objXMLHTTP){
+		objXMLHTTP.open("GET", url, true);
+		/*let IE refresh page */
+		//objXMLHTTP.setRequestHeader("Cache-Control", "no-cache");
+		objXMLHTTP.setRequestHeader("If-Modified-Since",new Date(0).toGMTString());
+	}
+}
+
+/* callback function for intial request to schedule a task  */
+function processPollRequest() {
+	var diagnosticResult = '';
+	if (objXMLHTTP.readyState == 4) {
+		if (objXMLHTTP.status == 200) {
+			diagnosticResult = objXMLHTTP.responseText;   
+		} 
+		else {
+			diagnosticResult = "trace route fail. status code:" + objXMLHTTP.status;
+		}
+		if(diagTypeVar=='2')           // tracert
+		{
+			if (diagnosticResult.search("tracert_end")<0){
+				document.forms[0].DisplayInfo.value = diagnosticResult;
+				setTimeout("diagnosticStart()",1000);
+			} else {
+				complete(diagnosticResult.replace("tracert_end", "----Traceroute end----"));
+			}
+		}else if(diagTypeVar=='3')           // nslookup
+		{
+			if (diagnosticResult.search("Nslookup_end")<0){
+				document.forms[0].DisplayInfo.value = diagnosticResult;
+				setTimeout("diagnosticStart()",1000);
+			} else {
+				complete(diagnosticResult.replace("Nslookup_end", "----NsLookup_end----"));
+			}
+		}else if(diagTypeVar=='1'){    // ping
+			complete(diagnosticResult);
+		}
+	}
+}
+
+function complete(result) {
+	document.forms[0].DisplayInfo.value =  result;
+	buttonControl(0);
+}
+
+function btnApply(type){
+	var loc = 'disagnostic-general.cgi?';
+
+	if(document.forms[0].diagAddr.value == ''){
+		alert('Address should not be empty!');
+		return;
+	}
+	if(!isValidHostName(document.forms[0].diagAddr.value)){
+		alert('Address is invalid!');
+		return;
+	}
+
+	buttonControl(1);
+	loc += 'diagAddr=' + document.forms[0].diagAddr.value;
+	loc += '&diagTestType=' + type;
+	loc += '&sessionKey=' + sessionKey;
+	var code = 'location.assign("' + loc + '")';
+	eval(code);
+}
+
+function buttonControl(mode) {
+	if (mode == 1){
+		document.forms[0].TraceRoute.disabled = true;
+		document.forms[0].Ping.disabled = true;
+		document.forms[0].NsLookup.disabled = true;
+	}
+	else{
+		document.forms[0].TraceRoute.disabled = false;
+		document.forms[0].Ping.disabled = false;
+		document.forms[0].NsLookup.disabled = false;
+	}
+}
+	
+function clearText(){
+	if(document.forms[0].diagAddr.value == "URL or IPv4/IPv6 Address")
+	{
+		document.forms[0].diagAddr.value = "";
+	}
+}
+
+function frmLoad(){
+	if(status=='1'){
+		document.forms[0].diagAddr.value = dstAddr;
+		document.forms[0].DisplayInfo.value = "-processing-";
+		buttonControl(1);
+		setTimeout("diagnosticStart()",5000);
+	}else
+	{
+		document.forms[0].DisplayInfo.value = "-info-";
+		document.forms[0].diagAddr.value= "URL or IPv4/IPv6 Address";
+	}
+}
+</script>
+</head>
+	<body onload="frmLoad()">
+		<blockquote>
+		<form onsubmit="return false">
+			<b>Ping/TraceRoute/Nslookup</b><br><br>
+			Test result<br>
+			<div class="infodisplay">
+				<textarea name="DisplayInfo" class="input_big" rows="15" cols="80" readonly="readonly">-info-</textarea>
+			</div>
+			<br>
+			<div class="w_text"> 
+				TCP/IP Address :
+				<input name="diagAddr" size="50" maxlength="50" value="" onclick="clearText();" onkeypress="clearText();" type="text">&nbsp;
+				<span class="none_right"><input name="Ping" value="Ping" onclick="btnApply(1);" type="button"></span>&nbsp;
+				<span class="none_right"><input name="TraceRoute" value="Trace Route" onclick="btnApply(2);" type="button"></span>&nbsp;
+				<span class="none_right"><input name="NsLookup" value=" Nslookup" onclick="btnApply(3);" type="button"></span>
+			</div>
+		</form>
+		</blockquote>
+	</body>
+</html>

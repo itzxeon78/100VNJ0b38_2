@@ -1,0 +1,260 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="x-frame-options" content="sameorigin">
+<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+<title>movistar</title>
+<link href="InstalacionWizard/css/style.css" rel="stylesheet" type="text/css" />
+<script src="InstalacionWizard/js/jquery-1.6.3.min.js" type="text/javascript"></script>
+<script src="InstalacionWizard/js/jquery-page.js" type="text/javascript"></script>
+</head>
+
+<body>
+<!--wrapper-->
+<div class="wrapper">
+<div class="wrapper2">
+    <!--top-->
+    <div class="topBorder">
+            <!--<div class="top_LLBox"><div id="home"><a href="installation_login.html"><img src="InstalacionWizard/img/home.png" width="45" height="45" /></a></div></div>-->
+            <!--<div class="top_LBox logoBox_in"></div>-->
+            <div class="top_LLBox">
+            <div id="home"><img src="/mhs/img/meun.png" width="45" height="45" /></div>
+            <div id="menu" class="toptitle2">MEN&Uacute</div>
+            <div id="pagemenu" class="menuList">
+                    <ul>
+          	<li><a href="installation_ontpw.html">Identificación ONT</a></li>
+            	<li><a href="installation_guide.html">Selección del servicio</a></li>
+            	</ul>
+            </div><!--pagemenu-->
+            </div><!--top_LLBox-->
+            <div class="top_CBox toptitle">Acceso al Configurador Router</div>
+            <div class="top_RRBox logoBox_in"><img src="InstalacionWizard/img/logo.png"/></div>
+    </div><!--top END-->
+    <!--stlye_mins-->
+    	<div class="topBorder2">
+            <div class="toptitle2">Acceso al Configurador Router</div>
+    	</div>
+    <!--stlye_mins end-->
+    <!--top_info m' l pc-->
+    <div class="top_info">
+	    <ul>
+            	<li><span class="sub">Fabricante: <br>Mitrastar</span></li>
+                <li><span class="sub">Modelo: <br><% ejGet(boardID) %></span></li>
+                <li><span class="sub">Firmware: <br><% ejGet(sysVersion) %></span></li>
+		<li style="display:none" id="connect"><span class="sub">Router:<br>Conectado a Internet </span></li>	
+		<li style="display:none" id="disconnect"><span class="sub">Router:<br>Sin conexión a Internet </span></li>
+                <li><span class="sub">Nº serie del equipo: <br><% ejGet(gponsernum) %></span></li>
+                <li><span class="sub">Direcciones MAC: <br><% ejGet(devicemacaddr) %></span></li>
+                <li><span class="sub">Potencia óptica recibida[dBm]: <br><% ejGetOther(devicerxpower) %></span></li>
+            </ul>
+            <div class="items"><a href="javascript:void(0)" onclick="logoutBtu();">Cerrar sesión</a></div>
+    </div><!--top_info m' l pc END-->
+     <!--top_info m' l pc-->
+    <div class="top_info_S">
+    	<div id="hoverItems" class="itemsB"><a href="#">Tu equipo&nbsp;></a>
+        	<ul>
+            	<li><span class="sub">Fabricante: <br>Mitrastar</span></li>
+                <li><span class="sub">Modelo: <br><% ejGet(boardID) %></span></li>
+                <li><span class="sub">Firmware: <br><% ejGet(sysVersion) %></span></li>
+		<li style="display:none" id="connect"><span class="sub">Router: <br>Conectado a Internet </span></li>	
+		<li style="display:none" id="disconnect"><span class="sub">Router: <br>Sin conexión a Internet </span></li>
+                <li><span class="sub">Nº serie del equipo: <br><% ejGet(gponsernum) %></span></li>
+                <li><span class="sub">Direcciones MAC: <br><% ejGet(devicemacaddr) %></span></li>
+                <li><span class="sub">Potencia óptica recibida[dBm]: <br><% ejGetOther(devicerxpower) %></span></li>
+            </ul>
+        </div>
+        
+      <div class="itemsB"><a href="javascript:void(0)" class="white" onclick="logoutBtu();">Cerrar sesión</a></div>
+      
+    </div><!--top_info m' l pc END-->
+    <!--location-->
+    <div class="locationTitle">Selección del servicio</div><!--location end-->
+    
+    <!--MAIN-->
+<div class="mainBorder">
+  	<div class="artBox">
+        
+    <div class="tabBorder">
+		<div class="tabID">Tipo de servicio contratado</div>
+		<div class="tabInput">
+			<select name="select4" class="chooseBox" id="select4" onchange="doDUO_TRIOChange();">
+			  <option value="0">Trío</option>
+			  <option value="1">Dúo</option>
+			</select>
+		</div>
+	</div>
+        	
+    <div class="tabBorder" id="IPTV">
+		<div class="tabID">Tipo de direccionamiento (Movistar TV)</div>
+		<div class="tabInput">
+			<select name="select5" class="chooseBox" id="select5">
+			  <option value="0">Dinámico (NAT-PAT)</option>
+			  <option value="1">Estático</option>
+			  <option value="2">Ninguno</option>
+			</select>
+		</div>
+    </div>
+            
+    <div class="tabBorder" id="Line">
+   	    <div class="tabID">Servicio Línea de voz</div>
+		<div class="tabInput">
+			<select name="select6" class="chooseBox" id="select6">
+			  <option value="0">Si</option>
+			  <option value="1">No</option>
+            </select>
+		</div>
+	</div>
+            
+<!--            
+    <div class="tabBorder" id="facilities">
+   	    <div class="tabID">Perfil Movistar TV</div>
+		<div class="tabInput">
+			<select name="select7" class="chooseBox" id="select7">            
+            </select>
+		</div>
+    </div>
+-->
+          
+        </div>
+        <div class="artBox">
+          <div class="leftBtu"><input name="button" id="button" value="<Volver" class="checkBtu" onclick="location.href='installation_ontpw.html'"/></div>
+          <div class="rightBtu"><input name="button" id="button" value="Siguiente>" class="checkBtu" onclick="load_install()"/></div> 
+        </div>
+        <div id="logout" class="finBox">
+    	    <div class="artBox">¿Está seguro de que desea cerrar la sesión?<br/>
+            </div>
+            <div class="artBox">
+              <div class="leftBtu"><input type="button" name="button" id="button" value="Cancelar" class="checkBtu" onclick="closeDiv();"/></div>
+              <div class="rightBtu"><input type="button" name="button" id="button" value="Aceptar" class="checkBtu" onclick="javascript:location.href='logout.cmd'"/></div>
+            </div>
+        </div>
+    
+</div><!--main END-->
+    
+    <!--footer-->
+    <div class="footerBorder">
+    © Telefónica de España S.A.U. Todos los derechos reservados v 1.1
+    </div><!--footer END-->
+	
+</div></div><!--wrapper END-->
+
+</body>
+<script>
+	var wanip = '<%ejGet(mhsIptvWanIp)%>';
+	var internet = '<%ejGetOther(sysInfo, wanStatus)%>';
+	var iptv = '<%ejGet(mhsinsIPTV)%>';
+	var nat = '<%ejGet(mhsinsNAT)%>';
+	var voip = '<%ejGet(mhsinsVOIP)%>';
+	var facilities_list = [ ["IMAGENIO SOLO TV", 754, 452],
+						  ["BASICA MINUS", 603, 603],
+						  ["BASICA", 754, 452],
+						  ["MAXIMA", 754, 452],
+						  ["MINIBA", 301, 905],
+						  ["Imagenio 10MB", 754, 452],
+						  ["IMAG SOLO TV", 754, 452],
+						  ["TV + Internet hasta 1Mb", 603, 603],
+						  ["TV + Internet 1Mb", 754, 452],
+						  ["TV + Internet 3Mb", 754, 452],
+						  ["TV + Internet hasta 6Mb/ 320k", 754, 452],
+						  ["Imagenio hasta 6 Mb minus", 1207, 452],
+						  ["Ima hasta 6 Mb / 640k", 1509, 452],
+						  ["TV + Internet 6Mb/ 320k", 754, 452],
+						  ["Imagenio 6 Mb / 640k", 1509, 452],
+						  ["TV + Internet 10Mb/ 320k", 754, 452],
+						  ["TV + Internet 10Mb/ 800k", 1886, 452],
+						  ["2 TV sin Internet", 754, 452],
+						  ["2 TV + Internet hasta 1Mb", 603, 603],
+						  ["2 TV + Internet 1Mb", 754, 452],
+						  ["2 TV + Internet 3Mb", 754, 452],
+						  ["2 TV + hasta Internet 6Mb / 320k", 754, 452],
+						  ["2 TV + hasta Internet 6Mb / 512k", 1207, 452],
+						  ["2 TV + hasta Internet 6Mb / 640k", 1509, 452],
+						  ["2 TV + Internet 6Mb / 320k", 754, 452],
+						  ["2 TV + Internet 6Mb / 640k", 1509, 452],
+						  ["2 TV + Internet 10Mb/ 320k", 754, 452],
+						  ["2 TV + Internet 10Mb/ 800k", 1886, 452],
+						  ["Imagenio HDTV sólo TV", 754, 452],
+						  ["Imagenio HDTV + Internet hasta 1Mb", 603, 603],
+						  ["Imagenio HDTV + Internet 1Mb", 754, 452],
+						  ["Imagenio HDTV + Internet 3Mb", 754,	452],
+						  ["Imagenio HDTV + Internet 6Mb /320", 754, 452],
+						  ["Imagenio HDTV + Internet 6Mb /640", 1509, 452],
+						  ["Imagenio HDTV + Internet 10Mb /320", 754, 452],
+						  ["Imagenio HDTV + Internet 10Mb /800", 1886, 452],
+						  ["Imagenio LITE 3Mb", 754, 452],
+						  ["Imagenio LITE 4Mb", 1057, 452],
+						  ["Imagenio 11,5Mb",1509, 452] ];
+	
+	var flag;
+	if(internet == "0"){
+		flag=1;
+	}
+	else{
+	    flag=0;
+	} 
+	if(flag==1){
+		document.getElementById("connect").style.display="";		
+		document.getElementById("disconnect").style.display="none";
+	}else{
+		document.getElementById("disconnect").style.display="";		
+		document.getElementById("connect").style.display="none";
+	}
+	
+
+//	for(i=0; i < facilities_list.length; i++){
+//		$("#select7").append($("<option></option>").attr("value", i ).text(facilities_list[i][0]));	
+//		if(i == 16){
+//			$("#select7 option").get(i).selected = true;
+//		}
+//	}
+
+	function doDUO_TRIOChange(){
+		if( document.getElementById("select4").selectedIndex == 0 ) 
+		{
+			document.getElementById("IPTV").style.display="";
+			document.getElementById("Line").style.display="";
+//			document.getElementById("facilities").style.display="";
+		}else{
+			document.getElementById("IPTV").style.display="none";
+//			document.getElementById("facilities").style.display="none";
+			//$('#select5 option[value=2]').attr('selected', 'selected');
+			//document.getElementById("select5").disabled = true;
+			//document.getElementById("facilities").disabled = true;
+		}
+	}	
+				  
+function load_install(){
+
+			var with_iptv=0;
+			var with_voip=0;
+			var with_nat=0;
+			//var with_facilities=0;
+			var link;
+
+			if( document.getElementById("select4").selectedIndex == 0 ) {
+				with_iptv = 1;
+			}else{
+				with_iptv = 0;
+			}
+			if( document.getElementById("select5").selectedIndex == 0 ) {
+				with_nat = 1;
+			}else{
+				with_nat = 0;
+			}
+			if( document.getElementById("select6").selectedIndex == 0 ) {
+				with_voip = 1;
+			}else{
+				with_voip = 0;
+			}
+						
+//			with_facilities = document.getElementById("select7").selectedIndex
+
+//			var link ="/instalacion.cmd?iptv="+with_iptv+"&voip="+with_voip+"&nat="+with_nat+"&facilities="+with_facilities;
+			var link ="/instalacion.cmd?iptv="+with_iptv+"&voip="+with_voip+"&nat="+with_nat;
+			link+= "&sessionKey=<%ejGetOther(sessionKey)%>&action=1";
+			window.location.href = link;
+	}
+	doDUO_TRIOChange();
+</script>
+</html>

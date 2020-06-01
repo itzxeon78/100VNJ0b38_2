@@ -1,0 +1,574 @@
+<html>
+<head>
+      <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+      <meta http-equiv="x-frame-options" content="sameorigin">
+      <link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>
+            <script language="javascript" src="util.js"></script>
+			<script language="JavaScript">
+<!-- hide
+var portArray = new Array('80','8000','443','22','<%ejGet(telnetPort)%>','<%ejGet(ftpPort)%>','<%ejGet(tftpPort)%>');
+var portArrayTmp; 
+var buildIPv6 = '1';
+
+var clientCertInfo = '';
+var clientCerts = clientCertInfo.split('|');
+var httpsCertName = '';
+
+function frmLoad()
+{
+	with (document.forms[0])
+   {
+		httpLan.checked = <%ejGet(httpLan)%>;
+		httpWan.checked = <%ejGet(httpWan)%>;
+		httpPort.value = '<%ejGet(httpPort)%>';
+		
+		httpsLan.checked = <%ejGet(httpsLan)%>;
+		httpsWan.checked = <%ejGet(httpsWan)%>;
+		httpsPort.value = '<%ejGet(httpsPort)%>';
+
+		httpSpecLan.checked = <%ejGet(httpSpecLan)%>;
+		httpSpecWan.checked = <%ejGet(httpSpecWan)%>;
+		httpSpecPort.value = '<%ejGet(httpSpecPort)%>';
+
+		sshLan.checked = <%ejGet(sshLan)%>;
+		sshWan.checked = <%ejGet(sshWan)%>;
+		sshPort.value = '<%ejGet(sshPort)%>';
+
+		telnetLan.checked = <%ejGet(telnetLan)%>;
+		telnetWan.checked = <%ejGet(telnetWan)%>;
+		telnetPort.value = '<%ejGet(telnetPort)%>';
+
+		ftpLan.checked = <%ejGet(ftpLan)%>;
+		ftpWan.checked = <%ejGet(ftpWan)%>;
+		ftpPort.value = '<%ejGet(ftpPort)%>';
+
+		tftpLan.checked = <%ejGet(tftpLan)%>;
+		tftpWan.checked = <%ejGet(tftpWan)%>;
+		tftpPort.value = '<%ejGet(tftpPort)%>';
+		
+		icmpLan.checked = <%ejGet(icmpLan)%>;
+		icmpWan.checked = <%ejGet(icmpWan)%>;
+		
+		TrustDomainHttpState.checked = <%ejGet(TrustDomainHttpState)%>;
+		TrustDomainHttpsState.checked = <%ejGet(TrustDomainHttpsState)%>;
+		TrustDomainHttpSpecState.checked = <%ejGet(TrustDomainHttpSpecState)%>;
+		TrustDomainSshState.checked = <%ejGet(TrustDomainSshState)%>;
+		TrustDomainIcmpState.checked = <%ejGet(TrustDomainIcmpState)%>;
+
+		TrustDomainTelnetState.checked = <%ejGet(TrustDomainTelnetState)%>;
+		TrustDomainFtpState.checked = <%ejGet(TrustDomainFtpState)%>;
+		TrustDomainTftpState.checked = <%ejGet(TrustDomainTftpState)%>;
+        TrustDomainIP.value = '<%ejGet(TrustDomainIP)%>';
+      }
+
+	ServiceChange();
+
+   $("select[name=httpsCertName]").empty();
+   for ( i = 0; i < clientCerts.length; i++ ) {					
+      if ( clientCerts[i] == httpsCertName )  
+         $("select[name=httpsCertName]").append("<option value='"+ clientCerts[i]+ "' selected>" + clientCerts[i] + "</option>");
+      else
+         $("select[name=httpsCertName]").append("<option value='"+ clientCerts[i]+ "'>" + clientCerts[i] + "</option>");
+   }
+	var errMsg = "";
+
+	if (errMsg != '')
+	{
+		alert(errMsg, 2);
+	}
+}
+
+function isPortUsed(idx, port)
+{
+	for(i=0; i<portArray.length; i++)
+	{
+		if (i == idx)
+			continue;
+		else if (port == portArray[i]){			
+			return false;
+		}
+	}
+
+	/* Steven, duplicate checking */
+	for(i=0; i<portArrayTmp.length; i++)
+	{
+		if (i == idx)
+			continue;
+		else if (port == portArrayTmp[i]){			
+			return false;
+		}
+	}
+	
+	return true;
+}
+
+function isValidServicePort(port) 
+{
+   var validport = 0;
+
+   if ( isNaN(port) )
+       return false;
+
+   validport = parseInt(port);
+
+   if ( isNaN(validport) )
+       return false;
+   
+   if ( validport < 1 || validport > 65535 )
+       return false;
+   
+   return true;
+}
+
+function ServiceChange()
+{
+	with (document.forms[0]){
+
+		if(httpWan.checked)
+		{
+			TrustDomainHttpState.disabled = true;
+		}else{
+			TrustDomainHttpState.disabled = false;
+		}
+		
+		if(httpsWan.checked)
+		{
+			TrustDomainHttpsState.disabled = true;
+		}else{
+			TrustDomainHttpsState.disabled = false;
+		}
+
+		if(httpSpecWan.checked)
+		{
+			TrustDomainHttpSpecState.disabled = true;
+		}else{
+			TrustDomainHttpSpecState.disabled = false;
+		}
+
+		if(sshWan.checked)
+		{
+
+			TrustDomainSshState.disabled = true;
+		}else{
+
+			TrustDomainSshState.disabled = false;
+		}
+		
+		if(icmpWan.checked)
+		{
+			TrustDomainIcmpState.disabled = true;
+		}else{
+			TrustDomainIcmpState.disabled = false;
+		}
+
+		if(telnetWan.checked)
+		{
+
+			TrustDomainTelnetState.disabled = true;
+		}else{
+
+			TrustDomainTelnetState.disabled = false;
+		}
+		
+		if(ftpWan.checked)
+		{
+			TrustDomainFtpState.disabled = true;
+		}else{
+			TrustDomainFtpState.disabled = false;
+		}
+
+		if(tftpWan.checked)
+		{
+			TrustDomainTftpState.disabled = true;
+		}else{
+			TrustDomainTftpState.disabled = false;
+		}
+		
+		if(TrustDomainHttpState.disabled==false)
+		{
+			if(TrustDomainHttpState.checked==true)
+			{
+				httpWan.disabled=true;
+			}else{
+				httpWan.disabled=false;
+			}
+		}
+		
+		if(TrustDomainHttpsState.disabled==false)
+		{
+			if(TrustDomainHttpsState.checked==true)
+			{
+				httpsWan.disabled=true;
+			}else{
+				httpsWan.disabled=false;
+			}
+		}
+
+		if(TrustDomainHttpSpecState.disabled==false)
+		{
+			if(TrustDomainHttpSpecState.checked==true)
+			{
+				httpSpecWan.disabled=true;
+			}else{
+				httpSpecWan.disabled=false;
+			}
+		}
+
+		if(TrustDomainSshState.disabled==false)
+		{
+			if(TrustDomainSshState.checked==true)
+			{
+				sshWan.disabled=true;
+			}else{
+				sshWan.disabled=false;
+			}
+		}
+
+		if(TrustDomainIcmpState.disabled==false)
+		{
+			if(TrustDomainIcmpState.checked==true)
+			{
+				icmpWan.disabled=true;
+			}else{
+				icmpWan.disabled=false;
+			}
+		}
+
+		if(TrustDomainTelnetState.disabled==false)
+		{
+			if(TrustDomainTelnetState.checked==true)
+			{
+				telnetWan.disabled=true;
+			}else{
+				telnetWan.disabled=false;
+			}
+		}
+
+		if(TrustDomainFtpState.disabled==false)
+		{
+			if(TrustDomainFtpState.checked==true)
+			{
+				ftpWan.disabled=true;
+			}else{
+				ftpWan.disabled=false;
+			}
+		}
+
+		if(TrustDomainTftpState.disabled==false)
+		{
+			if(TrustDomainTftpState.checked==true)
+			{
+				tftpWan.disabled=true;
+			}else{
+				tftpWan.disabled=false;
+			}
+		}
+		
+		if(TrustDomainHttpState.checked==true ||
+			TrustDomainHttpsState.checked==true ||
+			TrustDomainIcmpState.checked==true ||
+			TrustDomainHttpSpecState.checked==true ||
+			TrustDomainSshState.checked==true ||
+			TrustDomainTelnetState.checked==true ||
+			TrustDomainFtpState.checked==true ||
+			TrustDomainTftpState.checked==true)
+		{
+			TrustDomainIP.disabled = false;
+			//$('#TrustDomain').html('Enable');
+		}else{
+			TrustDomainIP.disabled = true;
+			//$('#TrustDomain').html('Disable');
+		}
+	}
+}
+function btnApply()
+{	
+	with (document.forms[0]){
+		var msg = "";
+
+		/* Steven, store new port for duplicate checking */
+		//portArrayTmp = new Array(httpPort.value, httpsPort.value, httpadminPort.value ,sshPort.value, telnetPort.value, ftpPort.value, smbPort.value);
+		portArrayTmp = new Array(httpPort.value, httpSpecPort.value ,httpsPort.value, sshPort.value, telnetPort.value, ftpPort.value, tftpPort.value);
+
+		if (isPortUsed(0, httpPort.value) == false)
+		{
+			msg = "HTTP port "+httpPort.value+" is used for other service.";
+			alert(msg, 2);
+			return;
+		}
+
+		if (isPortUsed(1, httpSpecPort.value) == false)
+		{
+			msg = "HTTP port "+httpSpecPort.value+" is used for other service.";
+			alert(msg, 2);
+			return;
+		}
+		
+		if (isPortUsed(2, httpsPort.value) == false)
+		{
+			msg = "HTTPS port "+httpsPort.value+" is used for other service.";
+			alert(msg, 2);
+			return;
+		}
+
+		if (isPortUsed(3, sshPort.value) == false)
+		{
+			msg = "SSH port "+sshPort.value+" is used for other service.";
+			alert(msg, 2);
+			return;
+		}
+
+		if (isPortUsed(4, telnetPort.value) == false)
+		{
+			msg = "TELNET port "+telnetPort.value+" is used for other service.";
+			alert(msg, 2);
+			return;
+		}
+		if (isPortUsed(5, ftpPort.value) == false)
+		{
+			msg = "FTP port "+ftpPort.value+" is used for other service.";
+			alert(msg, 2);
+			return;
+		}
+
+		if (isPortUsed(6, tftpPort.value) == false)
+		{
+			msg = "TFTP port "+tftpPort.value+" is used for other service.";
+			alert(msg, 2);
+			return;
+		}
+		
+		if (isValidServicePort(httpPort.value) == false)
+		{
+			msg = "Http port "+httpPort.value+" is invalid (1~65535).";
+			alert(msg, 2);
+			return;
+		}
+		
+		if (isValidServicePort(httpsPort.value) == false)
+		{
+			msg = "Https port "+httpsPort.value+" is invalid (1~65535).";
+			alert(msg, 2);
+			return;
+		}
+
+		if (isValidServicePort(httpSpecPort.value) == false)
+		{
+			msg = "Http port "+httpSpecPort.value+" is invalid (1~65535).";
+			alert(msg, 2);
+			return;
+		}
+
+		if (isValidServicePort(sshPort.value) == false)
+		{
+			msg = "SSH port "+sshPort.value+" is  invalid (1~65535).";
+			alert(msg, 2);
+			return;
+		}
+
+		if (isValidServicePort(telnetPort.value) == false)
+		{
+			msg = "Telnet port "+telnetPort.value+" is  invalid (1~65535).";
+			alert(msg, 2);
+			return;
+		}
+		if (isValidServicePort(ftpPort.value) == false)
+		{
+			msg = "FTP port "+ftpPort.value+" is  invalid (1~65535).";
+			alert(msg, 2);
+			return;
+		}
+		if (isValidServicePort(tftpPort.value) == false)
+		{
+			msg = "TFTP port "+tftpPort.value+" is  invalid (1~65535).";
+			alert(msg, 2);
+			return;
+		}
+		
+		if ((TrustDomainIP.disabled == false ) )
+		{
+         if (isValidIpAddress(TrustDomainIP.value) == false && isValidIpAddress6(TrustDomainIP.value)==false)
+         {
+            msg = "IP Address "+TrustDomainIP.value+" is  invalid.";
+            alert(msg,2);
+            return;
+         }
+      }
+
+		submit();
+	}
+	return true;
+}
+
+/*$(document).ready(function() {
+	frmLoad();
+});*/
+// done hiding -->
+</script>
+
+</head>
+<body onLoad='frmLoad()'>
+<form name="control" id="control" action="remoteMGMT-remoteMGMT.cgi" method="POST">
+<input name="sessionKey" type="HIDDEN" id="sessionKey" value="<%ejGetOther(sessionKey)%>" />
+<div class="content_frame" >
+  <!--Unit Explain start-->
+  <div class="explain">
+    <div><b class="r1"></b><b class="r2"></b><b class="r3"></b><b class="r4"></b><b class="r4"></b></div>
+    <div class="explain_text">Remote MGMT enables various approaches to access this device remotely from a WAN and/or LAN connection.</div>
+    <div><b class="r4"></b><b class="r4"></b><b class="r3"></b><b class="r2"></b><b class="r1"></b></div>
+  </div>
+  <!--Unit Explain End-->
+  <!--Set area start-->
+  <div class="data_frame">
+    <ul>
+    <table>	
+    <td class="set1">
+<td class="title"><b>Trust Domain</b></td> 
+			<tr>
+			<td class="set1">
+               <div class="w_text">
+                  
+                     <td class="left_table">Status :</td>
+                     <td class="right_table">
+                        <div id="TrustDomain"/>
+                     </td>
+                  
+               </div>
+            </td>
+      </tr>
+      <tr>          
+			<td class="set1">
+               <div class="w_text">
+                  
+                     <td class="left_table">Remote Management IP Address :</li>
+                     <td class="right_table">
+                        <input name="TrustDomainIP" type="text" size="40" />
+                     </td>
+                 
+               </div>
+            </td>
+      </tr>          
+    </table>
+<br>           
+<td class="space"> </td>
+      <tr>
+      <td class="set1">
+        <div class="w_table">
+          <table width="60%" cellpadding="0" cellspacing="0" style="table-layout:fixed;" class="table_frame" border="2">
+                        <tr valign="top">
+                          <td class="top_font "><b>Services</b></td>
+                          <td class="top_font "><b>LAN</b></td>
+                          <td class="top_font "><b>WAN</b></td>
+                          <td class="top_font"><b>Trust Domain</b></td>
+                          <td class="top_font "><span class="tableTitle style1"><b>WAN Port</b></span></td>
+                        </tr>
+                        <tr>
+                          <td class="table_font ">Allowed HTTP Ingress</td>
+                          <td class="table_font "><input type="checkbox" checked="checked" value="2" name="httpLan" />
+                            &nbsp;&nbsp;Enable</td>
+                          <td class="table_font "><input type="checkbox" checked="checked" value="2" onclick="ServiceChange()" name="httpWan" />
+                            &nbsp;&nbsp;Enable</td>
+                          <td class="table_font"><input type="checkbox" name="TrustDomainHttpState" value="2" onclick="ServiceChange()"/>
+                            &nbsp;&nbsp;Enable</td>
+                          <td class="table_font "><input maxlength="5" size="5" value="80" 
+                        name="httpPort" /></td>
+                        </tr>
+                        <tr>
+                          <td class="table_font ">Allowed HTTP Region Specific Ingress</td>
+                          <td class="table_font "><input type="checkbox" checked="checked" value="2" name="httpSpecLan" />
+                            &nbsp;&nbsp;Enable</td>
+                          <td class="table_font "><input type="checkbox" checked="checked" value="2" onclick="ServiceChange()" name="httpSpecWan" />
+                            &nbsp;&nbsp;Enable</td>
+                          <td class="table_font"><input type="checkbox" name="TrustDomainHttpSpecState" value="2" onclick="ServiceChange()"/>
+                            &nbsp;&nbsp;Enable</td>
+                          <td class="table_font "><input maxlength="5" size="5" value="8000" 
+                        name="httpSpecPort" /></td>
+                        </tr>
+						<tr>
+                          <td class="table_font ">Allowed HTTPS Ingress</td>
+                          <td class="table_font "><input type="checkbox" checked="checked" value="2" name="httpsLan" />
+                            &nbsp;&nbsp;Enable</td>
+                          <td class="table_font "><input type="checkbox" checked="checked" value="2" onclick="ServiceChange()" name="httpsWan" />
+                            &nbsp;&nbsp;Enable</td>
+                          <td class="table_font "><input type="checkbox" name="TrustDomainHttpsState" value="2" onclick="ServiceChange()"/>
+                            &nbsp;&nbsp;Enable</td>
+                          <td class="table_font "><input maxlength="5" size="5" value="443" 
+                        name="httpsPort" /></td>
+                        </tr>
+                        <tr>
+                          <td class="table_font ">Allowed SSH Ingress</td>
+                          <td class="table_font "><input type="checkbox" checked="checked" value="2" name="sshLan" />
+                            &nbsp;&nbsp;Enable</td>
+                          <td class="table_font "><input type="checkbox" checked="checked" value="2" name="sshWan" onclick="ServiceChange()" />
+                            &nbsp;&nbsp;Enable</td>
+                          <td class="table_font"><input type="checkbox" name="TrustDomainSshState" value="2" onclick="ServiceChange()"/>
+                            &nbsp;&nbsp;Enable</td>
+                          <td class="table_font "><input maxlength="5" size="5" value="22" 
+                        name="sshPort" /></td>
+                        </tr>
+                        <tr>
+                          <td class="table_font ">Allowed TELNET Ingress</td>
+                          <td class="table_font "><input type="checkbox" checked="checked" value="2" name="telnetLan" />
+                            &nbsp;&nbsp;Enable</td>
+                          <td class="table_font "><input type="checkbox" checked="checked" value="2" name="telnetWan" onclick="ServiceChange()" />
+                            &nbsp;&nbsp;Enable</td>
+                          <td class="table_font"><input type="checkbox" name="TrustDomainTelnetState" value="2" onclick="ServiceChange()"/>
+                             &nbsp;&nbsp;Enable</td>
+                          <td class="table_font "><input maxlength="5" size="5" value="23" 
+                        name="telnetPort" /></td>
+                        </tr>
+                        <tr>
+                          <td class="table_font ">Allowed FTP Ingress</td>
+                          <td class="table_font "><input type="checkbox" checked="checked" value="2" name="ftpLan" />
+                            &nbsp;&nbsp;Enable</td>
+                          <td class="table_font "><input type="checkbox" checked="checked" value="2" name="ftpWan" onclick="ServiceChange()" />
+                            &nbsp;&nbsp;Enable</td>
+                            <td class="table_font"><input type="checkbox" name="TrustDomainFtpState" value="2" onclick="ServiceChange()"/>
+                            &nbsp;&nbsp;Enable</td>
+                          <td class="table_font "><input maxlength="5" size="5" value="21" 
+                        name="ftpPort" /></td>
+                        </tr>
+                        <tr>
+                          <td class="table_font ">Allowed TFTP Ingress</td>
+                          <td class="table_font "><input type="checkbox" checked="checked" value="2" name="tftpLan" />
+                            &nbsp;&nbsp;Enable</td>
+                          <td class="table_font "><input type="checkbox" checked="checked" value="2" name="tftpWan" onclick="ServiceChange()" />
+                            &nbsp;&nbsp;Enable</td>
+                            <td class="table_font"><input type="checkbox" name="TrustDomainTftpState" value="2" onclick="ServiceChange()"/>
+                            &nbsp;&nbsp;Enable</td>
+                          <td class="table_font "><input maxlength="5" size="5" value="69" 
+                        name="tftpPort" /></td>
+                        </tr>
+                        <tr>
+                          <td class="table_font ">ICMP</td>
+                          <td class="table_font "><input type="checkbox" checked="checked" value="2" name="icmpLan" />
+                            &nbsp;&nbsp;Enable</td>
+                          <td class="table_font "><input type="checkbox" checked="checked" value="2" name="icmpWan" onclick="ServiceChange()"/>
+                            &nbsp;&nbsp;Enable</td>
+                          <td class="table_font"><input type="checkbox" name="TrustDomainIcmpState" value="2" onclick="ServiceChange()"/>
+						    &nbsp;&nbsp;Enable</td>
+                          <td class="table_font ">&nbsp;&nbsp;</td>
+                        </tr>
+                      </table>
+        </div>
+      </td>  
+      </tr>
+      <br><br><br>
+      <td class="space"></td>
+      <td class="buttonframe">
+        <div class="button_position">
+        	<center>
+          <input name="sysSubmit" value="Apply" type="button" onclick="btnApply();" />
+          &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+          <input name="Cancel" value="Cancel" type="button" onclick='frmLoad();' />
+        </center>
+        </div>
+      </td>
+    </ul>
+  </div>
+  <!--Set area end-->
+</div>
+</form>
+</body>
+</html>

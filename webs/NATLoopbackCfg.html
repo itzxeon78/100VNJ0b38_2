@@ -1,0 +1,65 @@
+<html>
+   <head>
+      <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+      <meta http-equiv="x-frame-options" content="sameorigin">
+      <link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>
+            <script language="javascript" src="util.js"></script>
+            <script language="javascript">
+<!-- hide
+var natlbEnabl = '<%ejGet(natlbEnabl)%>'
+
+function btnApplySave() {
+   var loc = 'nat-loopback.cmd?';
+
+   with ( document.forms[0] ) {
+     if (chkNatLoopBack.checked == true)
+        loc += 'natlbEnabl=1';
+     else
+        loc += 'natlbEnabl=0';
+   }
+   loc += '&sessionKey=<%ejGetOther(sessionKey)%>';
+   var code = 'location="' + loc + '"';
+   eval(code);
+}
+
+
+function frmLoad() {
+   with ( document.forms[0] ) {
+      if (natlbEnabl == '1')
+      {
+         chkNatLoopBack.checked = true;
+      }   
+      else
+      {
+         chkNatLoopBack.checked = false;
+      }   
+   }
+}
+
+// done hiding -->
+</script>
+   </head>
+   <body onLoad='frmLoad()'>
+      <blockquote>
+         <form>
+            <P>
+               <b>NAT LoopBack</b><br><br>
+            </P>
+
+            <tr>
+               <td colspan="2">
+                  <input type='checkbox' name='chkNatLoopBack' id='chkNatLoopBack'></td>
+               <td>Enable NAT LoopBack</td>
+            </tr>
+
+            <br>
+            <center>
+               <input type='button' onClick='btnApplySave()' value='Apply/Save'>
+            </center>
+         </form>
+      </blockquote>
+   </body>
+</html>
+
+

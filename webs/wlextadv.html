@@ -1,0 +1,352 @@
+<html>
+   <head>
+      <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+      <meta http-equiv="x-frame-options" content="sameorigin">
+      <link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>
+            <script language="javascript" src="util.js"></script>
+            <script language="javascript">
+<!-- hide
+
+var region = '<%ejGetExtWl(wlRegion)%>';
+var phy = '<%ejGetExtWl(wlphy)%>';
+var bw = '<%ejGetExtWl(wlBandwidth)%>';
+var beaconInterval = '<%ejGetExtWl(wlBeaconInterval)%>';
+var dtimInterval = '<%ejGetExtWl(wlDtimInterval)%>';
+var enableBF = '<%ejGetExtWl(wlEnableBF)%>';
+var enableShortGI = '<%ejGetExtWl(wlEnableShortGI)%>';
+var enableScs = '<%ejGetExtWl(wlEnableScs)%>';
+var enableQHop = '<%ejGetExtWl(wlEnableQHop)%>';
+var enableAirtimeFairness = '<%ejGetExtWl(wlEnableAirtimeFairness)%>';
+var enableOCACDFSZeroReentry = '<%ejGetExtWl(wlEnableOCACDFSZeroReentry)%>';
+var wltestMode     = '<%ejGetExtWl(wltestMode)%>';
+var pmf    = '<%ejGetExtWl(wlpmf_wifi)%>';
+var wlRefresh = '<%ejGetExtWl(wlRefresh)%>';
+var maui    = '<%ejGetExtWl(wlmaui)%>';
+var httpd    = '<%ejGetExtWl(wlHttpd)%>';
+var telnet    = '<%ejGetExtWl(wlTelnet)%>';
+var updateMiniBoot    = '<%ejGetExtWl(wlUpdateMiniBoot)%>';
+
+if ( wlRefresh == '1' )
+{
+	var code = 'location="wlextcfgrefresh.wl?wlRefresh=0"';
+	eval(code);   
+}
+
+function frmLoad() 
+{
+	with ( document.forms[0] ) 
+	{
+		setSelect(wlphy, phy);
+		loadBWList();
+		setSelect(wlBandwidth, bw);
+		wlBeaconInterval.value = beaconInterval;
+		wlDtimInterval.value = dtimInterval;
+		setCheck(wlEnableBF, enableBF);
+		setCheck(wlEnableShortGI, enableShortGI);
+		setCheck(wlEnableScs, enableScs);
+		setCheck(wlEnableQHop, enableQHop);
+		setCheck(wlEnableAirtimeFairness, enableAirtimeFairness);
+		setCheck(wlEnableOCACDFSZeroReentry, enableOCACDFSZeroReentry);
+
+		if(wltestMode == 1)
+		{
+			showhide("divPmf", 1);
+			showhide("divMaui", 1);			
+			setSelect(wlpmf, pmf);
+			setSelect(wlmaui, maui);		
+			setSelect(wlHttpd, httpd);	
+			setSelect(wlTelnet, telnet);	
+			setSelect(wlUpdateMiniBoot, updateMiniBoot);				
+			
+		}
+		else
+		{
+			showhide("divPmf", 0);
+			showhide("divMaui", 0);			
+			showhide("divHttpd", 0);
+			showhide("divTelnet", 0);		
+			showhide("divUpdateMiniBoot", 0);			
+		}
+	}
+}
+function loadBWList() 
+{
+	with ( document.forms[0] ) 
+	{
+		if(document.forms[0].wlphy.value == "802_11n")
+		{
+			wlBandwidthName = new Array( "40MHz", "20MHz");
+			wlBandwidthValue = new Array( "40MHz", "20MHz");		
+		}
+		else if(document.forms[0].wlphy.value == "802_11ac")
+		{
+			wlBandwidthName = new Array("80MHz", "40MHz", "20MHz");
+			wlBandwidthValue = new Array("80MHz", "40MHz", "20MHz");		
+		}
+		
+		wlBandwidth.length = wlBandwidthName.length;
+		for(var i in wlBandwidthName)
+		{
+			wlBandwidth[i] = new Option(wlBandwidthName[i], wlBandwidthValue[i]);
+			wlBandwidth[i].value = wlBandwidthValue[i];
+		}				
+	}
+}
+function doWirelessbandSelectionChange() 
+{
+	with ( document.forms[0] ) 
+	{
+		loadBWList();
+		if(document.forms[0].wlphy.value == "802_11n")
+		{
+			if(document.forms[0].wlBandwidth.value == "80MHz")
+			{
+				document.forms[0].wlBandwidth.value = "40MHz";
+			}
+		}
+		else if(document.forms[0].wlphy.value == "802_11ac")
+		{
+			document.forms[0].wlBandwidth.value = "80MHz";
+		}
+		setSelect(wlBandwidth, document.forms[0].wlBandwidth.value);		
+	}
+}
+function btnApply( place ) 
+{
+	var loc = '';
+	loc += 'wlextadv.wl?wlSsidIdx=1';
+
+	with ( document.forms[0] ) 
+	{
+
+		loc += '&wlBandwidth=' + wlBandwidth.options[wlBandwidth.selectedIndex].value;
+		loc += '&wlphy=' +  wlphy.value ;
+		loc += '&wlBeaconInterval=' +  wlBeaconInterval.value ;
+		loc += '&wlDtimInterval=' +  wlDtimInterval.value ;
+		loc += '&wlpmf_wifi0=' +  wlpmf.value ;
+		loc += '&wlpmf_wifi1=' +  wlpmf.value ;
+		loc += '&wlpmf_wifi2=' +  wlpmf.value ;
+		loc += '&wlpmf_wifi3=' +  wlpmf.value ;
+		if(wltestMode == 1)
+		{
+			loc += '&wlmaui=' +  wlmaui.value ;
+		}
+		loc += '&wlHttpd=' +  wlHttpd.value ;
+		loc += '&wlTelnet=' +  wlTelnet.value ;	
+		loc += '&wlUpdateMiniBoot=' +  wlUpdateMiniBoot.value ;			
+
+		
+		if ( wlEnableBF.checked == false ) 
+		{
+			loc += '&wlEnableBF=0';
+		}
+		else
+		{
+			loc += '&wlEnableBF=1';
+		}
+
+		if ( wlEnableShortGI.checked == false ) 
+		{
+			loc += '&wlEnableShortGI=0';
+		}
+		else
+		{
+			loc += '&wlEnableShortGI=1';
+		}	  
+
+		if ( wlEnableScs.checked == false ) 
+		{
+			loc += '&wlEnableScs=0';
+		}
+		else
+		{
+			loc += '&wlEnableScs=1';
+		}	 	  
+
+		if ( wlEnableQHop.checked == false ) 
+		{
+			loc += '&wlEnableQHop=0';
+		}
+		else
+		{
+			loc += '&wlEnableQHop=1';
+		}
+
+		if ( wlEnableAirtimeFairness.checked == false ) 
+		{
+			loc += '&wlEnableAirtimeFairness=0';
+		}
+		else
+		{
+			loc += '&wlEnableAirtimeFairness=1';
+		}		
+		
+		if ( wlEnableOCACDFSZeroReentry.checked == false ) 
+		{
+			loc += '&wlEnableOCACDFSZeroReentry=0';
+		}
+		else
+		{
+			loc += '&wlEnableOCACDFSZeroReentry=1';
+		}
+		
+	}
+	loc += '&sessionKey=<%ejGetOther(sessionKey)%>';
+	var code = 'location="' + loc + '"';
+	eval(code);
+}
+
+// done hiding -->
+      </script>
+   </head>
+   <body onLoad='frmLoad()'>
+      <blockquote>
+         <form onSubmit='return false'>
+            <b>Wireless -<a href="javascript:ShowFullItem(1)" border=0 style="text-decoration:none; cursor:text;">-</a> 5GHz advanced</b><br>
+            <br>This page allows you to configure advanced features of the wireless LAN interface. <BR>Click 'Apply' to configure the basic wireless options.<br>
+            <br>
+              <table border="0" cellpadding="4" cellspacing="0">
+                  <tr>
+                     <td width="50">Region</td>
+                     <td>
+                        <%ejGetExtWl(wlRegion)%>
+                     </td>
+                  </tr>
+	               <tr>
+	                  <td width="180">Bandwidth</td>
+	                  <td td width="200"><select name='wlBandwidth' size="1">
+	                     </select>
+	                  </td>                     
+	               </tr>                  
+	               <tr>
+	                  <td width="180">Wireless band</td>
+	                  <td td width="200"><select name='wlphy' size="1" onChange='doWirelessbandSelectionChange()'>
+	                     <option value="802_11ac">802.11 ac</option>
+	                     <option value="802_11n">802.11 a+n </option>
+	                     </select>
+	                  </td>                     
+	               </tr>
+                  <tr>
+                     <td width="50">Beacon Interval</td>
+                     <td>
+                        <input type='text' name='wlBeaconInterval' maxlength="32" size="32"></td>
+                  </tr>
+                  <tr>
+                     <td width="50">DTIM</td>
+                     <td>
+                        <input type='text' name='wlDtimInterval' maxlength="32" size="32"></td>
+                  </tr>
+                  <tr>
+                     <td valign="middle" align="center" width="30" height="30">
+                        <input type='checkbox' name='wlEnableBF' value="ON"></td>
+                     <td>Beamforming</td>
+                  </tr>
+                  <tr>
+                     <td valign="middle" align="center" width="30" height="30">
+                        <input type='checkbox' name='wlEnableShortGI' value="ON"></td>
+                     <td>Short GI</td>
+                  </tr>
+                  <tr>
+                     <td valign="middle" align="center" width="30" height="30">
+                        <input type='checkbox' name='wlEnableScs' value="ON"></td>
+                     <td>SCS (Smart Selection of Best Wireless Channel)</td>
+                  </tr> 
+                  <tr>
+                     <td valign="middle" align="center" width="30" height="30">
+                        <input type='checkbox' name='wlEnableQHop' value="ON"></td>
+                     <td>QHop</td>
+                  </tr> 
+                  <tr>
+                     <td valign="middle" align="center" width="30" height="30">
+                        <input type='checkbox' name='wlEnableAirtimeFairness' value="ON"></td>
+                     <td>Airtime Fairness</td>
+                  </tr>                   
+                  <tr>
+                     <td valign="middle" align="center" width="30" height="30">
+                        <input type='checkbox' name='wlEnableOCACDFSZeroReentry' value="ON"></td>
+                     <td>OCAC/DFS Zero Re-entry</td>
+                  </tr>   
+              </table>     
+              <div id="divPmf">
+              <table border="0" cellpadding="4" cellspacing="0">
+               <tr>         
+	               <tr>
+	                  <td width="180">pmf</td>
+	                  <td td width="200"><select name='wlpmf' size="1">
+	                     <option value="0">disabled</option>
+	                     <option value="1">optional</option>
+	                     <option value="2">required</option>
+	                     </select>
+	                  </td>                     
+	               </tr>   
+               </tr> 
+              </table>              
+              </div>
+              <div id="divMaui">
+              <table border="0" cellpadding="4" cellspacing="0">
+               <tr>         
+	               <tr>
+	                  <td width="180">Maui</td>
+	                  <td td width="200"><select name='wlmaui' size="1">
+	                     <option value="0">disabled</option>
+	                     <option value="1">enabled</option>
+	                     </select>
+	                  </td>                     
+	               </tr>   
+               </tr> 
+              </table>              
+              </div>      
+              <div id="divHttpd">
+              <table border="0" cellpadding="4" cellspacing="0">
+               <tr>         
+	               <tr>
+	                  <td width="180">HTTP</td>
+	                  <td td width="200"><select name='wlHttpd' size="1">
+	                     <option value="0">disabled</option>
+	                     <option value="1">enabled</option>
+	                     </select>
+	                  </td>                     
+	               </tr>   
+               </tr> 
+              </table>              
+              </div>   
+              <div id="divTelnet">
+              <table border="0" cellpadding="4" cellspacing="0">
+               <tr>         
+	               <tr>
+	                  <td width="180">Telnet</td>
+	                  <td td width="200"><select name='wlTelnet' size="1">
+	                     <option value="0">disabled</option>
+	                     <option value="1">enabled</option>
+	                     </select>
+	                  </td>                     
+	               </tr>   
+               </tr> 
+              </table>              
+              </div>                
+              <div id="divUpdateMiniBoot">
+              <table border="0" cellpadding="4" cellspacing="0">
+               <tr>         
+	               <tr>
+	                  <td width="180">Update Mini Boot</td>
+	                  <td td width="200"><select name='wlUpdateMiniBoot' size="1">
+	                     <option value="0">disabled</option>
+	                     <option value="1">enabled</option>
+	                     </select>
+	                  </td>                     
+	               </tr>   
+               </tr> 
+              </table>              
+              </div>                
+           <div id="divApply">           
+              <table border="0" cellpadding="4" cellspacing="0">
+               <tr> <td>        
+               <input type='button' onClick='btnApply("wlextadv.wl")' value='Apply/Save'>
+               </tr> </td>
+              </table>
+           </div>
+         </form>
+      </blockquote>
+   </body>
+</html>

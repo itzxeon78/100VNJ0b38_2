@@ -1,0 +1,729 @@
+<html>
+   <head>
+      <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+      <meta http-equiv="x-frame-options" content="sameorigin">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>
+            <script language="javascript" src="util.js"></script>
+            <script type="text/javascript" src="/mhs/js/networkMap/wifi.js"></script>
+            <script language="javascript">
+<!-- hide
+var isModuleExist = '<%ejGetExtWl(wlextModuleExist)%>';
+var isMainInterfaceExist = '<%ejGetExtWl(wlMainInterfaceExist)%>';
+var region = '<%ejGetExtWl(wlRegion)%>';
+var ssid = '<%ejGetExtWl(wlSsid_wl0v0)%>';
+var enbl = '<%ejGetExtWl(wlEnbl_wl0v0)%>';
+var hide = '<%ejGetExtWl(wlHide_wl0v0)%>';
+var isolation = '<%ejGetExtWl(wlIsolation_wl0v0)%>';
+var wlRefresh = '<%ejGetExtWl(wlRefresh)%>';
+var channel = '<%ejGetExtWl(wlChannel)%>';
+var wlCurrentChannel = '<%ejGetExtWl(wlCurrentChannel)%>';
+var mode = '<%ejGetExtWl(wlAuthMode)%>';
+var wpa = '<%ejGetExtWl(wlWpa)%>';
+var wpaPskKey = '<%ejGetExtWl(wlWpaPsk)%>';
+var WscMode       = '<%ejGetExtWl(wlWscMode)%>'; //WPS enable/disable
+var maxAssoc = '<%ejGetExtWl(wlMaxAssoc)%>';
+var ssidIdx = '<%ejGetExtWl(wlSsidIdx)%>';
+
+if ( wlRefresh == '1' )
+{
+	var code = 'location="wlextcfgrefresh.wl?wlRefresh=0"';
+	eval(code);   
+}
+
+function wlEnblChange()
+{
+	with( document.forms[0] ) 
+	{
+		if(wlEnbl.checked == true)
+		{
+			showhide("divwlHide", 1);
+			showhide("divwlIsolation", 1);
+			showhide("divwlSsid", 1);
+			showhide("divwlAuthMode", 1);
+			showhide("divwlMBSSInfo", 1);
+			showhide("CurChannel", 1);
+			showhide("wpaPreShareKey", 1);
+			showhide("divwlSsidIdx", 1);
+			showhide("wlWpaD", 1);		
+			wlHide.disabled = 0;
+			wlIsolation_wifi0.disabled = 0;
+			wlSsid.disabled = 0; 		
+		}
+		else
+		{
+			showhide("divwlHide", 0);
+			showhide("divwlIsolation", 0);
+			showhide("divwlSsid", 0);
+			showhide("divwlAuthMode", 0);
+			showhide("divwlMBSSInfo", 0);
+			showhide("CurChannel", 0);	
+			showhide("divwlSsidIdx", 0);
+			showhide("wpaPreShareKey", 0);
+			showhide("wlWpaD", 0);
+			wlHide.disabled = 1;
+			wlIsolation_wifi0.disabled = 1;
+			wlSsid.disabled = 1;  	
+		}
+	}
+}
+
+function wl_recalc(OnPageLoad)
+{
+	with( document.forms[0] ) 
+	{ 
+		updateCurChannel(OnPageLoad) ;      
+		loadChannelList(OnPageLoad) ;
+		loadSsidList(OnPageLoad);
+	}
+}
+
+function isValidWPAPskKey(val)
+{
+	var ret = false;
+	var len = val.length;
+	var maxSize = 63;
+//	var maxSize = 64;
+	var minSize = 8;
+
+	if ( len >= minSize && len < maxSize )
+	{
+		ret = true;
+	}
+//[SPRID 160516959] 2.4G/ 5G WPA2-PSK Password can accept 64 character. it should only allow 63 ASII on Advance GUI, Client Wizard, SSH, TR69 (keypassphase)	  
+//	else if ( len == maxSize ) 
+//	{
+//		for ( i = 0; i < maxSize; i++ )
+//		{
+//			if (isHexaDigit(val.charAt(i)) == false )
+//			{
+//				break;
+//			}
+//		}
+		
+//		if ( i == maxSize )
+//		{
+//			ret = true;
+//		}
+//	}
+	else
+	{
+		ret = false;
+	}
+	return ret;
+}
+function loadSsidList(OnPageLoad)
+{
+	var sel_wlSsidIdx =0;
+	var idx =0;
+	
+	/* save selected */   
+	if(OnPageLoad) 
+	{      
+		sel_wlSsidIdx = ssidIdx;
+	}
+	else 
+	{
+		sel_wlSsidIdx = document.forms[0].wlSsidIdx.value;
+	}
+	/* load list */
+	document.forms[0].wlSsidIdx.length = 0;
+	<%ejGetExtWl(wlSsidOption)%>
+
+	/* mark selected */
+	for (idx=0; idx<document.forms[0].wlSsidIdx.options.length; idx++)
+	{
+		if (document.forms[0].wlSsidIdx.options[idx].value == sel_wlSsidIdx)
+		{
+			document.forms[0].wlSsidIdx.options[idx].selected = true;
+			break;
+		}
+	}	
+}
+
+function loadChannelList(OnPageLoad)
+{
+	var sel_ch;
+	var idx;
+
+	/* save selected */   
+	if(OnPageLoad) 
+	{      
+		sel_ch = channel;
+	}
+	else 
+	{
+		sel_ch = document.forms[0].wlChannel.value;
+	}
+
+	/* load list */
+	document.forms[0].wlChannel.length = 0;
+	if(1)
+	{
+		if(region == 'None')
+		{
+			<%ejGetExtWl(wlChannelList)%>
+		}
+		else
+		{
+			<%ejGetExtWl(wlChannelListRegionBW)%>
+		}
+	}
+	else 
+	{
+		document.forms[0].wlChannel[0] = new Option("Auto", "0")
+	}
+
+	/* mark selected */
+	for (idx=0; idx<document.forms[0].wlChannel.options.length; idx++)
+	{
+		if (document.forms[0].wlChannel.options[idx].value == sel_ch)
+		{
+			document.forms[0].wlChannel.options[idx].selected = true;
+			break;
+		}
+	}
+   
+	/* set to first channel none-auto if not found */   
+	if (idx == document.forms[0].wlChannel.options.length) 
+	{
+		document.forms[0].wlChannel.options[1].selected = true;
+	}
+     
+}
+
+function updateCurChannel(OnPageLoad) 
+{
+	if(OnPageLoad)
+	{ 
+		if(document.getElementById) 
+		{ // DOM3 = IE5, NS6
+			document.getElementById("CurChannel").innerHTML = "  Current: " + wlCurrentChannel;
+		}
+		else
+		{
+			if(document.layers == false) 
+			{// IE4
+				document.all.CurChannel.innerHTML = "  Current: " + wlCurrentChannel;
+			}
+		}	  
+	}
+}
+function encrypChange()
+{
+	with ( document.forms[0] ) 
+	{
+		var authMode = getSelect(wlAuthMode);
+	}
+}
+
+function refreshUseDefaultWpaKey(onLoadPage)
+{
+	with (document.forms[0])
+	{
+		wlWpaPsk.value = wpaPskKey;
+		showhide("input_wlWpaPsk", 1);
+		showhide("text_wlWpaPsk", 0);
+	}
+}	
+
+function authModeChange(OnPageLoad)
+{
+	var showCert = 0;
+	with ( document.forms[0] )
+	{
+		if(wlEnbl.checked == false)
+		{
+			return;
+		}
+		
+		var authMode = getSelect(wlAuthMode);
+		var i, algos;
+		switch( authMode ) 
+		{
+			case 'shared':
+				break;
+			case 'open':
+				showhide("wpaPreShareKey", 0);
+				showhide("wlWpaD", 0);				
+				break;
+			case 'psk2':
+			case 'psk psk2':      
+				wlWpa.disabled = false;
+				showhide("wpaPreShareKey", 1);
+				showhide("wlWpaD", 1);
+				break;
+		}
+
+		if(OnPageLoad==1)
+		{
+			//algos = new Array("TKIP", "AES", "TKIP+AES");
+			algos = new Array("AES");
+
+			// Reconstruct algorithm array from new algorithms
+			wlWpa.length = algos.length;
+			for(var i in algos)
+			{
+				wlWpa[i] = new Option(algos[i], algos[i].toLowerCase());
+				wlWpa[i].value = algos[i].toLowerCase();
+
+				if(algos[i].toLowerCase() == wpa)
+				{
+					wlWpa[i].selected = true;
+				}
+			}
+		}  
+
+		//advice default cipher selection,remove if not desired
+		if(OnPageLoad == 0)
+		{
+			if(authMode == "psk2")
+			{
+				wlWpa.selectedIndex = getWpaIndex("aes") ;
+			}
+
+			if(authMode == "psk psk2")
+			{
+				wlWpa.selectedIndex = getWpaIndex("tkip+aes") ;
+			}		
+			wpa=wlWpa[wlWpa.selectedIndex].value;
+		}
+	}
+
+	encrypChange();
+	refreshUseDefaultWpaKey(1);   //update WPA UI 
+}
+
+function pin_window(pin)
+{
+	with(document.forms[0])
+	{
+		var w = window.open("", "", "toolbar=no,width=500,height=100");
+		w.document.write('<font size=5><b><center>' + pin + '</center></b></font>');
+		w.document.close();
+	}
+}
+
+function getWpaIndex(v)
+{
+	var i;
+
+	for (i = 0; i < document.forms[0].wlWpa.length; i++) 
+	{
+		if (document.forms[0].wlWpa[i].value == v)
+		{
+			return i;
+		}
+	}
+	return 0;
+}
+
+function help_window()
+{
+	with(document.forms[0])
+	{
+		var w = window.open("", "", "toolbar=no,width=500,height=100");
+		w.document.write('Input Station Pin from Client<br>');
+		w.document.close();
+	}
+}
+
+function devpin_window(pin)
+{
+	with(document.forms[0])
+	{
+		var w = window.open("", "", "toolbar=no,width=500,height=100");
+		w.document.write('Device Pin is generated by AP<br>');
+		w.document.close();
+	}
+}
+
+function frmLoad() 
+{
+	with ( document.forms[0] ) 
+	{
+		setCheck(wlEnbl, enbl);
+		setCheck(wlHide, hide);
+		setCheck(wlIsolation_wifi0, isolation);
+		wlSsid.value = ssid;
+		//authModeName = new Array("Open", "WPA2-PSK", "Mixed WPA2/WPA");
+		//authModeValue = new Array("open", "psk2", "psk psk2");
+		authModeName = new Array("Open", "WPA2-PSK");
+		authModeValue = new Array("open", "psk2");
+		wlAuthMode.length = authModeName.length;
+		for(var i in authModeName)
+		{
+			wlAuthMode[i] = new Option(authModeName[i], authModeValue[i]);
+			wlAuthMode[i].value = authModeValue[i];
+		}
+
+		wlWpaPsk.value = wpaPskKey;
+		wlMaxAssoc.value = maxAssoc;
+		setSelect(wlAuthMode, mode);
+
+		refreshUseDefaultWpaKey(1);   //update WPA UI   
+	}
+	wl_recalc(true);
+	wlEnblChange();
+	authModeChange(1);
+	if(isMainInterfaceExist != '1')
+	{
+		setTimeout("location.reload(true);",3000);
+	}	
+}
+
+function invalidCheck()
+{
+	var duplicated = false;
+	var invalid = false;
+	var ssidArray = new Array();
+	var idx=0;
+
+	with ( document.forms[0] )
+	{
+		ssidArray[idx++]=wlSsid.value;
+
+		for (var i=0; i < document.forms[0].elements.length; i++){      
+            	/* SSID check */
+            	if(document.forms[0].elements[i].name.search('wlSsid_wifi') != -1) {
+               ssidArray[idx]=document.forms[0].elements[i].value;
+               if(ssidArray[idx] == ''|| ssidArray[idx].length > 32) {
+                  alert('SSID should not be empty or longer than 30 characters');
+                  invalid = true;
+                  break;               
+               }
+
+               if(quotationCheck(ssidArray[idx], 33)){
+                  alert('SSID should not be empty or longer than 32 bytes');
+                  invalid = true;
+                  break; 
+               }
+               for(var j = 0; j < idx; j++) {
+                  if (ssidArray[idx] == ssidArray[j]) { 
+                     invalid = duplicated = true;
+                     break;
+                  }                     
+               }
+               idx++;
+            
+            if (duplicated)
+               break;
+		}
+	    }
+
+		if (duplicated) 
+		{
+			alert('Duplicated SSID found, each SSID must be unique\nPlease correct it before clicking Apply/Save again');
+		}
+
+		return invalid;
+	}
+}
+
+function wlSsidIdxChange() 
+{
+	var loc = '';
+
+	with ( document.forms[0] )
+	{
+		loc += 'wlextsecrefresh.wl?';
+		loc += 'wlSsidIdx='+wlSsidIdx.value;
+	}
+	loc += '&sessionKey=<%ejGetOther(sessionKey)%>';
+	var code = 'location="' + loc + '"';
+	eval(code);		
+}
+function btnApply( place ) 
+{	
+	var loc = '';
+	var hide_checked = false;
+
+	if(invalidCheck())
+	{
+		return;
+	}
+	
+	switch ( place )
+	{
+		case 'wlextcfg.wl':
+		loc += 'wlextcfg.wl?';
+		loc += 'wlWscStaPin=0';
+		loc += '&wpsTriggerType=none';	   
+		loc += '&';
+		break;			
+	}
+   
+	with ( document.forms[0] )
+	{
+		var authMode = getSelect(wlAuthMode);
+		var value;
+
+		if ( wlEnbl.checked == false )
+		{
+			loc += 'wlEnbl=0';
+			loc += '&wlHide=' + hide;
+			loc += '&wlIsolation_wifi0=' + isolation;
+			loc += '&wlSsid=' + ssid;
+		}
+		else
+		{
+			if ( wlSsid.value == '' )
+			{
+				alert('SSID should not be empty.');
+				return;
+			}
+
+			var str = new String();
+			str = wlSsid.value;
+			if ( str.length > 32 )
+			{
+				alert('SSID "' + wlSsid.value + '" should not be longer than 32 characters.');
+				return;
+			}
+			if(quotationCheck(wlSsid.value, 33)){
+				alert("La longitud del nombre SSID no puede ser más de 32 bytes.");
+				return;
+			}
+			loc += 'wlEnbl=1';
+			hide_checked = wlHide.checked;
+			loc += submitCheck(wlHide);   
+			
+			if(wlHide.checked == true)
+			{
+				if(WscMode == 'enabled')
+				{
+					if (confirm("WPS will be disabled if you choose to Hide Access Point") == false )
+						return;
+					else
+						loc += '&wl_wsc_mode=disabled';		
+				}
+			}	
+			
+			loc += '&wlSsid=' + encodeURIComponent(wlSsid.value);
+			loc += '&wlChannel=' + wlChannel.options[wlChannel.selectedIndex].value;
+			loc += '&wlMaxAssoc=' + wlMaxAssoc.value;
+
+			value = wlWpaPsk.value ;
+                   if(value.indexOf(" ") == 0)
+                   {
+                      alert('Please do not enter the space character in the start of the pre-Shared key.');
+                      return;		
+                   }
+                   else if(value.indexOf(" ") == value.length-1)
+                   {
+                      alert('Please do not enter the space character in the end of the pre-Shared key.');
+                      return;			
+                   }	
+				  
+			if( isValidWPAPskKey(value) == false )
+			{
+				alert('WPA Pre-Shared Key should be between 8 and 63 ASCII characters.');
+				return;
+			}		 
+			loc += '&wlAuthMode='+authMode ;
+			loc += '&wlWpaPsk=' + encodeURIComponent(wlWpaPsk.value);
+			
+			if(authMode != 'open')
+			{
+				loc += submitSelect(wlWpa);            
+			}
+
+			for (var i=0; i < document.forms[0].elements.length; i++)
+			{
+				if(document.forms[0].elements[i].name.search('_wifi') != -1) 
+				{
+					if (document.forms[0].elements[i].type == 'checkbox') 
+					{
+						loc += submitCheck(document.forms[0].elements[i]);
+						
+						/* Find checked Hidden box */
+						if (hide_checked == false)	
+						{
+							if ((document.forms[0].elements[i].name.search('wlEnbl_wifi') != -1)&& (document.forms[0].elements[i].checked == true)) 
+							{
+								/* Get hidden box */
+								for (var j=i+1; j < document.forms[0].elements.length; j++) 
+								{
+									if((document.forms[0].elements[j].name.search('wlHide_wifi') != -1) &&	(document.forms[0].elements[j].checked == true)) 
+									{
+										hide_checked = document.forms[0].elements[j].checked;
+										break;
+									}
+								}						
+							}
+						}
+					}
+					
+					if (document.forms[0].elements[i].type == 'text') 
+					{
+						loc += '&'+document.forms[0].elements[i].name + '=' + encodeURIComponent(document.forms[0].elements[i].value);
+					}
+				}            
+			}			
+		}
+	}
+	loc += '&sessionKey=<%ejGetOther(sessionKey)%>';
+	var code = 'location="' + loc + '"';
+	eval(code);
+}
+
+// done hiding -->
+      </script>
+   </head>
+   <body onLoad='frmLoad()'>
+      <blockquote>
+         <form onSubmit='return false'>
+            <b>Wireless -<a href="javascript:ShowFullItem(1)" border=0 style="text-decoration:none; cursor:text;">-</a> 5GHz Basic</b><br>
+            <br>A wireless network name (also known as SSID) and a security level are basic elements to start a wireless service. It is recommended to set a security level other than No Security to protect your data from unauthorized access or damage via wireless network.<br>
+            <br>
+            <table border="0" cellpadding="4" cellspacing="0">
+<script language="javascript">
+<!-- hide
+if ( enbl == '1') {
+	document.writeln("               <tr>");
+	document.writeln("                  <td>Wireless status: Enabled</td>");
+	document.writeln("               </tr>");
+}else{
+	document.writeln("               <tr>");
+	document.writeln("                  <td>Wireless status: Disabled</td>");
+	document.writeln("               </tr>");
+}
+// done hiding -->
+</script>
+            </table>
+            <table border="0" cellpadding="4" cellspacing="0">
+               <tr>
+                  <td valign="middle" align="center" width="30" height="30">
+                     <input type='checkbox' name='wlEnbl' onClick='wlEnblChange()'></td>
+                  <td>Enable Wireless Guest Network</td>
+               </tr>
+            </table>
+            <div id='divwlHide'>
+               <table border="0" cellpadding="4" cellspacing="0">
+                  <tr>
+                     <td valign="middle" align="center" width="30" height="30">
+                        <input type='checkbox' name='wlHide' value="ON"></td>
+                     <td>Hide Access Point</td>
+                  </tr>
+         </table> 
+         </div>
+         <div id='divwlIsolation'>
+               <table border="0" cellpadding="4" cellspacing="0">
+                  <tr>
+                     <td valign="middle" align="center" width="30" height="30">
+                        <input type='checkbox' name='wlIsolation_wifi0' value="ON"></td>
+                     <td>Clients Isolation</td>
+                  </tr>
+         </table> 
+         </div>
+          <div id='divwlSsid'>
+               <table border="0" cellpadding="4" cellspacing="0">
+                  <tr>
+                     <td width="50">SSID</td>
+                     <td>
+                        <input type='text' name='wlSsid' maxlength="32" size="32"></td>
+                  </tr>
+                  <tr>
+                     <td width="50">BSSID</td>
+                     <td>
+                        <%ejGetExtWl(wlBssid)%>
+                     </td>
+                  </tr>
+               <tr>
+                  <td width="180">Channel</td>
+                  <td td width="200"><select name='wlChannel' size="1" onChange="wl_recalc(false)">
+                     </select>
+                  </td>
+                  <td>
+                     <div id="CurChannel">
+                         Current Channel
+                     </div>
+                  </td>                     
+               </tr>
+                  <tr>
+                     <td>Max Clients:</td>
+                     <td>
+                        <input type='text' name='wlMaxAssoc' maxlength="3" size="3"></td>
+                  </tr>        
+               </table>              
+            </div>
+           <div id="divwlMBSSInfo">
+              <br><b> Guest/Virtual Access Points:</b><br><br>
+              <table id="wlBSSTbl" border="0" cellpadding="4" cellspacing="0">
+                 <tr> <td>
+                 <table border='1' cellpadding='2' cellspacing='0' align="left" >
+                    <tr>
+				<td class='hd' valign="middle" align="center" width="30" height="30" >Enabled</td>                    
+				<td class='hd' valign="middle" align="center" width="30" height="30" >SSID</td>
+				<td class='hd' valign="middle" align="center" width="30" height="30" >Hidden</td>                                                                 
+				<td class='hd' valign="middle" align="center" width="30" height="30" >Isolation</td>
+				<td class='hd' valign="middle" align="center" width="30" height="30" >Max Clients</td>
+				<td class='hd' valign="middle" align="center" width="30" height="30" >BSSID</td>
+                    </tr>
+                       <%ejGetExtWl(wlMbssTbl)%>
+                 </table>
+                 </td>
+              </table>
+           <br>
+           <br>            
+           </div>   
+            <div id="divwlSsidIdx">
+            <br><br> <b>Manual Setup AP</b><br>
+            <br>              
+              <table border="0" cellpadding="0" cellspacing="0">
+               <tr> <td>&nbsp;</td> <td>&nbsp;</td> </tr>
+               <tr>
+                  <td width='180'>Select SSID</td>
+                  <td><select name='wlSsidIdx' size="1" onChange='wlSsidIdxChange()'>
+                  </select>
+                  </td>
+               </tr>
+            </table>
+              </div>                       
+            <div id="divwlAuthMode">
+              <table border="0" cellpadding="0" cellspacing="0">
+               <tr> <td>&nbsp;</td> <td>&nbsp;</td> </tr>
+               <tr>
+                  <td width='180'>Network Authentication</td>
+                  <td><select name='wlAuthMode' size="1" onChange='authModeChange(0)'>
+                  </select>
+                  </td>
+               </tr>
+            </table>
+              </div> 
+            <div id="wpaPreShareKey">
+               <table border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                     <td width='180'>WPA/WAPI passphrase</td>
+                     <td>
+                     <span id="text_wlWpaPsk">0</span>
+                     <span id="input_wlWpaPsk">
+                        <input type='password' autocomplete="new-password" name='wlWpaPsk' size='20' maxlength='63'>&nbsp;&nbsp;
+                        <A HREF="javascript:pin_window(document.forms[0].wlWpaPsk.value)">Click here to display</A>
+                     </span>
+                     </td>
+                  </tr>
+               </table>
+            </div>            
+
+            <div id="wlWpaD"><table border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                     <td width='180'>WPA/WAPI Encryption</td>
+                     <td><select name="wlWpa" onChange='encrypChange()'>
+                        </select>
+                     </td>
+                  </tr>
+               </table>
+            </div>
+           <div id="divApply">           
+              <table border="0" cellpadding="4" cellspacing="0">
+               <tr> <td>        
+               <input type='button' onClick='btnApply("wlextcfg.wl")' value='Apply/Save'>
+               </tr> </td>
+              </table>
+           </div>
+         </form>
+      </blockquote>
+   </body>
+</html>

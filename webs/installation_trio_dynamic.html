@@ -1,0 +1,376 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="x-frame-options" content="sameorigin">
+<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+<title>movistar</title>
+<link href="InstalacionWizard/css/style.css" rel="stylesheet" type="text/css" />
+<script src="InstalacionWizard/js/jquery-1.6.3.min.js" type="text/javascript"></script>
+<script src="InstalacionWizard/js/jquery-page.js" type="text/javascript"></script>
+</head>
+<body>
+<!--wrapper-->
+<div class="wrapper">
+<div class="wrapper2">
+	<div id="pageloading" style="display: none" >
+		<div id="loadingimg"><img src="/InstalacionWizard/img/loading.gif" width="102" height="116" /></div>
+	</div>
+    <!--top-->
+    <div class="topBorder">
+            <!--<div class="top_LLBox"><div id="home"><a href="installation_login.html"><img src="InstalacionWizard/img/home.png" width="45" height="45" /></a></div></div>-->
+            <!--<div class="top_LBox logoBox_in"></div>-->
+            <div class="top_LLBox">
+            <div id="home"><img src="/mhs/img/meun.png" width="45" height="45" /></div>
+            <div id="menu" class="toptitle2">MEN&Uacute</div>
+            <div id="pagemenu" class="menuList">
+                    <ul>
+                    <li><a href="installation_ontpw.html">Identificación ONT</a></li>
+                    <li><a href="installation_guide.html">Selección del servicio</a></li>
+                    </ul>
+            </div><!--pagemenu-->
+            </div><!--top_LLBox-->
+            <div class="top_CBox toptitle">Acceso al Configurador Router</div>
+            <div class="top_RRBox logoBox_in"><img src="InstalacionWizard/img/logo.png"/></div>
+    </div><!--top END-->
+    <!--stlye_mins-->
+    	<div class="topBorder2">
+            <div class="toptitle2">Acceso al Configurador Router</div>
+    	</div>
+    <!--stlye_mins end-->
+    <!--top_info m' l pc-->
+    <div class="top_info">
+			<ul>
+            	<li><span class="sub">Fabricante: <br>Mitrastar</span></li>
+                <li><span class="sub">Modelo: <br><% ejGet(boardID) %></span></li>
+                <li><span class="sub">Firmware: <br><% ejGet(sysVersion) %></span></li>
+				<li style="display:none" id="connect"><span class="sub">Router:<br>Conectado a Internet </span></li>	
+				<li style="display:none" id="disconnect"><span class="sub">Router:<br>Sin conexión a Internet </span></li>
+                <li><span class="sub">Nº serie del equipo: <br><% ejGet(gponsernum) %></span></li>
+                <li><span class="sub">Direcciones MAC: <br><% ejGet(devicemacaddr) %></span></li>
+                <li><span class="sub">Potencia óptica recibida[dBm]: <br><% ejGetOther(devicerxpower) %></span></li>
+            </ul>
+            <div class="items"><a href="javascript:void(0)" onclick="logoutBtu();">Cerrar sesión</a></div>
+    </div><!--top_info m' l pc END-->
+     <!--top_info m' l pc-->
+    <div class="top_info_S">
+    	<div id="hoverItems" class="itemsB"><a href="#">Tu equipo&nbsp;></a>
+        	<ul>
+            	<li><span class="sub">Fabricante: <br>Mitrastar</span></li>
+                <li><span class="sub">Modelo: <br><% ejGet(boardID) %></span></li>
+                <li><span class="sub">Firmware: <br><% ejGet(sysVersion) %></span></li>
+				<li style="display:none" id="connect"><span class="sub">Router: Conectado a Internet </span></li>	
+				<li style="display:none" id="disconnect"><span class="sub">Router: Sin conexión a Internet </span></li>             
+                <li><span class="sub">Nº serie del equipo: <br><% ejGet(gponsernum) %></span></li>
+                <li><span class="sub">Direcciones MAC: <br><% ejGet(devicemacaddr) %></span></li>
+                <li><span class="sub">Potencia óptica recibida[dBm]: <br><% ejGetOther(devicerxpower) %></span></li>
+            </ul>
+        </div>
+        
+      <div class="itemsB"><a href="javascript:void(0)" class="white" onclick="logoutBtu();">Cerrar sesión</a></div>
+      
+    </div><!--top_info m' l pc END-->
+    <!--location-->
+    <div class="locationTitle">Movistar TV</div><!--location end-->
+    
+    <!--MAIN-->
+<form id="nat_voip" name="nat_voip" method="post" action="instalacion.cmd">
+<div class="mainBorder">
+  		<div class="artBox" id="autoCalculate">
+       	<div class="tabBorder">
+			<div class="tabID">Dirección IP WAN Router (Referencia UC de Visord)</div>
+			<div class="tabInput">
+			  <label for="textfield"></label>
+			  <input type="text" name="uiViewTVIP" id="uiViewTVIP" class="chooseBox" SIZE="15" MAXLENGTH="15" onblur="doCalculateSubnetMaskandGateWay();"/>
+			</div><!--tabInput-->
+			<div class="tabID">(Nota: 10.X.X.X)</div>
+        </div><!--tabBorder-->
+        	
+        <div class="tabBorder">
+			<div class="tabID">Dirección IP Gateway  WAN ROUTER</div>
+			<div class="tabInput">
+			  <label for="textfield"></label>
+			  <input type="text" name="uiViewTVGW" id="uiViewTVGW" class="chooseBox" SIZE="15" MAXLENGTH="15"  />
+			</div>
+        </div><!--tabBorder-->
+            
+        <div class="tabBorder">
+			<div class="tabID">Máscara de Subred</div>
+			  <div class="tabInput">
+			  <input type="text" name="uiViewTVSubMask" id="uiViewTVSubMask" class="chooseBox" SIZE="15" MAXLENGTH="15" />
+			  </div>
+        </div><!--tabBorder-->
+        </div><!--artBox-->
+        <div id="logout" class="finBox">
+    	  <div class="artBox">¿Está seguro de que desea cerrar la sesión?<br/>
+            </div>
+            <div class="artBox">
+              <div class="leftBtu"><input type="button" name="button" id="button" value="Cancelar" class="checkBtu" onclick="closeDiv();"/></div>
+              <div class="rightBtu"><input type="button" name="button" id="button" value="Aceptar" class="checkBtu" onclick="javascript:location.href='logout.cmd'"/></div>
+            </div>
+        </div>
+</div><!--mainBorder END-->
+
+<div id="Voice">
+<!--location-->
+<div class="locationTitle">Línea de voz</div><!--location end-->
+    
+    <!--MAIN-->
+<div class="mainBorder">
+  		<div class="artBox">
+       	  <div class="tabBorder">
+			<div class="tabID">Número de teléfono</div>
+			<div class="tabInput">
+			  <input type="text" name="uiViewLineNumber" id="uiViewLineNumber" class="chooseBox" onblur="voipNumberCheck();"/>
+			  <input type="HIDDEN" name="sessionKey" id="sessionKey" value="<%ejGetOther(sessionKey)%>">
+			  <input type="HIDDEN" name="action" id="action" value="">
+			</div>
+          </div>
+        </div>
+</div><!--main END-->
+</div><!--Voice END-->
+<div class="mainBorder">
+        <div class="artBox">
+          <div class="leftBtu"><input value="<Volver" class="checkBtu"  onclick="backtosetup();"/></div>
+          <div class="rightBtu"><input value="Siguiente>" class="checkBtu" onclick="doSave();"/></div> 
+        </div>
+</div><!--main END-->
+</form>
+ 
+    <!--footer-->
+    <div class="footerBorder">
+    © Telefónica de España S.A.U. Todos los derechos reservados v 1.1
+    </div><!--footer END-->
+	
+</div></div><!--wrapper END-->
+
+</body>
+<script type="text/javascript">
+var wanip = '<%ejGet(mhsIptvWanIp)%>';
+var internet = '<%ejGetOther(sysInfo, wanStatus)%>';
+var voip = '<%ejGet(mhsinsVOIP)%>';
+	var flag;
+	if(internet == "0"){
+		flag=1;
+	}
+	else{
+	    flag=0;
+	}    
+	if(flag==1){
+		document.getElementById("connect").style.display="";		
+		document.getElementById("disconnect").style.display="none";
+	}else{
+		document.getElementById("disconnect").style.display="";		
+		document.getElementById("connect").style.display="none";
+	}
+	
+	if(voip == 0)
+	{   	
+		$("#Voice").hide();
+	}
+	
+	function backtosetup(){
+		loadingProcess(3000);
+		document.nat_voip.action.value ="4";	
+		document.nat_voip.submit();		
+	}
+	
+	function loadingProcess(second){
+		$("#pageloading").css("display","block");
+		$("#pageloading").fadeOut(second);
+	}
+
+function checkIPFormat(address,type)
+{
+	var IP = address;
+	IP = IP.replace(/ /g, "");
+	address = IP;
+	IPsplit = IP.split(".");
+	if(IPsplit.length != 4 )
+	{
+		return (false);
+	}
+	for(i = 0; i < 4; i++)
+		if((isNaN(IPsplit[i])) || (IPsplit[i] == 'undefined') || (IPsplit[i] == "")) 
+		{
+			return (false);
+		} 
+		else
+		{
+			if((parseInt(IPsplit[i], 10) > 255) || (parseInt(IPsplit[i], 10) < 0)) 
+			{
+				return (false);
+			}
+		}
+		
+	int_add0=parseInt(IPsplit[0], 10);
+	int_add1=parseInt(IPsplit[1], 10);
+	int_add2=parseInt(IPsplit[2], 10);	
+	int_add3=parseInt(IPsplit[3], 10);			
+	if(int_add0 == 0 || int_add0 == 127 || int_add0 > 223 )
+	{
+		return (false);
+	}		
+	
+	if(type==1){
+		if(int_add0!=172){
+			return false;
+		}	
+	}
+	if(type == 2)
+	{
+		if(int_add0 !=10 || int_add1 < 64 || int_add1 > 255)
+		{
+			return false;
+		}	
+	}
+	return (true);
+}
+
+function Subnetv4Check()
+{	
+	var mask=$("#uiViewTVSubMask").attr("value");
+	if ( !((mask == "0.0.0.0")||
+	(mask == "128.0.0.0")||
+	(mask == "192.0.0.0")||
+	(mask == "224.0.0.0")||
+	(mask == "240.0.0.0")||
+	(mask == "248.0.0.0")||
+	(mask == "252.0.0.0")||
+	(mask == "254.0.0.0")||
+	(mask == "255.0.0.0")||
+	(mask == "255.128.0.0")||
+	(mask == "255.192.0.0")||
+	(mask == "255.224.0.0")||
+	(mask == "255.240.0.0")||
+	(mask == "255.248.0.0")||
+	(mask == "255.252.0.0")||
+	(mask == "255.254.0.0")||
+	(mask == "255.255.0.0")||
+	(mask == "255.255.128.0")||
+	(mask == "255.255.192.0")||
+	(mask == "255.255.224.0")||
+	(mask == "255.255.240.0")||
+	(mask == "255.255.248.0")||
+	(mask == "255.255.252.0")||
+	(mask == "255.255.254.0")||
+	(mask == "255.255.255.0")||
+	(mask == "255.255.255.128")||
+	(mask == "255.255.255.192")||
+	(mask == "255.255.255.224")||
+	(mask == "255.255.255.240")||
+	(mask == "255.255.255.248")||
+	(mask == "255.255.255.252")||
+	(mask == "255.255.255.254")||
+	(mask == "255.255.255.255")) )
+	{		
+		return (false);
+	}    
+	return (true);
+}
+
+function checkVoipNumber(number){
+	var num = number;
+	var str = num.toString();
+	if(str.length!= 9)
+	{
+		return (false);
+	}
+	if(str.match(/([^0-9])+/))
+	{
+		return (false);
+	}
+	if((str.charAt(0)!= "9") && (str.charAt(0)!= "8"))
+	{
+		return (false);
+	}
+	return (true);
+}
+
+function iptvIpCheck(){
+	var tvipaddr = $("#uiViewTVIP").attr("value");
+	if(checkIPFormat(tvipaddr,1)==false){
+		return (false);
+	}
+	return (true);
+}
+
+function iptvGwCheck(){
+	var tvipgw = $("#uiViewTVGW").attr("value");
+	if(checkIPFormat(tvipgw,0)==false){
+		return (false);
+	}
+	return (true);
+}
+
+function voipNumberCheck(){
+	var phoneNum = $("#uiViewLineNumber").attr("value");
+	if(!checkVoipNumber(phoneNum))
+	{
+		alert("El número de teléfono es incorrecto.");
+	}
+	}
+function doSave(){
+	document.nat_voip.uiViewTVIP.value = document.nat_voip.uiViewTVIP.value.replace(/ /g, "");
+	document.nat_voip.uiViewTVGW.value = document.nat_voip.uiViewTVGW.value.replace(/ /g, "");
+	document.nat_voip.uiViewTVSubMask.value = document.nat_voip.uiViewTVSubMask.value.replace(/ /g, "");
+	if((checkIPFormat(document.nat_voip.uiViewTVIP.value,2)==false) ||
+	(checkIPFormat(document.nat_voip.uiViewTVGW.value,0)==false) ||
+	(Subnetv4Check(document.nat_voip.uiViewTVSubMask.value,0)==false))
+	{		
+		alert("Dirección IP no válida o rango")
+		return;
+	}
+	
+	if((voip!=0) && (checkVoipNumber(document.nat_voip.uiViewLineNumber.value)==false))
+	{
+		alert("El número de teléfono es incorrecto.");
+		return;
+	}
+	document.nat_voip.action.value ="6";
+	loadingProcess(3000);
+	document.nat_voip.submit();
+}
+
+function doCalculateSubnetMaskandGateWay()
+{
+	document.nat_voip.uiViewTVIP.value = document.nat_voip.uiViewTVIP.value.replace(/ /g, "");
+
+	if(checkIPFormat(document.nat_voip.uiViewTVIP.value, 2)==false)
+	{  
+		alert("Rango de direcciones IP no válida");
+		return;
+	}
+	var ipWanIptv = document.nat_voip.uiViewTVIP.value;
+	var arr_ipWanIptv = ipWanIptv.split(".");
+	var ip0 = parseInt(arr_ipWanIptv[0],10);
+	var ip1 = parseInt(arr_ipWanIptv[1],10);
+	var ip2 = parseInt(arr_ipWanIptv[2],10);
+	var ip3 = parseInt(arr_ipWanIptv[3],10);
+	//alert (ip0 + " . "+ip1 + " . "+ip2 + " . "+ip3);
+	if ((ip1<=63))
+	{
+		document.nat_voip.uiViewTVSubMask.value = "255.192.0.0";
+		document.nat_voip.uiViewTVGW.value = arr_ipWanIptv[0] + ".0.0.1";
+	}
+	else if ((ip1>=64) &&(ip1<=127))
+	{
+		document.nat_voip.uiViewTVSubMask.value = "255.192.0.0";
+		document.nat_voip.uiViewTVGW.value =  arr_ipWanIptv[0] +".64.0.1";
+	}
+	else if ((ip1>=128) && (ip1<=255))
+	{
+		document.nat_voip.uiViewTVSubMask.value = "255.128.0.0";
+		document.nat_voip.uiViewTVGW.value = arr_ipWanIptv[0] +".128.0.1";
+	}
+}
+
+
+$(document).ready(function() {
+	
+	
+});
+
+
+</script>
+</html>

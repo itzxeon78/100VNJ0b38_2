@@ -1,0 +1,365 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="x-frame-options" content="sameorigin">
+<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+<title>movistar</title>
+<link href="/mhs/css/style.css" rel="stylesheet" type="text/css" />
+<link href="/mhs/css/common.css" rel="stylesheet" type="text/css" />
+<script src="/mhs/js/jquery-1.6.3.min.js" type="text/javascript" ></script>
+<!--<script src="/mhs/js/jquery-page.js" type="text/javascript"></script>-->
+<!--Botton-->
+<script type="text/javascript" src="/mhs/js/main.js"></script>
+<!--<script type="text/javascript" src="/mhs/js/demo.js"></script>-->
+<!--<script type="text/javascript" src="/mhs/js/networkMap/applications.js"></script>-->
+<!--<script type="text/javascript" src="/mhs/js/index.js"></script>-->
+<!--<script type="text/javascript" src="/mhs/js/commons.js"></script>-->
+<!--<script type="text/javascript" src="/mhs/js/jquery.json-2.2.js"></script>-->
+<script type="text/javascript" src="/mhs/js/jquery.utils.homestation.min.js"></script>
+<!--<script type="text/javascript" src="/mhs/js/languages.js"></script>-->
+<script type="text/javascript" src="util.js"></script>
+</head>
+
+<script language="javascript">
+
+var passwdLimit = '<%ejGetOther(passwdLimitedSetting)%>';
+var passwdMaxLen = '<%ejGetOther(passwdLimitedLen, MAX)%>';
+var passwdMinLen = '<%ejGetOther(passwdLimitedLen, MIN)%>';
+
+function btnApply() {
+
+	var admin_pwd = "<%ejGet(adminPassword)%>";
+	var pwdNew = document.getElementById("pwdNew").value;
+	var pwdOld = document.getElementById("pwdOld").value;
+	var pwdCfm = document.getElementById("pwdCfm").value;
+	
+	var c; 
+	var i, isUpper = 0, isNum = 0, isSymbol = 0, strong; 
+	var sub = document.getElementById("alink");
+	var sub2 = document.getElementById("alink2");
+	if( admin_pwd != pwdOld) {
+	    // alert("Invalid Old password");
+		$('#content').text("Inválido Contraseña anterior.");
+		$('#tab1').fadeIn();
+         return;
+	}
+	
+/*	
+	if ( pwdNew == pwdOld ) {
+        // alert("Invalid New password");
+		$('#content').text("Inválido Contraseña nueva.");
+		$('#tab1').fadeIn();
+         return;
+      }
+*/
+
+	if ( pwdNew != pwdCfm ) {
+	// alert("La contraseña no coincide.");
+		$('#content').text("La contraseña no coincide.");
+		$('#tab1').fadeIn();
+         return;
+      }
+
+      var str = new String();
+
+      if (passwdLimit != '1') {
+         passwdMaxLen = 64;
+         passwdMinLen = 0;
+      }
+
+      str = pwdNew;
+
+	//Check blank spaces (the password is empty)
+	if (str.length == 0)
+	{
+		$('#content').text("Tu contraseña contiene caracteres no válidos. Recuerda que no puedes introducir espacios al inicio o final de la contraseña. Tampoco introducir varios espacios consecutivos.");
+		$('#tab1').fadeIn();
+		return;
+	}
+	  
+      if ( str.length > passwdMaxLen ) {
+         //alert('Password should not be longer than " + passwdMaxLen + " characters.');
+         $('#content').text("Longitud clave de acces o router incorrecta. Debe contener entre " + passwdMinLen + " y " + passwdMaxLen + " carateres");
+		 $('#tab1').fadeIn();
+         return;
+      }
+
+      if ( str.length < passwdMinLen ) {
+         // alert('Password should not be less than ' + passwdMinLen + ' characters.');
+         $('#content').text("Longitud clave de acces o router incorrecta. Debe contener entre " + passwdMinLen + " y " + passwdMaxLen + " carateres.");
+		 $('#tab1').fadeIn();
+         return;
+      }
+
+	  /*Check if valid ASCII & beginning / end of the password or more consecutive spaces*/
+	  if (invalidASCIIrange(str) == true || invalidSpaceUse(str) == true)
+	  {
+		 $('#content').text("Tu contraseña contiene caracteres no válidos. Recuerda que no puedes introducir espacios al inicio o final de la contraseña. Tampoco introducir varios espacios consecutivos.");
+		 $('#tab1').fadeIn();
+		 return;
+	  }
+
+	  /*Check if single space*/
+      if ( str.indexOf(' ') != -1 ) {
+      //   alert('Password cannot contain a space.');
+		$('#content').text("La contraseña no puede contener un espacio.");
+		$('#tab1').fadeIn();
+         return;
+      }
+
+    for (i = 0; i < str.length; i++) 
+    { 
+		var c = pwdNew.charAt(i); 
+
+		if(!isNaN(c)) 
+				isNum=1; 
+		if (isNaN(c) && c == c.toUpperCase() && c != c.toLowerCase()) 
+				isUpper=1; 
+		if (isNaN(c) && c == c.toUpperCase() && c == c.toLowerCase()) 
+				isSymbol=1;      
+    } 
+    strong=isNum+isUpper+isSymbol; 
+/*	
+	if(strong<2){ 
+	   // alert("Password should contain at least two kinds of characters, such as uppercase letter, symbol or number."); 
+		//alert(document.getElementById("MLG_Password_Errors_7_Txt").innerHTML); 
+		$('#content').text("La contraseña debe contener al menos dos tipos de caracteres, tal como letra mayúscula, símbolo o número de.");
+		$('#tab1').fadeIn();
+		return; 
+	} 	
+*/	
+
+	var data = {
+		inUserName: encodeUrl("<%ejGet(adminUserName)%>"),
+		inPassword: encodeUrl(pwdNew),
+		inOrgPassword: encodeUrl(pwdOld),
+		sessionKey: <% ejGetOther(sessionKey)%>
+	};
+
+	var url = "/password.cgi";
+	var callback = function(responseData, textStatus){
+		var msg=$(responseData).find('#msg').html();
+		//alert(msg);
+		
+		if ( msg.indexOf('successful') != -1 ) {
+			$('#content2').text("Su contraseña se ha modificado correctamente.");
+			sub2.click();
+			//document.getElementById("form1").reset();
+		}
+		else
+		{
+			$('#content2').text("Su contraseña se ha modificado fracasado.");
+			sub2.click();
+			//document.getElementById("form1").reset();
+		}
+	};
+	$.post(url, data, callback, "html");
+		
+	loadingProcess();
+}
+
+function updatePassWordstrength(){
+    var value;
+		
+	value = $("#pwdNew").attr("value");
+			    
+    var n = 0;
+    if (value != null) 
+        n = value.length;
+    if (n < 0) 
+        n = 0;
+    var L = 0;
+    if (n == 0) 
+        L = 0;
+    else if (n < 2) 
+        L = 0;
+    else if (n >= 4 && n < 6) 
+        L = 1;
+    else if (n >= 6 && n < 8) 
+        L = 2;
+	else if (n >= 8) 
+        L = 2;
+	    
+	$("#pass_level_value").css("margin-left", (L *80) + "px");
+    $("#pass_level_value").attr("key", "ADMIN_PASS_STRENGTH_" + L);
+	reloadTexts();    
+}
+
+$(document).ready(function() {
+
+	$.fx.speeds._default = 500;
+	jQuery.getJSON('/mhs/config.json', function(data, textStatus){
+		CONFIG = data.CONFIG;
+		configurationLoaded();
+	 });
+	 
+	 updatePassWordstrength();
+});
+
+function loadingProcess(){
+	$("#pageloading").css("display","block");	
+	//setTimeout("location.reload(true);",5000);
+	$("#pageloading").fadeOut(5000)
+}
+
+function closeDiv2(){
+	$('Div.finBox').hide();
+	location.reload(true);
+}
+
+function invalidASCIIrange(value)
+{
+	for (i = 0; i < value.length; i++)
+	{
+		var tmp = value.charCodeAt(i);
+		if ((tmp < 32) || (tmp > 126))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+function invalidSpaceUse(value)
+{
+	if (value.match("  ") != null)
+	{
+		return true;
+	}
+	if (value.indexOf(" ") == 0)
+	{
+		return true;
+	}
+	if (value.indexOf(" ") == value.length - 1)
+	{
+		return true;
+	}
+	return false;
+}
+
+</script>
+
+<body>
+ <!--top-->
+ <!--wrapper-->
+<div class="wrapper">
+<div class="wrapper2">
+  	<div id="pageloading" style="display: none" >
+		<div id="loadingimg"><img src="/mhs/images/loading.gif" width="102" height="116" /></div>
+	</div>
+    <div class="topBorder">
+            <div class="top_LLBox"><div id="home"><img src="/mhs/img/meun.png" width="45" height="45" /></div><div id="menu" class="toptitle2">MENÚ</div>
+            	<div id="pagemenu" class="menuList">
+                	<ul>
+                    	<!--li><a href="InicioLogout.cmd">Inicio</a></li-->
+                        <li><a href="mhs.html">WiFi</a></li>
+                        <li><a href="wifi5g.html">WiFi Plus</a></li>
+                        <li><a href="wifisecond.html">WiFi Invitados</a></li>
+                        <li><a href="PortForwardWizard.cmd?page=1">Puertos</a></li>
+                        <li class="sec"><a href="#">Red local&nbsp;></a>
+                        	<ul>
+                            	<li><a href="networkmap.html">Mapa de red local</a></li>
+                                <li><a href="lan_v4.html">Red Local</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="multipuesto.html">Multipuesto / Monopuesto</a></li>
+                        <li><a href="lan_v6.html">IPv6</a></li>
+                        <li><a href="changepasswd.html">Cambio contraseña del router</a></li>
+                        <li><a href="firmwareupgrad.html">Actualizaciones Firmware</a></li>
+                        <li><a href="configsetting.html">Otras funcionalidades</a></li>
+                        <li class="sec"><a href="#">Ayuda&nbsp;></a>
+                        	<ul>
+                            	<li><a href="wizard_help.html">Ayuda configurador web</a></li>
+                                <li><a href="sysinfo.html">Acerca de</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="advancedsettings.html">Configuración avanzada</a></li>
+                    </ul></div>
+                </div>
+            <div class="top_CBox toptitle">Acceso al Configurador Router</div>
+            <div class="top_RRBox logoBox_in"><img src="/mhs/img/logo.png"/></div>
+    </div><!--top END-->
+    <!--stlye_mins-->
+    	<div class="topBorder2">
+            <div class="toptitle2">Acceso al Configurador Router</div>
+    	</div>
+    <!--stlye_mins end-->
+    <div class="mainBorder"><div class="items"><a href="javascript:void(0)" onclick="logoutBtu();">Cerrar sesión</a></div></div>
+    <!--location-->
+    <div class="locationTitle">Cambio contraseña del router</div><!--location end-->
+    
+    <!--MAIN-->
+<div class="mainBorder">
+	<div id="logout" class="finBox">
+    	<div class="artBox">¿Está seguro de que desea cerrar la sesión?<br/>
+            </div>
+            <div class="artBox">
+              <div class="leftBtu"><input type="button" name="button" id="button" value="Cancelar" class="checkBtu" onclick="closeDiv();"/></div>
+              <div class="rightBtu"><input type="button" name="button" id="button" value="Aceptar" class="checkBtu" onclick="javascript:location.href='logout.cmd'"/></div>
+            </div>
+    </div>
+    
+   	<div class="artBox black2">Desde aquí podrás cambiar la contraseña de acceso al router. Se recomienda que la clave tenga al menos 8 caracteres alfanuméricos:</div>
+	<form id="form1">
+  		<div class="artBox">
+        	<div class="tabBorder">
+            <div class="tabID">Contraseña anterior:</div><div class="tabInput"><input name="pwdOld" id="pwdOld" type="password" autocomplete="new-password" class="chooseBox" id="textfield4"/></div>
+            </div>
+            
+            
+            
+          <div class="tabBorder">
+            <div class="tabID">Contraseña nueva:</div><div class="tabInput"><input name="pwdNew" id="pwdNew" type="password" autocomplete="new-password" class="chooseBox" onkeyup="updatePassWordstrength();" /></div>
+            </div>
+            
+            <div class="tabBorder_nM">			
+            <div class="tabID2">Nivel de seguridad de la contraseña</div><div class="tabInput2"><div class="wrmBox"><span class="trad" id="pass_level_value" key="ADMIN_PASS_STRENGTH_0"></span></div></div>
+            </div>
+            
+          <div class="tabBorder">
+            <div class="tabID">Confirmar nueva contraseña:</div>
+            <span class="tabInput">
+            <input name="pwdCfm" id="pwdCfm" type="password" autocomplete="new-password" class="chooseBox" id="textfield"/>
+            </span></div>
+            
+        </div>
+  		<div class="artBox">
+  		  <div class="leftBtu">
+  		    <input type="reset" value="Cancelar" class="checkBtu"/>
+	      </div>
+  		  <div class="rightBtu">
+  		    <input type="button" value="Aceptar" class="checkBtu" onClick='btnApply()' />
+	      </div>
+        <div id="fin" class="fin_item">
+           <ul>
+             <li id="calltab1"><a class="finBox" id="alink" href="#tab1">alink</a></li>
+             <li id="calltab2"><a class="finBox" id="alink2" href="#tab2">alink2</a></li>
+           </ul>
+        </div><!--fin-->
+  </form>
+  </div>
+        <div id="tab1" class="finBox">
+            <div class="artBox" id="content" align="center">content<br/>
+            </div>
+            <div class="artBox">
+                <div align="center"><input  name="button" id="button" value="Cerrar" style="text-align:center" class="checkBtu2" onclick="closeDiv();"/></div>
+            </div>
+        </div><!-- #tab1 finBox end-->
+         <div id="tab2" class="finBox">
+            <div class="artBox" id="content2" align="center">content<br/>
+            </div><!--artBox-->
+            <div class="artBox">
+                <div align="center"><input  name="button" id="button" value="Cerrar" style="text-align:center" class="checkBtu2" onclick="closeDiv2();"/></div>
+            </div>
+        </div><!-- #tab2 finBox end-->
+<!--location--><!--location end--><!--location--><!--location end--></div><!--main END-->
+    
+    <!--footer-->
+    <div class="footerBorder">
+    © Telefónica de España S.A.U. Todos los derechos reservados v 1.1
+    </div><!--footer END-->
+	
+</div></div><!--wrapper END-->
+</body>
+</html>

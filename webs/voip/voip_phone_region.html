@@ -1,0 +1,162 @@
+<html><head>
+<meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+<link rel=stylesheet href='../stylemain.css' type='text/css'>
+<link rel=stylesheet href='../colors.css' type='text/css'>
+<script language="javascript">
+<!-- hide 
+
+var currentSp = '<%ejGetVoice(numSp)%>'; //current Profile count
+var voiceRunning = '<%ejGetVoice(voiceStatus)%>';
+var dialMethod = '<%ejGetVoice(dialMethod)%>';
+var locList = '<%ejGetVoice(localeList)%>';
+var selectedLocale = '<%ejGetVoice(localeName)%>';
+var sessionkey = '<%ejGetOther(sessionKey)%>';
+
+/* test sample
+var maxSp = '10'; // MaxProfileCount
+var currentSp = '1'; //current Profile count
+var voiceRunning = '0';
+var dialMethod = 'DialMethod_EUROP';
+var locList = 'AUS - AUSTRAILIA,BEL - BELIGIUM,BRA - BRAZIL,CHL - CHILE,CHN - CHINA,CZH - CZECH,DNK - DENMARK,ETS - ETSI,FIN - FINLAND,FRA - FRANCE,DEU - GERMANY,HUN - HUNGARY,IND - INDIA,ITA - ITALY,JPN - JAPAN,NLD - NETHERLANDS,NZL - NEWZEALAND,USA - NORTHAMERICA,ESP - SPAIN,SWE - SWEDEN,NOR - NORWAY,CHE - SWITZERLAND,T57 - TR57,GBR - UK,TWN - TAIWAN';
+var selectedLocale = ' sl0 = "USA";';
+*/
+
+for (var i = 0; i < currentSp; i++) {
+   eval( "var sl" + i + " \= \"\" " ); /*selectedLocale per profile*/
+}
+if ( selectedLocale.search("ejGetVoice") < 0 ){
+	eval(selectedLocale);
+}
+
+function printLocaleListBox(){
+   var tokLocCodeList = locList.split(",");
+
+   for(i = 0; i < tokLocCodeList.length; i++)
+   {
+      var tokCodeNameList = tokLocCodeList[i].split(" - ");
+      document.writeln("<option value=\"" + tokCodeNameList[0] + "\" selected>");
+      document.writeln(tokCodeNameList[0] + " - " + tokCodeNameList[1]);
+   }
+}
+
+function btnDefaultSip(current_view) {
+   var loc = 'voicesipsetdefault.cmd?';
+   loc += 'currentview=' + current_view;
+
+   //Stripping quotes and spaces
+   loc = loc.replace(/['" ]/g,'');
+   loc += '&sessionKey='+sessionkey;
+
+   var code = 'location="' + loc + '"';
+   eval(code);
+}
+
+function btnStartSip(current_view) {
+
+	var voiceRunning='<%ejGetVoice(voiceInUse)%>';	 
+	if(parseInt(voiceRunning)==1){
+		alert("  Your settings will take effect after the end of the call  \n");
+	}	
+
+   var loc = 'voicesipstart.cmd?';
+   loc += addParamsToQuery( loc, current_view );
+   
+   //Stripping quotes and spaces
+   loc = loc.replace(/['" ]/g,'');
+   loc += '&sessionKey='+sessionkey;
+
+   var code = 'location="' + loc + '"';
+   eval(code);
+}
+
+function enableButtons(){
+   var buttonStart = document.getElementById("StartButton");
+   var buttonDefault = document.getElementById("DefaultButton");
+
+   if ( voiceRunning == 1 ) {
+      buttonStart.disabled = true;
+      buttonDefault.disabled = false;
+   } else {
+      buttonStart.disabled = false;
+      buttonDefault.disabled = false;
+   }
+}
+
+function addParamsToQuery( loc_init, current_view) {
+
+   var loc = loc_init;   
+   with ( document.forms[0] ) {
+      loc += 'currentview=' + current_view; 
+      
+      loc += '&localeName0=' + localeName.value.replace(/['" ]/g,'');
+      loc += '&dialMethod=' + dialMethodSelect.value.replace(/['" ]/g,'');
+   }
+   
+   return loc;
+}
+
+function frmLoad() {
+	with ( document.forms[0] ) {
+		enableButtons();
+		for(var i=0;i<dialMethodSelect.length;i++){
+			if(dialMethodSelect.options[i].value == dialMethod){
+				dialMethodSelect.options[i].selected = true;
+			}
+		}
+		
+		//localeName.value = selectedLocale;	
+		localeName.value = eval('sl'+ 0); // always use the first profile setting
+	}
+}
+// done hiding -->
+</script>
+</head>
+
+<body onload="frmLoad()">
+<form id="form1" name="form1" method="post" action="">
+<div class="config-block">
+	<div class="left">
+  <div class="right">
+			<div class="headline">Region Settings </div>
+      <br class="clearfloat" />
+			<!-- configuration beginning -->
+		<div class="root">
+		  <table width="300" border="0">
+                <tr>
+                  <td width="60%">Region Settings</td>
+                  <td width="40%"><select name="localeName" size="1">
+                  <script TYPE="text/javascript">
+                     printLocaleListBox()
+                  </script>
+               </select></td>
+                </tr>
+          </table>
+		</div>
+			<div class="root">
+			  <table width="300" border="0">
+                <tr>
+                  <td width="60%">Call Service Mode</td>
+                  <td width="40"><select name="dialMethodSelect">
+                    <option value="DialMethod_EUROP">Europe Type</option>
+                    <option value="DialMethod_USA" selected="selected">USA Type</option>
+                  </select></td>
+                </tr>
+              </table>
+			</div>
+			<div class="btn-block">
+			  <p>			    
+			    <input type='button' onClick="btnStartSip('voip_phone_region')" value='Apply' ID="StartButton" disabled="true">
+			    <input onclick="btnDefaultSip('voip_phone_region')"  value="Cancel" id="DefaultButton" disabled="true" type="button">
+		            </p>
+		</div>
+			<!-- configuration ending -->
+			<br class="clearfloat" />
+	  </div>
+		
+		<br class="clearfloat" />
+	</div>
+</div>
+<div class="config-bottom"><br class="clearfloat" /></div><br />
+</form>
+</body>
+</html>

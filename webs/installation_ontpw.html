@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="x-frame-options" content="sameorigin">
+<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+<title>movistar</title>
+<link href="InstalacionWizard/css/style.css" rel="stylesheet" type="text/css" />
+<script src="InstalacionWizard/js/jquery-1.6.3.min.js" type="text/javascript"></script>
+<script src="InstalacionWizard/js/jquery-page.js" type="text/javascript"></script>
+</head>
+
+<body>
+<!--wrapper-->
+<div class="wrapper">
+<div class="wrapper2">
+    <!--top-->
+    <div class="topBorder">
+		<div class="top_LLBox">
+			<div id="home"><img src="/mhs/img/meun.png" width="45" height="45" /></div>
+			<div id="menu" class="toptitle2">MEN&Uacute</div>
+			<div id="pagemenu" class="menuList">
+				<ul>
+					<li><a href="installation_ontpw.html">Identificación ONT</a></li>
+					<li><a href="installation_guide.html">Selección del servicio</a></li>
+				</ul>
+			</div><!--pagemenu-->
+		</div><!--top_LLBox-->
+            <!--<div class="top_LBox logoBox_in"></div>-->
+            <div class="top_CBox toptitle">Acceso al Configurador Router</div>
+            <div class="top_RRBox logoBox_in"><img src="InstalacionWizard/img/logo.png"/></div>
+    </div><!--top END-->
+    <!--stlye_mins-->
+    	<div class="topBorder2">
+            <div class="toptitle2">Acceso al Configurador Router</div>
+    	</div>
+    <!--stlye_mins end-->
+    <!--top_info m' l pc-->
+    <div class="top_info">
+			<ul>
+            	<li><span class="sub">Fabricante: <br>Mitrastar</span></li>
+                <li><span class="sub">Modelo: <br><% ejGet(boardID) %></span></li>
+                <li><span class="sub">Firmware: <br><% ejGet(sysVersion) %></span></li>
+				<li style="display:none" id="connect"><span class="sub">Router: <br>Conectado a Internet </span></li>	
+				<li style="display:none" id="disconnect"><span class="sub">Router: <br>Sin conexión a Internet </span></li>
+                <li><span class="sub">Nº serie del equipo: <br><% ejGet(gponsernum) %></span></li>
+                <li><span class="sub">Direcciones MAC: <br><% ejGet(devicemacaddr) %></span></li>
+                <li><span class="sub">Potencia óptica recibida[dBm]: <br><% ejGetOther(devicerxpower) %></span></li>
+            </ul>
+            <div class="items"><a href="javascript:void(0)" onclick="logoutBtu();">Cerrar sesión</a></div>
+    </div><!--top_info m' l pc END-->
+     <!--top_info m' l pc-->
+    <div class="top_info_S">
+    	<div id="hoverItems" class="itemsB"><a href="#">Tu equipo&nbsp;></a>
+        	<ul>
+            	<li><span class="sub">Fabricante: <br>Mitrastar</span></li>
+                <li><span class="sub">Modelo: <br><% ejGet(boardID) %></span></li>
+                <li><span class="sub">Firmware: <br><% ejGet(sysVersion) %></span></li>
+				<li style="display:none" id="connect"><span class="sub">Router: <br>Conectado a Internet </span></li>	
+				<li style="display:none" id="disconnect"><span class="sub">Router: <br>Sin conexión a Internet </span></li>             
+                <li><span class="sub">Nº serie del equipo: <br><% ejGet(gponsernum) %></span></li>
+                <li><span class="sub">Direcciones MAC: <br><% ejGet(devicemacaddr) %></span></li>
+                <li><span class="sub">Potencia óptica recibida[dBm]: <br><% ejGetOther(devicerxpower) %></span></li>
+            </ul>
+        </div>
+        
+      <div class="itemsB"><a href="javascript:void(0)" class="white" onclick="logoutBtu();">Cerrar sesión</a></div>
+      
+    </div><!--top_info m' l pc END-->
+    <!--location-->
+    <div class="locationTitle">Identificación ONT</div><!--location end-->
+    
+    <!--MAIN-->
+<div class="mainBorder">
+	<div id="logout" class="finBox">
+    	<div class="artBox">¿Está seguro de que desea cerrar la sesión?<br/>
+            </div>
+            <div class="artBox">
+              <div class="leftBtu"><input type="button" name="button" id="button" value="Cancelar" class="checkBtu" onclick="closeDiv();"/></div>
+              <div class="rightBtu"><input type="button" name="button" id="button" value="Aceptar" class="checkBtu" onclick="javascript:location.href='logout.cmd'"/></div>
+            </div>
+    </div>
+<form name="ontid"  method="post" id="ontid" action="instalacion.cmd">
+   	<div class="artBox black2">Introduce el identificador de la ONT y pulsa el botón “Aceptar”. Al pulsal "Aceptar" se producirá la configuración remota del equipo. Esta operación puede llevar unos minutos y es posible que se produzca el reinicio del equipo.</div>
+  	<div class="artBox">
+        <input name="gponPassword" value="" type="text" id="gponPassword" class="txtBox black" <%ejGetOther(disableOntPW)%>/>
+        <input name="acceptontpw" type="button" id="acceptontpw" class="sendBtu" value="Aceptar"<%ejGetOther(disableOntPW)%>/>
+        <input type="HIDDEN" name="sessionKey" id="sessionKey" value="">
+        <input type="HIDDEN" name="action" id="action" value="">
+        </div>
+        <div class="artBox">
+        <div class="u15">
+        	<span class="sub">Atención:</span> Es necesario tener el cable óptico desconectado del equipo para introducir el identificador de la ONT.<br/>
+   	    La incorrecta introducción  de este identificador puede ocasionar la pérdida del servicio.</div>
+        </div>
+</form>  
+</div><!--main END-->
+    
+    <!--footer-->
+    <div class="footerBorder">
+    © Telefónica de España S.A.U. Todos los derechos reservados v 1.1
+    </div><!--footer END-->
+
+</div></div><!--wrapper END-->
+
+<script type="text/javascript">
+
+var wanip = '<%ejGet(mhsIptvWanIp)%>';
+var internet = '<%ejGetOther(sysInfo, wanStatus)%>';
+var flag;
+	if(internet == "0"){
+		flag=1;
+	}
+	else{
+	    flag=0;
+	} 
+	if(flag==1){
+		document.getElementById("connect").style.display="";		
+		document.getElementById("disconnect").style.display="none";
+	}else{
+		document.getElementById("disconnect").style.display="";		
+		document.getElementById("connect").style.display="none";
+	}
+
+var gponPassword = '<% ejGet(gponPassword)%>';
+
+if(gponPassword != "1234567890")
+{
+	var str = gponPassword.toString();
+	document.ontid.gponPassword.value = str.substring(2);
+}
+
+$(document).ready(function()
+{
+	$('#acceptontpw').click(function()
+	{
+		var ontpassword = document.ontid.gponPassword.value;
+
+		/*Hex input format*/
+		if (( ontpassword.length != 14 )&&( ontpassword.length != 20 ))
+		{
+			alert( "Formato de identificador invalido.  Debe estar formado por 14 caracteres en hexadecimal." );
+			return false;
+		}
+
+		var regu = /^[0-9a-fA-F]+$/;
+		if ( regu.test( ontpassword ) )
+		{
+			var tmpONT = ontpassword.toUpperCase();
+			document.ontid.gponPassword.value = "0x" + tmpONT;
+		}
+		else
+		{
+			//alert( "Error: Wrong GPON Password format, please input correct HEX value" );
+			alert( "el tamaño no es el pre-establecido" );
+			return false;
+		}
+
+		document.ontid.action.value = "0";
+		document.ontid.sessionKey.value = <%ejGetOther(sessionKey)%>;
+		document.ontid.submit();
+	});
+});
+</script>
+</body>
+</html>

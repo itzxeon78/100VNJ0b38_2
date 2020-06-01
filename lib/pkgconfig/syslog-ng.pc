@@ -1,0 +1,17 @@
+# Package Information for pkg-config
+prefix=
+exec_prefix=${prefix}
+datarootdir=${prefix}/share
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+toolsdir=${datarootdir}/tools
+moduledir=/lib/syslog-ng
+scldir=${datarootdir}/include/scl
+ivykis=internal
+
+Name: syslog-ng-dev
+Description: Dev package for syslog-ng module
+Version: 3.7.3
+Requires: glib-2.0 eventlog
+Libs: -L${libdir} -L/home/hill/TEF/brcm_414/Spain/FW/release/release_ES_100VNJ0b33/targets/GPT-2541GNAC-TEF/fs.install/lib/gpl/ -lsyslog-ng
+Cflags: -I${includedir}/syslog-ng -I${includedir}/syslog-ng/ivykis

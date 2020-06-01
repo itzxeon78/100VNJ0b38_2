@@ -1,0 +1,968 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="x-frame-options" content="sameorigin">
+<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+<title>movistar</title>
+<link href="/mhs/css/style.css" rel="stylesheet" type="text/css" />
+<!--Botton-->
+<link type="text/css" rel="stylesheet" href="/mhs/css/ui.switchbutton.min.css" />
+<!--<link type="text/css" rel="stylesheet" href="css/demo.css" />-->
+<script type="text/javascript" src="/mhs/js/jquery-1.6.3.min.js"></script>
+<script type="text/javascript" src="/mhs/js/jquery.tmpl.min.js"></script>
+<script type="text/javascript" src="/mhs/js/jquery-ui-1.8.16.custom.min.js"></script>
+<script type="text/javascript" src="/mhs/js/jquery.switchbutton.min.js"></script>
+<script type="text/javascript" src="/mhs/js/main.js"></script>
+<!--<script type="text/javascript" src="/mhs/js/demo.js"></script>-->
+<!--<script type="text/javascript" src="/mhs/js/networkMap/applications.js"></script>-->
+<!--<script type="text/javascript" src="/mhs/js/index.js"></script>-->
+<!--<script type="text/javascript" src="/mhs/js/commons.js"></script>-->
+<!--<script type="text/javascript" src="/mhs/js/jquery.json-2.2.js"></script>-->
+<script type="text/javascript" src="/mhs/js/jquery.utils.homestation.min.js"></script>
+<!--<script type="text/javascript" src="/mhs/js/languages.js"></script>-->
+
+<script type="text/javascript">
+$(window).load(function(){
+	var x=1;
+	$('#about1-'+x).fadeIn(100);
+	btushow(x);
+	
+	$('#pver').click(function(){
+		$('#about1-'+x).fadeOut(100);
+		x++;
+		$('#about1-'+x).fadeIn(100);
+		btushow(x);
+		//$('#goDown').hide();
+		//$('#goUp').show();
+		})
+	$('#next').click(function(){
+		$('#about1-'+x).fadeOut(100);
+		x--;
+		$('#about1-'+x).fadeIn(100);
+		btushow(x);
+		})
+	
+	
+	
+})
+function btushow(x){
+	if(x<=1){
+		$('#pver').hide();
+		$('#next').show();
+	}else if(x>=3){
+		$('#next').hide();
+		$('#pver').show();
+	}else{
+		$('#next,#pver').show();
+	}
+   return
+}
+</script>
+<script type="text/javascript">
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+</script>
+<script type="text/javascript">
+var EmptyIndex = 0;
+var delnum = 0;
+var StartWanN = 0;
+var EndWanN = 0;
+var StartLanN = 0;
+var EndLanN = 0;
+var gblsessionKey = <% ejGetOther(sessionKey)%>;
+
+
+
+function isRuleAlreadyExisted()
+{
+	var errFlag = 0;
+	var parsePortMapping = "<%ejGetOther(parseportforward)%>";
+	var parsePortMappingTable = parsePortMapping.split("&");
+	var totalMappings = parsePortMappingTable.length;
+	var WanPortinRange = 0;
+	var LanPortinRange = 0;
+	var setHostIp = document.form1.IPAddr.value.split(".");
+	if(parsePortMapping.length == 0)
+	{
+		return 0; //no possibility of duplicated rules
+	}
+	if(document.form1.ruleStartWanN.value.match(':') != null)
+	{
+		var tmp = document.form1.ruleStartWanN.value.split(":");
+		StartWanN = parseInt(tmp[0]);
+		EndWanN = parseInt(tmp[1]);
+		if(EndWanN == 0)
+		EndWanN = StartWanN;
+		WanPortinRange = 1;
+	}
+	else
+	{
+		StartWanN =  parseInt(document.form1.ruleStartWanN.value);
+		EndWanN = StartWanN;
+	}
+	
+	if(document.form1.ruleStartLanN.value.match(':')!=null)
+	{
+		var tmp = document.form1.ruleStartLanN.value.split(":");
+		StartLanN = parseInt(tmp[0]);
+		EndLanN = parseInt(tmp[1]);
+		LanPortinRange = 1;
+	}
+	else
+	{
+		StartLanN =  parseInt(document.form1.ruleStartLanN.value);
+		EndLanN = StartLanN;
+	}
+	//alert ("SET RULE:\n"+StartWanN+":"+EndWanN+"to"+StartLanN+":"+EndLanN+"\nTotal Rules: "+totalMappings);
+
+	for(i = 0; i < totalMappings; i++){
+		var subMappingTables = parsePortMappingTable[i].split("|");
+		var checkIndex = subMappingTables[0];
+		var checkDescript = subMappingTables[1];
+		var checkProtocol = subMappingTables[2];
+		var checkIP = subMappingTables[3].split(".");
+		var checkWanPortStart = parseInt(subMappingTables[4]);
+		var checkWanPortEnd = parseInt(subMappingTables[5]);
+		var checkLanPortStart = parseInt(subMappingTables[6]);
+		var checkLanPortEnd = parseInt(subMappingTables[7]);
+
+		var ProtocalChar = "ALL";
+		if(document.getElementById("select_trafficN").selectedIndex == 0)
+		{
+			ProtocalChar = "TCP";
+		}
+		else if(document.getElementById("select_trafficN").selectedIndex == 1)
+		{
+			ProtocalChar = "UDP";
+		}
+
+		if((checkProtocol == ProtocalChar)||(ProtocalChar == "ALL"))
+		{
+			if(WanPortinRange)
+			{
+				//range port
+				if((StartWanN >= checkWanPortStart) && (StartWanN <= checkWanPortEnd))
+					errFlag++;
+				else if((EndWanN >= checkWanPortStart) && (EndWanN <= checkWanPortEnd))
+					errFlag++;
+				else if((StartWanN < checkWanPortStart) && !(EndWanN < checkWanPortStart))
+					errFlag++;
+				else if((StartWanN > checkWanPortEnd) && !(EndWanN > checkWanPortStart))
+					errFlag++;
+			}
+			else
+			{
+				//single port
+				if(StartWanN >= checkWanPortStart && StartWanN <= checkWanPortEnd)
+					errFlag++;
+			}
+
+			if((parseInt(setHostIp[0]) == parseInt(checkIP[0]))&&(parseInt(setHostIp[1]) == parseInt(checkIP[1]))&&(parseInt(setHostIp[2]) == parseInt(checkIP[2]))&&(parseInt(setHostIp[3]) == parseInt(checkIP[3])))
+			{
+			
+				//check if wan ports conflict
+				if(LanPortinRange)
+				{
+					//range port
+					if((StartLanN >= checkLanPortStart) && (StartLanN <= checkLanPortEnd))
+						errFlag++;
+					else if((EndLanN >= checkLanPortStart) && (EndLanN <= checkLanPortEnd))
+						errFlag++;
+					else if((StartLanN < checkLanPortStart) && !(EndLanN < checkLanPortStart))
+						errFlag++;
+					else if((StartLanN > checkLanPortEnd) && !(EndLanN > checkLanPortStart))
+						errFlag++;
+				}
+				else
+				{
+					//single port
+					if(StartLanN >= checkLanPortStart && StartLanN <= checkLanPortEnd)
+						errFlag++;
+				}
+						 
+			}
+		}
+		
+		if (errFlag!=0)
+		{
+			return 1;
+		}
+	}
+	
+	return 0;
+}
+
+function inValidIPAddr(Address)
+{
+//alert(Address);
+  var address = Address.match("^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$");
+  var digits;
+  var i;
+  var gatewayIP = '<%ejGet(ethIpAddress)%>';
+  if(Address == gatewayIP)
+  {
+    alert("No es posible abrir puertos para la dirección del router 192.168.1.1.");
+    return true;
+  }
+
+  if(address == null) { 
+  	//alert(window.parent.document.getElementById("MLG_IP_Invalid_Error").innerHTML +" " + Address);
+	alert(_("IP_ADDRESS_ERROR_1"));
+  	return true;
+  }
+  
+  digits = address[0].split(".");
+  for(i=0; i < 4; i++)
+  {
+  	if((Number(digits[i]) > 255 ) || (Number(digits[i]) < 0 ) || (Number(digits[0]) > 223) || (digits[i] == null))
+  	{ 
+  		//alert(window.parent.document.getElementById("MLG_IP_Invalid_Error").innerHTML +" " +Address);
+		alert(_("IP_ADDRESS_ERROR_1"));
+  		return true;
+  	}
+  }
+  if(!isValidIpAddr(digits[0],digits[1],digits[2],digits[3],false))
+  {
+	//alert(window.parent.document.getElementById("MLG_IP_Invalid_Error").innerHTML +" " + Address);
+	alert(_("IP_ADDRESS_ERROR_1"));
+  	return true;
+  }
+  return false;
+}
+
+function isValidIpAddr(ip1,ip2,ip3,ip4)
+{
+if(ip1==0 || ip4==0 || ip4==255 || ip1==127 )	
+	return false;			
+
+return true;	
+}
+function chkPortRange()
+{	
+	port = parseInt(StartWanN);
+	port2 = parseInt(EndWanN);
+	port3 = parseInt(StartLanN);
+	port4 = parseInt(EndLanN);
+	
+	if (port > 65535 || port < 1 || port2 > 65535 || port2 < 1 || isNaN(port) || isNaN(port2) || port3 > 65535 || port3 < 1 || port4 > 65535 || port4 < 1 || isNaN(port3) || isNaN(port4))
+	{	
+		//alert(document.getElementById("MLG_PortRangeError_JS").innerHTML);
+		alert("Debe ingresar puertos comprendidos dentro del rango de (0-65535)");
+		return true;	
+	}
+
+	var conReqPort="<%ejGet(tr69cReqPort)%>";
+//	var PortForwarding_Port_CWMP_Error="Port " +conReqPort+ " is used for CWMP!";
+	if ( (port == conReqPort || port2 == conReqPort)  && ( document.getElementById("select_trafficN").selectedIndex != 2)  )
+	{
+		//alert(conReqPort+document.getElementById("MLG_NAT_Port_CWMP_Error").innerHTML);
+		alert(conReqPort + 'Port is used for CWMP!');
+		return true;
+	}	
+	if ((port <= conReqPort && port2 >= conReqPort) && ( document.getElementById("select_trafficN").selectedIndex != 2) ) 
+	{
+		//alert(conReqPort+document.getElementById("MLG_NAT_Port_CWMP_Error").innerHTML);
+		alert(conReqPort + 'Port is used for CWMP!');
+		return true;
+	}	
+	Sports = new Array(10);
+	Eports = new Array(10);
+	return false;
+}
+
+function deleteClick(entry) {
+    delnum = entry;
+    saveApplicationIPv4(2); 
+}
+function editClick(entry,active) {
+//alert("edit");
+//	var WanPort=document.getElementById("WanPort"+entry).innerHTML.split("-");
+//	var LocalPort=document.getElementById("LocalPort"+entry).innerHTML.split("-");
+	if(document.getElementById("WanPort"+entry).value.match(':')!=null){
+		var tmp = document.getElementById("WanPort"+entry).value.split(":");
+		var StartWanN= parseInt(tmp[0]);
+		var EndWanN= parseInt(tmp[1]);
+		if(EndWanN == 0)
+		EndWanN = StartWanN;	
+
+	} else {
+		var StartWanN=parseInt(document.getElementById("WanPort"+entry).value);
+		var EndWanN=parseInt(document.getElementById("WanPort"+entry).value);
+	}
+
+        if(document.getElementById("LocalPort"+entry).value.match(':')!=null){
+                var tmp = document.getElementById("LocalPort"+entry).value.split(":");
+                var  StartLanN= parseInt(tmp[0]);
+                var EndLanN= parseInt(tmp[1]);
+
+        } else {
+                var StartLanN=parseInt(document.getElementById("LocalPort"+entry).value);
+                var EndLanN=parseInt(document.getElementById("LocalPort"+entry).value);
+        }
+
+
+	var data = {
+		sessionKey: gblsessionKey,
+		reloadFlag: 1,
+		action: "edit",
+		ruleindex: entry,
+		start_port: StartWanN,
+		end_port: EndWanN,
+		appName: document.getElementById("Name"+entry).value,
+		Addr: document.getElementById("LOCALIP"+entry).value,
+		PortRule_Protocol:document.getElementById("Protocol"+entry).value,
+		oStart:StartLanN,
+		oEnd:EndLanN	
+	};
+	if (active ==0)
+		data.PortRule_Active = "No";
+	else
+		data.PortRule_Active = "Yes";
+    var url = "/PortForwardWizard.cmd";
+	var callback = function(responseData, textStatus){
+	//	$.closeLoadingMask(1);
+		window.parent.location.reload();	
+	};
+	$.post(url, data, callback, "cmd");
+	loadingProcess();
+}
+
+function saveApplicationIPv4(flag){
+	/*if (!validateForm()){
+		return false;
+	}*/
+	if (flag==0)
+	{
+		if (chkPortRange())
+			return;	
+		if (inValidIPAddr(document.getElementById("IPAddr").value))
+			return;	
+		if(document.getElementById("application_name").value==""){
+			alert('Please input the Service Name');
+			//alert(document.getElementById("MLG_PortFD_Error_2").innerHTML);
+			return;
+		}
+
+		var vsEntry = <% ejGet(vsEntryNum)%>		
+		if(vsEntry>=32){
+			//alert(document.getElementById("MLG_NATPortForwarding_RuleFull_Note").innerHTML);
+			alert("The max number of rule is 32. Please remove rule for adding new one.");
+			return;
+		}		
+	}
+
+	var Protocol = document.getElementById("select_trafficN");	
+	var data = {
+		sessionKey: gblsessionKey,
+		reloadFlag: 1,
+		action: "edit",
+		ruleindex: EmptyIndex,
+		PortRule_Active: "Yes",
+		start_port: StartWanN,
+		end_port: EndWanN,
+		appName: document.getElementById("application_name").value,
+		Addr:document.getElementById("IPAddr").value,
+		PortRule_Protocol:Protocol.options[Protocol.selectedIndex].value,
+		oStart:StartLanN,
+		oEnd:EndLanN		
+	};
+	var edit_ipaddr = document.getElementById("IPAddr").value.split(".");
+	data.Addr = parseInt(edit_ipaddr[0], 10) + "." + parseInt(edit_ipaddr[1], 10) + "." + parseInt(edit_ipaddr[2], 10) + "." + parseInt(edit_ipaddr[3], 10);
+	
+	if (flag==0)
+	{
+		data.action = "add";
+	}
+    if (flag==1)
+	{
+       data.action = "clearall";
+	}
+    if (flag==2)
+	{
+		data.action = "del";
+		data.delnum = delnum;
+		data.Addr = document.getElementById("LOCALIP"+delnum).value;
+		data.PortRule_Protocol = document.getElementById("Protocol"+delnum).value;
+		LanPort = (document.getElementById("LocalPort"+delnum).value).split(":");
+		WanPort = (document.getElementById("WanPort"+delnum).value).split(":");
+		data.start_port = WanPort[0];
+		data.end_port = WanPort[1];
+		data.oStart = LanPort[0];
+		data.oEnd = LanPort[1];
+	}
+
+    var url = "/PortForwardWizard.cmd";
+	var callback = function(responseData, textStatus){
+		//$.closeLoadingMask(1);
+		window.parent.location.reload();	
+	};
+	//$.openLoadingMask(1);
+	$.post(url, data, callback, "cmd");
+	loadingProcess();
+}
+function isRuleAlreadyExisted_EditTable(pageEntry, pageEntryEnd)
+{
+//	alert("pageEntry="+pageEntry+", pageEntryEnd="+pageEntryEnd);
+	var errFlag = 0;
+	var parsePortMapping = "<%ejGetOther(parseportforward)%>";
+	var parsePortMappingTable = parsePortMapping.split("&");
+	var totalMappings = parsePortMappingTable.length;
+	var i, j;
+	
+	for( i = pageEntry ; i < pageEntryEnd ; i++){
+		var LocalIPTable = document.getElementById("LOCALIP"+i).value.split(".");
+		var ProtocalCharTable = "TCP";
+	
+		if(document.getElementById("WanPort"+i).value.match(':')!=null){
+			var tmp = document.getElementById("WanPort"+i).value.split(":");
+			var StartWanNTable= parseInt(tmp[0]);
+			var EndWanNTable= parseInt(tmp[1]);
+		       if(EndWanNTable == 0)
+		       EndWanNTable = StartWanNTable;
+		} else {
+			var StartWanNTable=parseInt(document.getElementById("WanPort"+i).value);
+			var EndWanNTable=parseInt(document.getElementById("WanPort"+i).value);
+		}
+
+        if(document.getElementById("LocalPort"+i).value.match(':')!=null){
+			var tmp = document.getElementById("LocalPort"+i).value.split(":");
+			var StartLanNTable= parseInt(tmp[0]);
+			var EndLanNTable= parseInt(tmp[1]);
+        } else {
+			var StartLanNTable=parseInt(document.getElementById("LocalPort"+i).value);
+			var EndLanNTable=parseInt(document.getElementById("LocalPort"+i).value);
+        }
+		
+		if(document.getElementById("Protocol"+i).value == 1)
+		{
+			ProtocalCharTable = "TCP";
+		}
+		else if(document.getElementById("Protocol"+i).value == 2)
+		{
+			ProtocalCharTable = "UDP";
+		}
+		
+//alert("entry="+i+"LocalIPTable="+document.getElementById("LOCALIP"+i).value+"\n"+"StartWanNTable="+StartWanNTable+"\n"+"EndWanNTable="+EndWanNTable+"\n"+"StartLanNTable="+StartLanNTable+"\n"+"EndLanNTable="+EndLanNTable+"\n"+"Protocal="+ProtocalCharTable);
+		
+		//check with page
+		for(j = i + 1 ; j < pageEntryEnd ; j++){
+			var checkTableIP = document.getElementById("LOCALIP"+j).value.split(".");
+			var checkTableProtocol = "TCP"; 
+			
+			if(document.getElementById("WanPort"+j).value.match(':')!=null){
+				var tmp = document.getElementById("WanPort"+j).value.split(":");
+				var checkTableStartWan= parseInt(tmp[0]);
+				var checkTableEndWan= parseInt(tmp[1]);
+		              if(checkTableEndWan == 0)
+		              checkTableEndWan = checkTableStartWan;				
+			} else {
+				var checkTableStartWan=parseInt(document.getElementById("WanPort"+j).value);
+				var checkTableEndWan=parseInt(document.getElementById("WanPort"+j).value);
+			}
+
+			if(document.getElementById("LocalPort"+j).value.match(':')!=null){
+				var tmp = document.getElementById("LocalPort"+j).value.split(":");
+				var checkTableStartLan = parseInt(tmp[0]);
+				var checkTableEndLan= parseInt(tmp[1]);
+			} else {
+				var checkTableStartLan =parseInt(document.getElementById("LocalPort"+j).value);
+				var checkTableEndLan=parseInt(document.getElementById("LocalPort"+j).value);
+			}
+				
+			if(document.getElementById("Protocol"+j).value == 1)
+			{
+				checkTableProtocol = "TCP";
+			}
+			else if(document.getElementById("Protocol"+j).value == 2)
+			{
+				checkTableProtocol = "UDP";
+			}
+			
+//alert("j="+j+"checkTableIP="+document.getElementById("LOCALIP"+j).value+"\n"+"checkTableStartWan="+checkTableStartWan+"\n"+"checkTableEndWan="+checkTableEndWan+"\n"+"checkTableStartLan="+checkTableStartLan+"\n"+"checkTableEndLan="+checkTableEndLan+"\n"+"Protocal="+checkTableProtocol);
+			
+			
+			if(checkTableProtocol == ProtocalCharTable)
+			{		
+				//range port
+				if((StartWanNTable >= checkTableStartWan) && (StartWanNTable <= checkTableEndWan))
+					errFlag++;
+				else if((EndWanNTable >= checkTableStartWan) && (EndWanNTable <= checkTableEndWan))
+					errFlag++;
+				else if((StartWanNTable < checkTableStartWan) && !(EndWanNTable < checkTableStartWan))
+					errFlag++;
+				else if((StartWanNTable > checkTableEndWan) && !(EndWanNTable > checkTableStartWan))
+					errFlag++;
+
+				if((parseInt(LocalIPTable[0]) == parseInt(checkTableIP[0]))&&(parseInt(LocalIPTable[1]) == parseInt(checkTableIP[1]))&&(parseInt(LocalIPTable[2]) == parseInt(checkTableIP[2]))&&(parseInt(LocalIPTable[3]) == parseInt(checkTableIP[3])))
+				{		
+					//range port
+					if((StartLanNTable >= checkTableStartLan) && (StartLanNTable <= checkTableEndLan))
+						errFlag++;
+					else if((EndLanNTable >= checkTableStartLan) && (EndLanNTable <= checkTableEndLan))
+						errFlag++;
+					else if((StartLanNTable < checkTableStartLan) && !(EndLanNTable < checkTableStartLan))
+						errFlag++;
+					else if((StartLanNTable > checkTableEndLan) && !(EndLanNTable > checkTableStartLan))
+						errFlag++;
+				}
+			} 
+		}
+
+		//check with MDM
+		for(j = 0; j < totalMappings; j++){
+			if(j >= pageEntry && j <= pageEntryEnd)
+			{continue;} //don't check the rules itself with MDM that you are editing. 
+			
+			var subMappingTables = parsePortMappingTable[j].split("|");
+			var checkIndex = subMappingTables[0];
+			var checkDescript = subMappingTables[1];
+			var checkProtocol = subMappingTables[2];
+			var checkIP = subMappingTables[3].split(".");
+			var checkWanPortStart = parseInt(subMappingTables[4]);
+			var checkWanPortEnd = parseInt(subMappingTables[5]);
+			var checkLanPortStart = parseInt(subMappingTables[6]);
+			var checkLanPortEnd = parseInt(subMappingTables[7]);
+
+			if(checkProtocol == ProtocalCharTable)
+			{
+				//range port
+				if((StartWanNTable >= checkWanPortStart) && (StartWanNTable <= checkWanPortEnd))
+					errFlag++;
+				else if((EndWanNTable >= checkWanPortStart) && (EndWanNTable <= checkWanPortEnd))
+					errFlag++;
+				else if((StartWanNTable < checkWanPortStart) && !(EndWanNTable < checkWanPortStart))
+					errFlag++;
+				else if((StartWanNTable > checkWanPortEnd) && !(EndWanNTable > checkWanPortStart))
+					errFlag++;
+
+				if((parseInt(LocalIPTable[0]) == parseInt(checkIP[0]))&&(parseInt(LocalIPTable[1]) == parseInt(checkIP[1]))&&(parseInt(LocalIPTable[2]) == parseInt(checkIP[2]))&&(parseInt(LocalIPTable[3]) == parseInt(checkIP[3])))
+				{
+					//range port
+					if((StartLanNTable >= checkLanPortStart) && (StartLanNTable <= checkLanPortEnd))
+						errFlag++;
+					else if((EndLanNTable >= checkLanPortStart) && (EndLanNTable <= checkLanPortEnd))
+						errFlag++;
+					else if((StartLanNTable < checkLanPortStart) && !(EndLanNTable < checkLanPortStart))
+						errFlag++;
+					else if((StartLanNTable > checkLanPortEnd) && !(EndLanNTable > checkLanPortStart))
+						errFlag++;
+				}
+			}
+		}
+		
+//		alert("errFlag="+errFlag);
+		if (errFlag!=0)
+		{
+			return 1;
+		}
+		
+	}
+	return 0;
+}
+
+function ModifyRuleMapping()
+{
+	var page = document.getElementById("portpage").value;
+	var parsePortMapping = "<%ejGetOther(parseportforward)%>";
+	var parsePortMappingTable = parsePortMapping.split("&");
+	var totalMappings = parsePortMappingTable.length;
+	var rule_index = 0;
+	var entry = 0, count = 0;
+	var portnameObj, LocalIPObj, ProtocolObj, entryObj, StartWanObj, EndWanObj, StartLanObj, EndLanObj, ActiveObj;
+	
+	if (page == 1){
+		if (totalMappings < 5){
+			entry_max = totalMappings;
+			entry = 0;
+		}else{
+			entry_max = 4;
+			entry = 0;
+		}
+	}else{
+	       if(page * 4 < totalMappings)
+			entry_max = page * 4;
+		else
+		entry_max = totalMappings;
+		//var entry_value = Math.floor(totalMappings / 4);
+		entry = (page - 1) * 4;
+	}
+	
+//	alert("entry_max="+entry_max+"\n"+"entry="+entry);
+	if(isRuleAlreadyExisted_EditTable(entry, entry_max)!=0){
+		alert("La regla ya existe");
+		del_show2();
+		return;
+	}
+
+	for(entry ; entry < entry_max ; entry++ ){
+		var portname = document.getElementById("Name"+entry);
+		var LocalIP = document.getElementById("LOCALIP"+entry);
+		var Protocol = document.getElementById("Protocol"+entry);
+			
+		if(document.getElementById("WanPort"+entry).value.match(':')!=null){
+			var tmp = document.getElementById("WanPort"+entry).value.split(":");
+			var StartWanN= parseInt(tmp[0]);
+			var EndWanN= parseInt(tmp[1]);
+		       if(EndWanN == 0)
+		       EndWanN = StartWanN;		
+		} else {
+			var StartWanN=parseInt(document.getElementById("WanPort"+entry).value);
+			var EndWanN=parseInt(document.getElementById("WanPort"+entry).value);
+		}
+
+        if(document.getElementById("LocalPort"+entry).value.match(':')!=null){
+                var tmp = document.getElementById("LocalPort"+entry).value.split(":");
+                var StartLanN= parseInt(tmp[0]);
+                var EndLanN= parseInt(tmp[1]);
+        } else {
+                var StartLanN=parseInt(document.getElementById("LocalPort"+entry).value);
+                var EndLanN=parseInt(document.getElementById("LocalPort"+entry).value);
+        }
+				
+		if (EndWanN < StartWanN)
+		{	
+			alert("WAN puerto final debe ser mayor puerto de inicio.");
+			del_show2();
+			return true;
+		}
+		
+		if (isNaN(StartLanN)){
+			StartLanN = StartWanN;
+			EndLanN = EndWanN;
+		}
+		
+		if((EndWanN - StartWanN) != (EndLanN - StartLanN))
+		{
+			EndLanN =  parseInt(StartLanN) + parseInt(EndWanN - StartWanN);
+		}
+		
+		document.getElementById("WanPort"+entry).value = StartWanN + ":" + EndWanN;
+		document.getElementById("LocalPort"+entry).value = StartLanN + ":" + EndLanN;
+				
+		if (document.getElementById("ChangeAction"+entry).checked == true)
+		{
+			var Active = "Yes";
+		}else{
+			var Active = "No";
+		} 	
+		
+		if (count == 0){
+			portnameObj = portname.value + ',';
+			LocalIPObj = LocalIP.value + ',';
+			ProtocolObj = Protocol.value + ',';
+			entryObj = entry + ',';
+			StartWanObj = StartWanN + ',';
+			EndWanObj = EndWanN + ',';
+			StartLanObj = StartLanN + ',';
+			EndLanObj = EndLanN + ',';
+			ActiveObj = Active + ',';
+		}else {
+			portnameObj = portnameObj + portname.value + ',';
+			LocalIPObj = LocalIPObj + LocalIP.value + ',';
+			ProtocolObj = ProtocolObj + Protocol.value + ',';
+			entryObj = entryObj + entry + ',';
+			StartWanObj = StartWanObj + StartWanN + ',';
+			EndWanObj = EndWanObj + EndWanN + ',';
+			StartLanObj = StartLanObj + StartLanN + ',';
+			EndLanObj = EndLanObj + EndLanN + ',';
+			ActiveObj = ActiveObj + Active + ',';
+		}
+		count += 1 ;
+	}	
+	
+//	alert("entryObj="+entryObj+"\n"+"portnameObj="+portnameObj+"\n"+"LocalIPObj="+LocalIPObj+"\n"+"ProtocolObj="+ProtocolObj+"\n"+"StartWanObj="+StartWanObj+"\n"+"EndWanObj="+EndWanObj+"\n"+"StartLanObj="+StartLanObj+"\n"+"EndLanObj="+EndLanObj+"\n"+"ActiveObj="+ActiveObj);
+
+	var data = {
+		sessionKey: gblsessionKey,
+		reloadFlag: 1,
+		ruleindex: entryObj,
+		action: "edittable",
+		start_port: StartWanObj,
+		end_port: EndWanObj,
+		appName: portnameObj,
+		Addr: LocalIPObj,
+		PortRule_Protocol: ProtocolObj,
+		oStart: StartLanObj,
+		oEnd: EndLanObj,
+		PortRule_Active: ActiveObj
+	};
+
+	var url = "/PortForwardWizard.cmd";
+	var callback = function(responseData, textStatus){
+		window.parent.location.reload();	
+	};
+	$.post(url, data, callback, "cmd");
+	loadingProcess();
+}
+
+function setiPt()   
+{
+	if(document.form1.ruleStartWanN.value.match(':')!=null)
+	{
+		var tmp = document.form1.ruleStartWanN.value.split(":");
+		StartWanN = parseInt(tmp[0]);
+		EndWanN = parseInt(tmp[1]);
+		if(EndWanN == 0)
+		{
+		EndWanN = StartWanN;	
+		document.form1.ruleStartWanN.value = StartWanN + ":" + EndWanN;
+		}
+	}
+	else
+	{
+		StartWanN =  parseInt(document.form1.ruleStartWanN.value);
+		EndWanN = StartWanN;
+	}
+
+	if (EndWanN < StartWanN)
+	{	
+		alert("WAN puerto final debe ser mayor puerto de inicio.");
+		return true;
+	}
+
+	document.form1.ruleStartLanN.value = document.form1.ruleStartWanN.value;
+	StartLanN = StartWanN;
+	EndLanN = EndWanN;
+}
+
+function setePt()   
+{
+	if(document.form1.ruleStartLanN.value.match(':')!=null)
+	{
+		var tmp = document.form1.ruleStartLanN.value.split(":");
+		StartLanN = parseInt(tmp[0]);
+		EndLanN = parseInt(tmp[1]);
+	}
+	else
+	{
+		StartLanN =  parseInt(document.form1.ruleStartLanN.value);
+		EndLanN = StartLanN;
+	}
+
+	if((EndWanN - StartWanN) != (EndLanN - StartLanN))
+	{
+		EndLanN =  parseInt(StartLanN) + parseInt(EndWanN - StartWanN);
+		document.form1.ruleStartLanN.value = StartLanN + ":" + EndLanN;
+	}
+	
+	if(isNaN(StartLanN) || isNaN(EndLanN))
+	{
+		document.form1.ruleStartLanN.value = document.form1.ruleStartWanN.value;
+		StartLanN = StartWanN;
+		EndLanN = EndWanN;
+	}
+}
+
+function ChangePage(cpage) {
+
+	var data = {
+		sessionKey: gblsessionKey,
+		page: cpage		
+	};	
+    var url = "/PortForwardWizard.cmd";
+	var callback = function(responseData, textStatus){
+		window.parent.location.reload();	
+	};
+	$.post(url, data, callback, "cmd");
+	loadingProcess();
+}
+
+
+$(document).ready(function(){
+		
+		
+	$.fx.speeds._default = 500;
+	jQuery.getJSON('/mhs/config.json', function(data, textStatus){
+		//STATUS = data.STATUS;
+		CONFIG = data.CONFIG;
+		configurationLoaded();
+	});
+	
+	document.getElementById("form1").reset();
+	
+	$('#acceptApp').click(function() {
+		//alert("acceptApp!"); //new add
+		if(isRuleAlreadyExisted()!=0){
+			alert("La regla ya existe");
+			return;
+		}
+        saveApplicationIPv4(0);		
+	});
+//Multi_Language();	
+	/*
+	$('#rules_list').load('/PortForwardWizard.cmd?sessionKey='+gblsessionKey, function(){
+		$('#action').text("Acción");
+		$(".common:checkbox").switchbutton();
+	});	
+	*/
+	$(".common:checkbox").switchbutton();
+	$('#DeleteAll').click(function() {
+	//	alert("DeleteAll!"); 
+        saveApplicationIPv4(1);	 // clear all nat rules	
+	});
+	
+	$('.common').change(function(){
+	   if($(this).prop('checked')){
+			editClick($(this).val(),1);
+	   }else{
+			editClick($(this).val(),0);
+	   }
+	});
+	
+	$('.del_icon2').click(function(){
+		var value=$(this ).attr('value');
+	  	deleteClick(value);	  
+	});
+	
+});
+
+function loadingProcess(){
+	$("#pageloading").css("display","block");
+	setTimeout("location.reload(true);",5000);
+	$("#pageloading").fadeOut(5000)
+}
+</script>
+
+</head>
+
+<body onload="MM_preloadImages('/mhs/img/x3.png')">
+<!--wrapper-->
+<div class="wrapper">
+<div class="wrapper2">
+ <!--top-->
+ 	<div id="pageloading" style="display: none" >
+		<div id="loadingimg"><img src="/mhs/images/loading.gif" width="102" height="116" /></div>
+	</div>
+    <div class="topBorder">
+            <div class="top_LLBox"><div id="home"><img src="/mhs/img/meun.png" width="45" height="45" /></div><div id="menu" class="toptitle2">MEN&Uacute</div>
+            	<div id="pagemenu" class="menuList">
+                	<ul>
+                    	<!--li><a href="InicioLogout.cmd">Inicio</a></li-->
+                        <li><a href="mhs.html">WiFi</a></li>
+                        <li><a href="wifi5g.html">WiFi Plus</a></li>
+                        <li><a href="wifisecond.html">WiFi Invitados</a></li>
+                        <li><a href="PortForwardWizard.cmd?page=1">Puertos</a></li>
+                        <li class="sec"><a href="#">Red local&nbsp;></a>
+                        	<ul>
+                            	<li><a href="networkmap.html">Mapa de red local</a></li>
+                                <li><a href="lan_v4.html">Red Local</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="multipuesto.html">Multipuesto / Monopuesto</a></li>
+                        <li><a href="lan_v6.html">IPv6</a></li>
+                        <li><a href="changepasswd.html">Cambio contraseña del router</a></li>
+                        <li><a href="firmwareupgrad.html">Actualizaciones Firmware</a></li>
+                        <li><a href="configsetting.html">Otras funcionalidades</a></li>
+                        <li class="sec"><a href="#">Ayuda&nbsp;></a>
+                        	<ul>
+                            	<li><a href="wizard_help.html">Ayuda configurador web</a></li>
+                                <li><a href="sysinfo.html">Acerca de</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="advancedsettings.html">Configuración avanzada</a></li>
+                    </ul></div>
+                </div>
+            <div class="top_CBox toptitle">Acceso al Configurador Router</div>
+            <div class="top_RRBox logoBox_in"><img src="/mhs/img/logo.png"/></div>
+    </div><!--top END-->
+    <!--stlye_mins-->
+    	<div class="topBorder2">
+            <div class="toptitle2">Acceso al Configurador Router</div>
+    	</div>
+    <!--stlye_mins end-->
+    <div class="mainBorder"><div class="items"><a href="javascript:void(0)" onclick="logoutBtu();">Cerrar sesión</a></div></div>
+    <!--location-->
+    <div class="locationTitle">Puertos</div><!--location end-->
+    
+    <!--MAIN-->
+<div class="mainBorder">
+	<div id="logout" class="finBox">
+    	<div class="artBox">¿Está seguro de que desea cerrar la sesión?<br/>
+            </div>
+            <div class="artBox">
+              <div class="leftBtu"><input type="button" name="button" id="button" value="Cancelar" class="checkBtu" onclick="closeDiv();"/></div>
+              <div class="rightBtu"><input type="button" name="button" id="button" value="Aceptar" class="checkBtu" onclick="javascript:location.href='logout.cmd'"/></div>
+            </div>
+    </div>
+   	<div class="artBox black2">Rellena los siguientes campos y pulsa el botón Añadir. Ten en cuenta que para abrir un rango de puertos debes usar el siguiente formato : 5001:5010 </div>
+  		
+        <div class="markBg"><div class="artBox">
+        <form id="form1" name="form1" method="post" action="">
+        	<div class="tabBorder">
+                <div class="tabID">Nombre regla de puertos</div>
+                <div class="tabInput"><input name="application_name" type="text" class="chooseBox" id="application_name"/></div>
+            </div>
+            
+            <div class="tabBorder">
+                <div class="tabID">Dirección IP </div>
+                <div class="tabInput"><input name="IPAddr" type="text" class="chooseBox" id="IPAddr"/></div>
+            </div>
+            
+            <div class="tabBorder">
+                <div class="tabID">Protocolo </div>
+                <div class="tabInput">
+                  <select name="select4" class="chooseBox" id='select_trafficN' onchange="changeFlag();" >
+                    <option value="1">TCP</option>
+                    <option value="2">UDP</option>
+					<option value="3">TCP+UDP</option>
+                  </select>
+                </div>
+            </div>
+            
+            <div class="tabBorder">
+                <div class="tabID">Abrir Puerto/Rango Externo (WAN)</div>
+                <div class="tabInput"><input name="ruleStartWanN" type="text" class="chooseBox" id="ruleStartWanN" maxlength='11' onchange='setiPt()'/></div>
+            </div>
+            
+            <div class="tabBorder">
+                <div class="tabID">Abrir Puerto/Rango Interno (LAN)</div>
+                <div class="tabInput"><input name="ruleStartLanN" type="text" class="chooseBox" id="ruleStartLanN" maxlength='11' onchange='setePt()'/></div>
+            </div>
+            
+            <div class="tabBorder">
+                <div class="rightBtu"><input type="button" name="button" id="acceptApp" value="Añadir" class="checkBtu"/></div>
+            </div>
+        </form>    
+  		</div></div>
+        
+       
+        <div class="artBox">
+        
+       	  <div class="tabBorder_100">
+                <div id="showIcon"><span class="blueLink"><a href="javascript:void(0)" onclick="del_show2();">Editar</a></span></div>
+                <div id="closeIcon"><div class="tabInput"><span class="blueLink"><a href="javascript:void(0)" onclick="del_close2(); ModifyRuleMapping();">OK</a></span></div></div>
+        	</div>
+        	<div id="rules_list"><% ejGetOther(portforward_rule) %></div><!--tabBorder_100-->          
+            
+  </div>
+    
+</div><!--main END-->
+    
+    <!--footer-->
+    <div class="footerBorder">
+    © Telefónica de España S.A.U. Todos los derechos reservados v 1.1
+    </div><!--footer END-->
+	
+</div></div><!--wrapper END-->
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="x-frame-options" content="sameorigin">
+<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+<title>movistar</title>
+<link href="InstalacionWizard/css/style.css" rel="stylesheet" type="text/css" />
+<script src="InstalacionWizard/js/jquery-1.6.3.min.js" type="text/javascript"></script>
+<script src="InstalacionWizard/js/jquery-page.js" type="text/javascript"></script>
+</head>
+
+<body>
+<!--wrapper-->
+<div class="wrapper">
+<div class="wrapper2">
+<div id="pageloading" style="display: none" >
+  <div id="loadingimg"><img src="/InstalacionWizard/img/loading.gif" width="102" height="116" /></div>
+</div>
+    <!--top-->
+    <div class="topBorder">
+            <!--<div class="top_LLBox"><div id="home"><a href="installation_login.html"><img src="InstalacionWizard/img/home.png" width="45" height="45" /></a></div></div>-->
+            <!--<div class="top_LBox logoBox_in"></div>-->
+            <div class="top_LLBox">
+            <div id="home"><img src="/mhs/img/meun.png" width="45" height="45" /></div>
+            <div id="menu" class="toptitle2">MEN&Uacute</div>
+            <div id="pagemenu" class="menuList">
+                    <ul>
+                    <li><a href="installation_ontpw.html">Identificación ONT</a></li>
+                    <li><a href="installation_guide.html">Selección del servicio</a></li>
+                    </ul>
+            </div><!--pagemenu-->
+            </div><!--top_LLBox-->
+            <div class="top_CBox toptitle">Acceso al Configurador Router</div>
+            <div class="top_RRBox logoBox_in"><img src="InstalacionWizard/img/logo.png"/></div>
+    </div><!--top END-->
+    <!--stlye_mins-->
+    	<div class="topBorder2">
+            <div class="toptitle2">Acceso al Configurador Router</div>
+    	</div>
+    <!--stlye_mins end-->
+    <!--top_info m' l pc-->
+    <div class="top_info">
+			<ul>
+            	<li><span class="sub">Fabricante: <br>Mitrastar</span></li>
+                <li><span class="sub">Modelo: <br><% ejGet(boardID) %></span></li>
+                <li><span class="sub">Firmware: <br><% ejGet(sysVersion) %></span></li>
+		<li style="display:none" id="connect"><span class="sub">Router:<br>Conectado a Internet </span></li>	
+		<li style="display:none" id="disconnect"><span class="sub">Router:<br>Sin conexión a Internet </span></li>
+                <li><span class="sub">Nº serie del equipo: <br><% ejGet(gponsernum) %></span></li>
+                <li><span class="sub">Direcciones MAC: <br><% ejGet(devicemacaddr) %></span></li>
+                <li><span class="sub">Potencia óptica recibida[dBm]: <br><% ejGetOther(devicerxpower) %></span></li>
+            </ul>
+            <div class="items"><a href="javascript:void(0)" onclick="logoutBtu();">Cerrar sesión</a></div>
+    </div><!--top_info m' l pc END-->
+     <!--top_info m' l pc-->
+    <div class="top_info_S">
+    	<div id="hoverItems" class="itemsB"><a href="#">Tu equipo&nbsp;></a>
+        	<ul>
+            	<li><span class="sub">Fabricante: <br>Mitrastar</span></li>
+                <li><span class="sub">Modelo: <br><% ejGet(boardID) %></span></li>
+                <li><span class="sub">Firmware: <br><% ejGet(sysVersion) %></span></li>
+		<li style="display:none" id="connect"><span class="sub">Router:<br>Conectado a Internet </span></li>	
+		<li style="display:none" id="disconnect"><span class="sub">Router:<br>Sin conexión a Internet </span></li>
+                <li><span class="sub">Nº serie del equipo: <br><% ejGet(gponsernum) %></span></li>
+                <li><span class="sub">Direcciones MAC: <br><% ejGet(devicemacaddr) %></span></li>
+                <li><span class="sub">Potencia óptica recibida[dBm]: <br><% ejGetOther(devicerxpower) %></span></li>
+            </ul>
+        </div>
+        
+      <div class="itemsB"><a href="javascript:void(0)" class="white" onclick="logoutBtu();">Cerrar sesión</a></div>
+      
+    </div><!--top_info m' l pc END-->
+    
+
+<!--location-->
+    <div class="locationTitle">Resumen de la configuración del servicio</div><!--location end-->
+    
+    <!--MAIN-->
+<div class="mainBorder">
+  		<div class="artBox">
+        
+       	  <div class="tabBorder">
+			<span class="sub">Servicio contratado:</span>
+			<span id="wanmode"></span>
+		  </div><!--tabBorder-->
+          <div class="tabBorder" id="addresstype">
+			<span class="sub">Tipo de direccionamiento: </span>
+			<span style="display:none" id="nat-pat">Dinámico (NAT-PAT)</span>
+			<span style="display:none" id="static" >Estático</span>
+			<span style="display:none" id="none_tv" >Ninguno</span>
+          </div><!--tabBorder-->
+          <div class="tabBorder" id="RouterIP">
+			<span class="sub">Dirección IP WAN Router: </span> <span id="iptvwanip"></span>
+          </div><!--tabBorder-->
+          <div class="tabBorder" id="RouterGWIP">
+			<span class="sub">Dirección IP Gateway WAN Router: </span> <span id="iptvGateway"></span>
+		  </div><!--tabBorder-->
+          <div class="tabBorder" id="RouterMaskIP">
+			<span class="sub">Máscara subred IP WAN Router: </span> <span id="iptvsubnet"></span>
+		  </div><!--tabBorder-->
+          <div class="tabBorder" id="LanIPaddr">
+			<span class="sub">Dirección IP acceso Imagenio: </span> <span id="lanip"></span> 
+		  </div><!--tabBorder-->
+          <div class="tabBorder" id="LanIPSMask">
+			<span class="sub">Máscara subred acceso Imagenio:</span> <span id="lanipSubMask"></span> 
+		  </div><!--tabBorder-->
+          <div class="tabBorder" id="VoiceService">
+			<span class="sub">Servicio Línea de Voz:</span> <span id="voipmode"></span>   
+		  </div><!--tabBorder-->
+          <div class="tabBorder" id="Phonenum">
+			<span class="sub">Número de Teléfono:</span>  <span id="lineNumber"></span>      
+		  </div><!--tabBorder-->
+		  
+        </div><!--artBox-->
+		
+        <div class="artBox">
+          <div class="leftBtu"><input value="<Volver" class="checkBtu" onclick="backtosetup();"/></div>
+            <div id="dau" class="rightBtu"><input value="Aplicar" class="checkBtu" onclick="doSave();"/>
+<!--fin
+          	<div id="fin" class="fin_item">
+            	<ul>
+                	<li id="calltab1"><a href="#tab1">Cambios aplicados correctanmente</a></li>
+                    <li id="calltab2"><a href="#tab2">Cambios incorrectos</a></li>
+                </ul>
+            </div>
+-->
+    <form id="saveform" name="saveform" method="post" action="instalacion.cmd">
+			<input type="HIDDEN" name="sessionKey" id="sessionKey" value="<%ejGetOther(sessionKey)%>">
+			<input type="HIDDEN" name="action" id="action" value="">
+    </form>
+
+          </div> <!--dau-->
+        </div><!--artBox-->
+        
+        <div id="tab1" class="finBox">
+            <div class="artBox">La configuración del servicio ha sido aplicada correctamente.A continuación, una vez pulses el botón "Salir" se va a producir un REINICIO automático.Si deseas realizar alguna configuración adicional tales como el cambio contraseña Wifi, filtrado MAC…accede a la web del configurador del equipo: <br/>
+            </div>
+            <div class="artBox black2" align="center"><strong><%ejGetOther(metaCreate)%>://192.168.1.1</strong></div>
+            <div class="artBox">
+                <div class="leftBtu2"><input  name="button" id="button" value="Atrás" class="checkBtu2" onclick="closeDiv();"/></div>
+                <div class="rightBtu2"><input name="button" id="button" value="Salir" class="checkBtu2" onclick="doSave();"/></div>
+            </div>
+        </div><!-- #tab1 finBox end-->
+        
+         <div id="tab2" class="finBox">
+            <div class="artBox">La configuración del servicio ha sido aplicada incorrectamente. Pulsa el botón “Cancelar” y repite el proceso de configuración del servicio<br/>
+            </div><!--artBox-->
+            <div class="artBox">
+                <div class="leftBtu2"><input  name="button" id="button" value="Canclar" class="checkBtu2" onclick="changeconfig();"/></div>
+                <div class="rightBtu2"><input name="button" id="button" value="Salir" class="checkBtu2" onclick="closeDiv();"/></div>
+            </div><!--artBox-->
+        </div><!-- #tab2 finBox end-->
+        <div id="logout" class="finBox">
+    	  <div class="artBox">¿Está seguro de que desea cerrar la sesión?<br/>
+            </div>
+            <div class="artBox">
+              <div class="leftBtu"><input type="button" name="button" id="button" value="Cancelar" class="checkBtu" onclick="closeDiv();"/></div>
+              <div class="rightBtu"><input type="button" name="button" id="button" value="Aceptar" class="checkBtu" onclick="javascript:location.href='logout.cmd'"/></div>
+            </div>
+        </div>
+</div><!--main END-->
+
+    
+    <!--footer-->
+    <div class="footerBorder">
+    © Telefónica de España S.A.U. Todos los derechos reservados v 1.1
+    </div><!--footer END-->
+
+</div></div><!--wrapper END-->
+</body>
+<script>
+ 	var wanip = '<%ejGet(mhsIptvWanIp)%>';
+ 	var internet = '<%ejGetOther(sysInfo, wanStatus)%>';
+	var iptv = '<%ejGet(mhsinsIPTV)%>';
+	var nat = '<%ejGet(mhsinsNAT)%>';
+	var voip = '<%ejGet(mhsinsVOIP)%>';
+	//alert("iptv = "+iptv+"\nnat = "+nat+"\nvoip = "+voip);
+	var flag;
+	if(internet == "0"){
+		flag=1;
+	}
+	else{
+	    flag=0;
+	} 
+	if(flag==1){
+		document.getElementById("connect").style.display="";		
+		document.getElementById("disconnect").style.display="none";
+	}else{
+		document.getElementById("disconnect").style.display="";		
+		document.getElementById("connect").style.display="none";
+	}
+	
+	if(iptv==1){
+		$("#wanmode").text("Trío");
+		$("#iptvwanip").text("<%ejGet(mhsIptvWanIp)%>");		
+		$("#iptvsubnet").text("<%ejGet(mhsIptvSubnetMask)%>");
+		$("#iptvGateway").text("<%ejGet(mhsIptvGatewayIp)%>");
+		$("#lanip").text("<%ejGet(mhsSecondaryLanIp)%>");
+		$("#lanipSubMask").text("255.255.255.248");
+	
+		if(nat==1){
+			$("#LanIPaddr").hide();
+			$("#LanIPSMask").hide();
+			document.getElementById("nat-pat").style.display="";
+		}else{
+			document.getElementById("static").style.display="";
+		}		
+	}else{
+		$("#wanmode").text("Dúo");
+		$("#addresstype").hide();
+		$("#RouterIP").hide();
+		$("#RouterGWIP").hide();
+		$("#RouterMaskIP").hide();
+		$("#LanIPaddr").hide();
+		$("#LanIPSMask").hide();
+		document.getElementById("none_tv").style.display="";
+	}
+     if(voip == 1)
+     {
+     	$("#voipmode").text("Sí ");
+     	$("#lineNumber").text("<%ejGet(mhsVoipNumber)%> ");
+     }
+     else
+     {
+         	$("#voipmode").text("No");
+     	$("#lineNumber").text("N / A");         	
+		$("#Phonenum").hide();
+		$("#VoiceService").hide();
+	}
+	function backtosetup(){
+		loadingProcess(3000);
+		document.saveform.action.value ="5";
+		document.saveform.submit();
+	}
+	
+	function doSave(){		
+		document.saveform.action.value ="7";
+		document.saveform.submit();
+		loadingProcess(10000);
+	}
+	
+	function checkSave(){		
+		$('#tab1').fadeIn();
+	}
+	
+	function changeconfig(){		
+		document.saveform.action.value ="8";
+	
+		loadingProcess(3000);
+		document.saveform.submit();
+	}
+	
+	function loadingProcess(second){
+		$("#pageloading").css("display","block");
+		$("#pageloading").fadeOut(second);
+	}
+	
+	function checkIPTV(){
+	  iptvip = $("#uiViewTVIP").attr("value");
+	  if(iptvip!=""){
+		  if ( checkIPFormat(iptvip,2) == false ) {
+			 //alert('Address "' + lanIp + '" is invalid IP address.');		 
+			 return false;
+		  }
+	  }
+	  return true;
+	}
+	
+	function checklocalIP(){
+	  localip = $("#uiViewIPLOCAL").attr("value");
+	  if(localip!=""){
+		  if ( checkIPFormat(localip,1) == false ) {
+			 //alert('Address "' + lanIp + '" is invalid IP address.');		 
+			 return false;
+		  }
+	  }
+	  return true;
+	}
+	
+	function checkIPFormat(address,type)
+    {
+		var IP = address;
+		IP = IP.replace(/ /g, "");
+		address = IP;
+		IPsplit = IP.split(".");
+		if(IPsplit.length != 4 )
+		{
+			return (false);
+		}
+		for(i = 0; i < 4; i++)
+			if((isNaN(IPsplit[i])) || (IPsplit[i] == 'undefined') || (IPsplit[i] == "")) 
+			{
+				return (false);
+			} 
+			else
+			{
+				if((parseInt(IPsplit[i], 10) > 255) || (parseInt(IPsplit[i], 10) < 0)) 
+				{
+					return (false);
+				}
+			}
+			
+		int_add0=parseInt(IPsplit[0], 10);
+		int_add3=parseInt(IPsplit[3], 10);			
+		if(int_add0 == 0 || int_add0 == 127 || int_add0 > 223 || int_add3 == 255)
+		{
+			return (false);
+		}
+		
+		if(type==1){
+			if(int_add0!=10){
+				return false;
+			}
+		}
+		
+		if(type==2){
+			if(int_add0!=172){
+				return false;
+			}
+		}
+		
+		return (true);
+    }
+</script>
+</html>

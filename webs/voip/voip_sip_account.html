@@ -1,0 +1,1844 @@
+<html><head>
+<meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+<link rel=stylesheet href='../stylemain.css' type='text/css'>
+<link rel=stylesheet href='../colors.css' type='text/css'>
+<script type="text/javascript" src="showpath.js" ></script>
+<script type="text/JavaScript" src="../util.js" ></script>
+<script type="text/JavaScript" src="common.js" ></script>
+<script type="text/JavaScript" src="voipSipAccount.js" ></script>
+<script language="javascript">
+<!-- hide 
+var lineCountArray = new Array(); 
+
+var maxSp = '<%ejGetVoice(maxSp)%>'; // MaxProfileCount
+var maxLines = '<%ejGetVoice(maxLines)%>'; //MaxLineCount
+var currentSp = '<%ejGetVoice(numSp)%>'; //current Profile count
+var currentAcnt = '<%ejGetVoice(numLines)%>'; //current sip accounts
+var tmplc = '<%ejGetVoice(linesPerVP)%>'; //number of lines per profile
+var suppCodecList = '<%ejGetVoice(suppCodecList)%>';
+var tmpvpn = '<%ejGetVoice(VPName)%>';
+var voiceRunning = '<%ejGetVoice(voiceInUse)%>';
+var tmpst = '<%ejGetVoice(transport)%>';
+var mailServerList = '<%ejGetOther(mailServerList)%>'
+
+/* Get all the per-line items from provisioning (through the C code).
+** The provisioning will provide javascript variables
+** with initialized values if the values are available. */
+
+
+var maxPrefCodecs = 3;
+var tmpphonenum   = '<%ejGetVoice(extension)%>';
+var tmpan = '<%ejGetVoice(authName)%>';
+var tmppw = '<%ejGetVoice(password)%>';
+var tmple  = '<%ejGetVoice(lineEnabled)%>';
+var tmpanc  = '<%ejGetVoice(anonCall)%>';
+var tmpurltype = '<%ejGetVoice(urlType)%>';
+var tmpingain = '<%ejGetVoice(ingressGain)%>';
+var tmpegain = '<%ejGetVoice(egressGain)%>';
+var tmpvadenable = '<%ejGetVoice(vadEnable)%>';
+var tmpechocancel = '<%ejGetVoice(echoCancel)%>';
+var tmpcallwait = '<%ejGetVoice(callwait)%>';
+var tmpfwdall = '<%ejGetVoice(fwdAll)%>';
+var tmpfwdbusy = '<%ejGetVoice(fwdBusy)%>';
+var tmpfwdnoans = '<%ejGetVoice(fwdNoAns)%>';
+var tmpfwdNum = '<%ejGetVoice(fwdNum)%>';
+var tmpfwdBusyNum = '<%ejGetVoice(fwdBusyNum)%>';
+var tmpfwdNoAnsNum = '<%ejGetVoice(fwdNoAnsNum)%>';
+var tmpfwdringcount = '<%ejGetVoice(ringcount)%>';
+var tmpdnd = '<%ejGetVoice(doNotDisturb)%>';
+var tmptrans = '<%ejGetVoice(calltrans)%>';
+var tmpcwrej = '<%ejGetVoice(callwaitRejTime)%>';
+var tmpphoneselect = '<%ejGetVoice(phoneSelect)%>';
+var tmpcl  = '<%ejGetVoice(codecList)%>';
+var tmpcle  = '<%ejGetVoice(codecListEnable)%>';
+var tmpmw      = '<%ejGetVoice(mwi)%>';
+var tmpmwt = '<%ejGetVoice(mwiet)%>';
+var tmpwltm = '<%ejGetVoice(warmLineTimer)%>';
+var tmpwl = '<%ejGetVoice(warmLine)%>';
+var tmphl = '<%ejGetVoice(hotLine)%>';
+var tmphlnum = '<%ejGetVoice(hotLineNum)%>';
+var tmpwlnum = '<%ejGetVoice(warmLineNum)%>';
+var tmpacntNum = '<%ejGetVoice(linecmaNum)%>';
+var tmpmce = '<%ejGetVoice(missedCallEmail)%>';
+var tmpmcesa = '<%ejGetVoice(missedCallEmailSA)%>'
+/*
+var tmpmceto = '<%ejGetVoice(missedCallEmailTo)%>';
+var tmpmceti = '<%ejGetVoice(missedCallEmailTitle)%>';
+*/
+var tmpccbs = '<%ejGetVoice(CCBS)%>';
+// aircheng
+/*
+var tmpem = '<%ejGetVoice(earlyMedia)%>';
+var tmpemi = '<%ejGetVoice(earlyMediaIndex)%>';
+*/
+/*
+var tmpmoh = '<%ejGetVoice(musicOnHold)%>';
+var tmpmohi = '<%ejGetVoice(musicOnHoldIndex)%>';
+*/
+var sessionkey = '<%ejGetOther(sessionKey)%>';
+var defcle  = '<%ejGetVoice(suppCodecList)%>';
+var fxschannelnum = '<%ejGetVoice(fxsChannelNum)%>';
+var spainsetting = '<%ejGetVoice(spainSetting)%>';
+
+for (var i = 0; i < currentSp; i++) {
+   eval( "var st" + i + " \= \"\" " ); /*transport*/
+   eval( "var vpn" + i + " \= \"\" " ); /*vpName*/
+   eval( "var lc" + i + " \= \"\" " );   /*line count per profile*/
+   eval(tmplc);   
+   eval("lineCountArray[" + i + "] = lc" + i);
+   
+	for (var m = 0; m < lineCountArray[i]; m++) {
+   eval( "var ex" + i + "_" + m + " \= \"\" ");   //phone number
+   eval( "var an" + i + "_" + m + " \= \"\" "); // auth name
+   eval( "var pw" + i + "_" + m + " \= \"\" ");  //password
+   eval( "var le" + i + "_" + m + " \= \"\" "); //line enable
+   eval( "var anc" + i + "_" + m + " \= \"\" "); //Anonymous outgoing calls
+   eval( "var ur" + i + "_" + m + " \= \"\" "); //Url type
+   eval( "var ig" + i + "_" + m + " \= \"\" "); //ingress gain
+   eval( "var eg" + i + "_" + m + " \= \"\" "); //egress gain
+   eval( "var ve" + i + "_" + m + " \= \"\" "); //vad enable
+   eval( "var ec" + i + "_" + m + " \= \"\" "); //echo cancel enable
+   eval( "var cw" + i + "_" + m + " \= \"\" "); //call wait enable
+   eval( "var cfall" + i + "_" + m + " \= \"\" "); //call fwd unconditional
+   eval( "var cfbus" + i + "_" + m + " \= \"\" "); //call fwd busy
+   eval( "var cfnoa" + i + "_" + m + " \= \"\" "); //call fwd no answer
+   eval( "var cfnum" + i + "_" + m + " \= \"\" "); //call fwd unconditional number
+   eval( "var cfbnum" + i + "_" + m + " \= \"\" "); //call fwd busy number   
+   eval( "var cfnanum" + i + "_" + m + " \= \"\" "); //call fwd no answer number
+   eval( "var rc" + i + "_" + m + " \= \"\" "); //call fwd no answer ring count
+   eval( "var dnd" + i + "_" + m + " \= \"\" "); //Do Not Disturb Enable
+   eval( "var ct" + i + "_" + m + " \= \"\" "); //Call Transfer Enable
+   eval( "var cwrejt" + i + "_" + m + " \= \"\" "); //Call Waiting Reject Time
+   eval( "var ps" + i + "_" + m + " \= \"\" "); //phyReferenceFxsList
+   eval( "var cl" + i + "_" + m + " \= \"\" "); //codecList
+   eval( "var cle" + i + "_" + m + " \= \"\" "); //codecListEnable
+   eval( "var mw" + i + "_" + m + " \= \"\" "); //mwi
+   eval( "var mwt" + i + "_" + m + " \= \"\" "); //mwi expire time
+   eval( "var wltm" + i + "_" + m + " \= \"\" "); //warmLineTimer
+   eval( "var wl" + i + "_" + m + " \= \"\" "); //warmLine
+   eval( "var hl" + i + "_" + m + " \= \"\" "); //hotLine
+   eval( "var hotnum" + i + "_" + m + " \= \"\" "); //hotLine number
+   eval( "var warmnum" + i + "_" + m + " \= \"\" "); //warnLine number
+   eval( "var lcma" + i + "_" + m + " \= \"\" ");   //linecmaNum   
+   /*
+   eval( "var mce" + i + "_" + m + " \= \"\" ");   //missedCallEmailEnable  
+   eval( "var mcesa" + i + "_" + m + " \= \"\" ");   //missedCallEmailServerAddr
+   eval( "var mceto" + i + "_" + m + " \= \"\" ");   //missedCallEmailTo
+   eval( "var mceti" + i + "_" + m + " \= \"\" ");   //missedCallEmailTitle
+   */
+   eval( "var ccbs" + i + "_" + m + " \= \"\" ");   //CCBS
+// aircheng
+   /*
+   eval( "var em" + i + "_" + m + " \= \"\" ");   //earlyMedia
+   eval( "var emi" + i + "_" + m + " \= \"\" ");   //earlyMediaIndex
+   */
+   /*
+   eval( "var moh" + i + "_" + m + " \= \"\" ");   //musicOnHold
+   eval( "var mohi" + i + "_" + m + " \= \"\" ");   //musicOnHoldIndex
+   */
+	}
+
+}
+
+if ( tmpst.search("ejGetVoice") < 0 ){
+	eval(tmpst);
+}
+if ( tmpvpn.search("ejGetVoice") < 0 ){
+	eval(tmpvpn);
+}
+if ( tmpphonenum.search("ejGetVoice") < 0 ) {
+   eval( tmpphonenum );
+}
+
+if ( tmpan.search("ejGetVoice") < 0 ) {
+   eval( tmpan );
+}
+if ( tmppw.search("ejGetVoice") < 0 ) {
+   eval( tmppw );
+}
+if ( tmple.search("ejGetVoice") < 0 ) {
+   eval( tmple );
+}
+if ( tmpanc.search("ejGetVoice") < 0 ) {
+   eval( tmpanc );
+}
+if ( tmpurltype.search("ejGetVoice") < 0 ) {
+   eval( tmpurltype );
+}
+if ( tmpingain.search("ejGetVoice") < 0 ) {
+   eval( tmpingain );
+}
+if ( tmpegain.search("ejGetVoice") < 0 ) {
+   eval( tmpegain );
+}
+if ( tmpvadenable.search("ejGetVoice") < 0 ) {
+   eval( tmpvadenable );
+}
+if ( tmpechocancel.search("ejGetVoice") < 0 ) {
+   eval( tmpechocancel );
+}
+if ( tmpcallwait.search("ejGetVoice") < 0 ) {
+   eval( tmpcallwait );
+}
+if ( tmpfwdall.search("ejGetVoice") < 0 ) {
+   eval( tmpfwdall );
+}
+if ( tmpfwdbusy.search("ejGetVoice") < 0 ) {
+   eval( tmpfwdbusy );
+}
+if ( tmpfwdnoans.search("ejGetVoice") < 0 ) {
+   eval( tmpfwdnoans );
+}
+if ( tmpfwdNum.search("ejGetVoice") < 0 ) {
+   eval( tmpfwdNum );
+}
+if ( tmpfwdBusyNum.search("ejGetVoice") < 0 ) {
+   eval( tmpfwdBusyNum );
+}
+if ( tmpfwdNoAnsNum.search("ejGetVoice") < 0 ) {
+   eval( tmpfwdNoAnsNum );
+}
+if ( tmpfwdringcount.search("ejGetVoice") < 0 ) {
+   eval( tmpfwdringcount );
+}
+if ( tmpdnd.search("ejGetVoice") < 0 ) {
+   eval( tmpdnd );
+}
+if ( tmptrans.search("ejGetVoice") < 0 ) {
+   eval( tmptrans );
+}
+if ( tmpcwrej.search("ejGetVoice") < 0 ) {
+   eval( tmpcwrej );
+}
+if ( tmpphoneselect.search("ejGetVoice") < 0 ) {
+   eval( tmpphoneselect );
+}
+if ( tmpcl.search("ejGetVoice") < 0 ) {
+   eval( tmpcl );
+}
+if ( tmpcl.search("ejGetVoice") < 0 ) {
+   eval( tmpcle );
+}
+if ( tmpmw.search("ejGetVoice") < 0 ) {
+   eval( tmpmw );
+}
+if ( tmpmwt.search("ejGetVoice") < 0 ) {
+   eval( tmpmwt );
+}
+if ( tmpwltm.search("ejGetVoice") < 0 ) {
+   eval( tmpwltm );
+}
+if ( tmpwl.search("ejGetVoice") < 0 ) {
+   eval( tmpwl );
+}
+if ( tmphl.search("ejGetVoice") < 0 ) {
+   eval( tmphl );
+}
+if ( tmphlnum.search("ejGetVoice") < 0 ) {
+   eval( tmphlnum );
+}
+if ( tmpwlnum.search("ejGetVoice") < 0 ) {
+   eval( tmpwlnum );
+}
+if ( tmpacntNum.search("ejGetVoice") < 0 ) {
+   eval( tmpacntNum );
+}
+if ( tmpmce.search("ejGetVoice") < 0 ) {
+   eval( tmpmce );
+}
+if ( tmpmcesa.search("ejGetVoice") < 0 ) {
+   eval( tmpmcesa );
+}
+/*
+if ( tmpmceto.search("ejGetVoice") < 0 ) {
+   eval( tmpmceto );
+}
+if ( tmpmceti.search("ejGetVoice") < 0 ) {
+   eval( tmpmceti );
+}
+*/
+if ( tmpccbs.search("ejGetVoice") < 0 ) {
+   eval( tmpccbs );
+}
+// aircheng
+/*
+if ( tmpem.search("ejGetVoice") < 0 ) {
+   eval( tmpem );
+}
+if ( tmpemi.search("ejGetVoice") < 0 ) {
+   eval( tmpemi );
+}
+*/
+	/*
+if ( tmpmoh.search("ejGetVoice") < 0 ) {
+   eval( tmpmoh );
+}
+if ( tmpmohi.search("ejGetVoice") < 0 ) {
+   eval( tmpmohi );
+}
+*/
+if ( fxschannelnum.search("ejGetVoice") < 0 ) {
+   eval( fxschannelnum );
+}
+
+/* Lein default setting*/
+//var maxPrefCodecs = '<%ejGetVoice(maxPrefCodecs)%>';
+var defphonenum = 'changeme';
+var defan = 'changeme';
+var defpw = 'changeme';
+var defle  = 0;
+var defanc  = 0;
+var defurltype = 'URL_Sip';
+var defingain = 0;
+var defegain = 0;
+var defvadenable = 0;
+var defechocancel = 1;
+
+var defcallwait = 0;
+var deffwdall = 0;
+var deffwdbusy = 0;
+var deffwdnoans = 0;
+var deffwdNum = '';
+var deffwdBusyNum = '';
+var deffwdNoAnsNum = '';
+var deffwdringcount = 20;
+var defdnd = 0;
+var deftrans = 0;
+var defcwrej = 20;
+var defphoneselect = 3;
+var defcl  = "G.711ALaw,G.711MuLaw,G.729a";
+var defmw  = 0;
+var defmwt = 3600;
+var defwltm = 5;
+var defwl = 0;
+var defhl = 0;
+var defhlnum = '';
+var defwlnum = '';
+var defmce = 0;
+var defmcesa = 'None';
+var defmceto = 'changeme';
+var defmceti = 'MissedCallNotification';
+var defccbs = 0;
+// aircheng
+var defem = 0;
+var defemi = 66;
+var defmoh = 0;
+var defmohi = 66;
+/***********************/
+
+
+var recoverCodec1 = 0;
+var recoverCodec2 = 0;
+var recoverCodec3 = 0;
+
+function disableItem()
+{
+	
+	var i=0;
+	var argument = disableItem.arguments;
+	var sourceChcek = document.getElementById(argument[1]).checked;
+	var destinationCheck;
+	switch(argument[0])
+	{
+		case 1:
+			if(sourceChcek == false)
+			{
+				for(i=2;i<argument.length;i++)
+				{
+					document.getElementById(argument[i]).disabled = false;
+				}
+			}else
+			{
+				for(i=2;i<argument.length;i++)
+				{
+					document.getElementById(argument[i]).disabled = true;
+				}
+			}
+		break;
+		case 2:
+			if(sourceChcek == true)
+			{
+				for(i=2;i<argument.length;i++)
+				{
+					document.getElementById(argument[i]).disabled = false;
+				}
+			}else
+			{
+				for(i=2;i<argument.length;i++)
+				{
+					document.getElementById(argument[i]).disabled = true;
+				}
+			}
+		break;
+		default:
+		break;
+	}
+}
+
+function loadPreprocess()
+{
+	recoverCodec1 = document.getElementById("codecSelect1").value;
+	recoverCodec2 = document.getElementById("codecSelect2").value;
+	recoverCodec3 = document.getElementById("codecSelect3").value;
+	disableItem(1,"unconditionalEnable","busyEnable","busyNumber","noAnswerEnable","noAnswerNumber","noAnswerCount");
+}
+
+function btnStartSip(current_view) {
+	 if(!formCheck()){
+	 	return;
+	 }
+	var SPSelect = document.forms[0].vpSelect.value;
+	var j =  document.forms[0].sipSelect.value;
+	with( document.forms[1] ){
+		var newNum = escape(sipAccountNumber.value.replace(/['" @]/g,'')); 	
+		for (var sp = 0; sp < currentSp; sp++) {
+			for (var m = 0; m < lineCountArray[sp]; m++) {
+			    if(!((parseInt(SPSelect)==parseInt(sp)) && (parseInt(j)==parseInt(m)))){
+					if(newNum == eval("ex" + sp + "_" + m) ){
+						alert("This number already exists!!\n");		
+						return;
+					}
+				}
+			}
+		}	 
+	}
+		
+	var lines = eval("lc"+SPSelect);
+	var loc = '' ;
+	if(parseInt(j) < parseInt(lines) ){
+		loc = 'voicesipstart.cmd?';
+	}else{
+		if(parseInt(currentAcnt) >= parseInt(maxLines)){
+			return;
+		}else{		
+			loc = 'voicesipAddLine.cmd?';	
+		}		
+	}	
+
+   loc = addParamsToQuery( loc, current_view );
+   
+   //Stripping quotes and spaces
+   loc = loc.replace(/['" ]/g,'');
+   loc += '&sessionKey='+sessionkey;
+
+   var code = 'location="' + loc + '"';
+   eval(code);
+}
+
+function btnDefaultSip(current_view) {
+   var loc = 'voicesipsetdefault.cmd?';
+   loc += 'currentview=' + current_view;
+
+   //Stripping quotes and spaces
+   loc = loc.replace(/['" ]/g,'');
+   loc += '&sessionKey='+sessionkey;
+
+var code = 'location="' + loc + '"';
+eval(code);
+}
+
+
+function btnDeleteLine(current_view) {
+
+    var sp = document.forms[0].vpSelect.value;  
+	var j =  document.forms[0].sipSelect.value;
+	if(parseInt(eval("lc" + sp )) <= 1){
+		alert("A single SIP account MUST be present in a SIP service provider !!\n");	
+		return;
+	}
+	var loc = 'voicesipDeleteLine.cmd?';
+	loc += 'currentview=' + current_view;
+    loc += '&cmacnt=' + eval("lcma"+sp+"_"+j);
+   //Stripping quotes and spaces
+   loc = loc.replace(/['" ]/g,'');
+   loc += '&sessionKey='+sessionkey;
+
+var code = 'location="' + loc + '"';
+eval(code);
+}
+
+function checkMWIEnable(){
+	with (document.forms[1]){	
+		if(mwiEnable.checked){
+			mwiExpireTime.disabled = false;	
+		}
+		else{
+			mwiExpireTime.disabled = true;	
+		}	
+	}
+}
+
+function checkWarmHotEnable(){
+    var sp = document.forms[0].vpSelect.value;  
+	var j =  document.forms[0].sipSelect.value;
+	with (document.forms[1]){	
+		if(j < eval("lc" + sp )){
+			if(warmHotEnable.checked){
+				warmLineSelect[0].disabled = false;	
+				warmLineSelect[1].disabled = false;    	
+				warmHotNumber.disabled = false;
+				if(eval("wl"+ sp +"_"+j)==0 && eval("hl"+ sp +"_"+j)==0){
+					warmLineSelect[0].checked = true;	
+				}
+			
+				if(warmLineSelect[0].checked){
+					warmExpireTime.disabled = false;
+				}
+			}
+			else{
+				warmLineSelect[0].disabled = true;	
+				warmLineSelect[1].disabled = true;    	
+				warmHotNumber.disabled = true;
+				warmExpireTime.disabled = true;			
+			}
+		}else{
+			if(warmHotEnable.checked){
+				warmLineSelect[0].disabled = false;	
+				warmLineSelect[1].disabled = false;    	
+				warmHotNumber.disabled = false;
+				if(defwl==0 && defhl==0){
+					warmLineSelect[0].checked = true;	
+				}
+			
+				if(warmLineSelect[0].checked){
+					warmExpireTime.disabled = false;
+				}
+			}
+			else{
+				warmLineSelect[0].disabled = true;	
+				warmLineSelect[1].disabled = true;    	
+				warmHotNumber.disabled = true;
+				warmExpireTime.disabled = true;			
+			}		
+		}
+	}
+	
+}
+
+function checkWarmHotSelect(){
+
+    var sp = document.forms[0].vpSelect.value;  
+	var j =  document.forms[0].sipSelect.value;
+	with (document.forms[1]){	
+		if(warmLineSelect[0].checked){
+			warmExpireTime.disabled = false;	
+		}
+		else{
+			warmExpireTime.disabled = true;	
+		}	
+	}
+}
+
+/*
+function checkmissedCallEmailEnable(){
+	with (document.forms[1]){	
+		if(missedCallEmailEnable.checked){
+			mailServerSelect.disabled = false;	
+			missedCallEmailTo.disabled = false;
+			missedCallEmailTitle.disabled = false;
+		}
+		else{
+			mailServerSelect.disabled = true;	
+			missedCallEmailTo.disabled = true;
+			missedCallEmailTitle.disabled = true;
+		}	
+	}
+}
+*/
+
+// aircheng - early media
+/*
+function checkEarlyMediaEnable(){
+	with (document.forms[1]){	
+		if(earlyMedia.checked){
+			earlyMediaIndex.disabled = false;	
+		}
+		else{
+			earlyMediaIndex.disabled = true;	
+		}	
+	}
+}
+*/
+// aircheng - music on hold
+/*
+function checkMusicOnHoldEnable(){
+	with (document.forms[1]){	
+		if(musicOnHold.checked){
+			musicOnHoldIndex.disabled = false;	
+		}
+		else{
+			musicOnHoldIndex.disabled = true;	
+		}	
+	}
+}
+*/
+
+function addParamsToQuery( loc_init, current_view) {
+   var loc = loc_init;
+   
+   var sp = document.forms[0].vpSelect.value;  
+   var j =  document.forms[0].sipSelect.value;
+   with ( document.forms[1] ) {
+       loc += 'currentview=' + current_view; 
+       loc += '&spnum=' + sp;    
+       loc += "&extension" + sp + "_" + j + "=" + escape(sipAccountNumber.value.replace(/['" @]/g,''));         
+       loc += "&dispName" + sp + "_" + j + "=" + escape(sipAccountNumber.value.replace(/['" @]/g,''));
+       loc += "&authName" + sp + "_" + j + "=" + escape(authUserName.value.replace(/['" ]/g,''));
+       loc += "&password" + sp + "_" + j + "=" + escape(authPassword.value.replace(/['" ]/g,'')); 
+      			 
+       if ( sipAccountEnable.checked ){
+          loc+= "&lineEnabled" + sp + "_" + j + "=on";
+       } else {
+          loc+= "&lineEnabled" + sp + "_" + j + "=off";
+       }
+       
+       loc += "&urlType" + sp + "_" + j + "=" + urlTypeSelect.value.replace(/['" ]/g,''); 
+       loc += "&egressGain" + sp + "_" + j + "=" + speakingVolume.value.replace(/['" ]/g,''); 
+       loc += "&ingressGain"  + sp + "_" + j + "=" + listeningVolume.value.replace(/['" ]/g,''); 
+       if ( vadEnable.checked ){
+          loc+= "&vadEnable" + sp + "_" + j + "=on";
+       } else {
+          loc+= "&vadEnable" + sp + "_" + j + "=off";
+       }
+       
+       if ( g168Enable.checked ){
+          loc+= "&echoCancel" + sp + "_" + j + "=on";
+       } else {
+          loc+= "&echoCancel" + sp + "_" + j + "=off";
+       }
+       
+       if ( callWaitingEnable.checked ){
+          loc+= "&callwait" + sp + "_" + j + "=on";
+       } else {
+          loc+= "&callwait" + sp + "_" + j + "=off";
+       }
+       
+       if ( unconditionalEnable.checked ){
+          loc+= "&fwdAll" + sp + "_" + j + "=on";          
+       } else {
+          loc+= "&fwdAll" + sp + "_" + j + "=off";
+       }
+       if(unconditionalNumber.value.replace(/['" ]/g,'').length > 0){
+       	loc += "&fwdNum" + sp + "_" + j + "=" + unconditionalNumber.value.replace(/['" ]/g,''); 
+       }
+       
+       if ( busyEnable.checked ){
+          loc+= "&fwdBusy" + sp + "_" + j + "=on";          
+       } else {
+          loc+= "&fwdBusy" + sp + "_" + j + "=off";
+       }
+       if(busyNumber.value.replace(/['" ]/g,'').length > 0){
+       	loc += "&fwdBusyNum" + sp + "_" + j + "=" + busyNumber.value.replace(/['" ]/g,''); 
+       }
+       
+       if ( noAnswerEnable.checked ){
+          loc+= "&fwdNoAns" + sp + "_" + j + "=on";          
+       } else {
+          loc+= "&fwdNoAns" + sp + "_" + j + "=off";
+       }
+       
+       if(noAnswerNumber.value.replace(/['" ]/g,'').length > 0){
+       	loc += "&fwdNoAnsNum" + sp + "_" + j + "=" + noAnswerNumber.value.replace(/['" ]/g,''); 
+       }
+       
+       
+       
+       loc += "&ringcount" + sp + "_" + j + "=" + noAnswerCount.value.replace(/['" ]/g,''); 
+       
+       if ( doNotDisturbEnable.checked ){
+          loc+= "&doNotDisturb" + sp + "_" + j + "=on";
+       } else {
+          loc+= "&doNotDisturb" + sp + "_" + j + "=off";
+       }
+       if ( callTransferEnable.checked ){
+          loc+= "&calltrans" + sp + "_" + j + "=on";
+       } else {
+          loc+= "&calltrans" + sp + "_" + j + "=off";
+       }
+       if( sendCallerIdEnable.checked) {
+          loc+= "&anonCall" + sp + "_" + j + "=off";
+       } else {
+          loc+= "&anonCall" + sp + "_" + j + "=on";
+       }
+       
+       loc += "&callwaitRejTime" + sp + "_" + j + "=" + waitingRejectTimer.value.replace(/['" ]/g,''); 
+       
+       var phoneSelect=0;
+       if(phoneSelect1.checked){
+       	 phoneSelect = 1 << 0;
+       }
+       if(fxschannelnum =='2'){
+	       if(phoneSelect2.checked){
+	       	 phoneSelect |= (1 << 1);
+	       }
+       }
+	 
+       loc += "&phoneSelect" + sp + "_" + j + "=" + phoneSelect;
+       
+       var codecListId = "codecList";
+       var maxPrefCodecs = 3;
+       var prefCodecList="";
+        for (var k = 0; k < maxPrefCodecs; k++) {
+           l = k + 1;
+           if ( l == 1 ){
+              prefCodecList += eval( "codecSelect" + l + ".value" );
+           } else {
+           		if(eval( "codecSelect" + l + ".value" ) == 'None'){
+           			break;
+           		}
+              prefCodecList += "," + eval( "codecSelect" + l + ".value" );
+           }
+        }
+        prefCodecList += ",X_5067F0_T38,X_5067F0_NTE" 
+		loc += "&" + codecListId  + sp + "_" + j + "=" + prefCodecList;
+		
+		//handle codec list box
+		if(j >= eval("lc" + sp)){			
+			//set codecListEnable for new line
+			loc +="&codecListEnable"+sp+"_"+j+"="+defcle;			
+		}
+       
+       if ( mwiEnable.checked ){
+          loc+= "&mwi" + sp + "_" + j + "=on";
+       } else {
+          loc+= "&mwi" + sp + "_" + j + "=off";
+       }
+	   loc+= "&mwiet" + sp + "_" + j +  "=" + mwiExpireTime.value;
+              
+       if(warmHotEnable.checked){
+       	  if(warmLineSelect[0].checked){
+       	  	loc+= "&hotLine" + sp + "_" + j + "=off";
+       	  	loc+= "&warmLine" + sp + "_" + j + "=on";
+       	  	loc+= "&warmLineNum" + sp + "_" + j + "=" + warmHotNumber.value;
+       	  }
+       	  else if(warmLineSelect[1].checked){
+       	  	loc+= "&hotLine" + sp + "_" + j + "=on";
+       	  	loc+= "&warmLine" + sp + "_" + j + "=off";
+       	  	loc+= "&hotLineNum" + sp + "_" + j + "=" + warmHotNumber.value;
+       	  }
+       }
+       else{
+       	  loc+= "&hotLine" + sp + "_" + j + "=off";
+       	  loc+= "&warmLine" + sp + "_" + j + "=off";
+       }
+       
+       loc += "&warmLineTimer" + sp + "_" + j + "=" + warmExpireTime.value;    
+/*
+		if ( missedCallEmailEnable.checked ){
+          loc+= "&missedCallEmail" + sp + "_" + j + "=on";          
+       } else {
+          loc+= "&missedCallEmail" + sp + "_" + j + "=off";
+       }
+	   loc+= "&missedCallEmailSA" + sp + "_" + j + "=" + mailServerSelect.value;
+	   loc+= "&missedCallEmailTo" + sp + "_" + j +  "=" + missedCallEmailTo.value;
+	       loc+= "&missedCallEmailTitle" + sp + "_" + j +  "=" + encodeUrl(missedCallEmailTitle.value);
+*/
+		
+	/*Mask CCBS setting on GUI, because its function not ready now, KeyYang@MSTC 20120830*/		
+	/*
+		if ( ccbsEnable.checked ){
+          loc+= "&CCBS" + sp + "_" + j + "=on";          
+       } else {
+          loc+= "&CCBS" + sp + "_" + j + "=off";
+       }
+      */
+
+// aircheng - early media
+/*
+       if ( earlyMedia.checked ){
+          loc+= "&earlyMedia" + sp + "_" + j + "=on";
+          loc+= "&earlyMediaIndex" + sp + "_" + j +  "=" + earlyMediaIndex.value;
+       } else {
+          loc+= "&earlyMedia" + sp + "_" + j + "=off";
+		  loc+= "&earlyMediaIndex" + sp + "_" + j +  "=" + earlyMediaIndex.value;
+       }
+*/
+// aircheng - music on hold
+/*
+       if ( musicOnHold.checked ){
+          loc+= "&musicOnHold" + sp + "_" + j + "=on";
+          loc+= "&musicOnHoldIndex" + sp + "_" + j +  "=" + musicOnHoldIndex.value;
+       } else {
+          loc+= "&musicOnHold" + sp + "_" + j + "=off";
+		  loc+= "&musicOnHoldIndex" + sp + "_" + j +  "=" + musicOnHoldIndex.value;
+       }
+*/
+   }   
+   return loc;
+}
+
+function enableButtons(){
+   var vpSelect = document.forms[0].vpSelect.value;
+   var sipSelect = document.forms[0].sipSelect.value;
+
+   var buttonStart = document.getElementById("StartButton");
+   var buttonDefault = document.getElementById("DefaultButton");
+    var DeleteDefault = document.getElementById("DeleteButton");
+    buttonStart.disabled = false;
+    buttonDefault.disabled = false;
+	if(sipSelect < eval("lc" + vpSelect)){
+		DeleteDefault.disabled = false;
+	}else{
+		DeleteDefault.disabled = true;		
+	}
+/*
+   if ( voiceRunning == 1 ) {
+      buttonStart.disabled = true;
+      buttonDefault.disabled = false;
+   } else {
+      buttonStart.disabled = false;
+      buttonDefault.disabled = false;
+   }
+ */  
+}
+function printSPSelectList(){
+
+	var addNewIdx ;
+	var spname ; 
+   for (var i = 0; i < currentSp; i++) {
+		addNewIdx = i + 1;
+		vpname = eval('vpn'+i) ;
+		if(i == 0){
+			document.writeln("	<option selected='selected' value='" + i + "'>" + vpname +"</option>");		
+		}else{
+			document.writeln("	<option value='" + i + "'>" + vpname +"</option>");
+		}
+   }
+}
+
+/*
+function printMailServerListBox(){
+   var tokMailServerList = mailServerList.split(",");
+   if(mailServerList == ''){
+	  document.writeln("<option value='None' selected>None</option>");
+   }
+   else{
+	   for(i = 0; i < tokMailServerList.length; i++)
+	   {      
+		  document.writeln("<option value=\"" + tokMailServerList[i] + "\" selected>");
+		  document.writeln(tokMailServerList[i]);
+		  document.writeln("</option>");
+	   }
+	   document.writeln("<option value='None' selected>None</option>");
+   }
+   
+   
+}
+*/
+
+function frmLoad(){
+
+	var vpSelect = document.forms[0].vpSelect.value;
+	var linenum = eval("lc" + vpSelect);
+	
+    document.forms[0].sipSelect.selectedIndex=0;	
+    for(var j = 0; j < linenum ; j++){
+		var sipPrefix = "SIP"+eval("lcma"+vpSelect+"_"+j)+"-" ; 
+		document.forms[0].sipSelect.options[j] = new Option(sipPrefix+eval("ex"+vpSelect+"_"+j),j);
+	}
+	if(parseInt(currentAcnt) < parseInt(maxLines)){
+		document.forms[0].sipSelect.options[linenum] = new Option("ADD_NEW",linenum);	
+		document.forms[0].sipSelect.length = parseInt(linenum)+1;			
+	}else{
+		document.forms[0].sipSelect.length = parseInt(linenum);		
+	}		
+
+	frmLoad1();
+} 
+
+function frmLoad1() {
+
+   var vpSelect = document.forms[0].vpSelect.value;
+   var sipSelect = document.forms[0].sipSelect.value;
+  
+   with ( document.forms[1] ) {
+   
+	enableButtons();
+
+	if(parseInt(voiceRunning)==1){
+		alert("VoIP is in use,all voice configure change will take effect after the end of the call\n");
+	}		
+	if(sipSelect < eval("lc" + vpSelect)){
+
+    //Handle line enable checkboxes
+   	if ( eval("le" + vpSelect + "_" + sipSelect + "== 1")  ){
+        sipAccountEnable.checked = true;
+    } else {
+        sipAccountEnable.checked = false;
+    }
+
+	  sipAccountNumber.value = eval("ex"+ vpSelect + "_" + sipSelect);
+	  authUserName.value = eval("an"+ vpSelect + "_" + sipSelect);
+	  authPassword.value = eval("pw"+ vpSelect + "_" + sipSelect);
+   	 if ( eval("anc"+ vpSelect + "_" + sipSelect) ==1  ){
+            sendCallerIdEnable.checked = false;
+     } else {
+            sendCallerIdEnable.checked = true;
+     }
+	 
+	 
+	if(eval("st"+ vpSelect)!= "TLS"){
+		urlTypeSelect.options[0] = new Option("SIP","URL_Sip");
+		urlTypeSelect.options[1] = new Option("TEL","URL_Tel");
+		urlTypeSelect.length = 2;		
+		 for(i=0;i<urlTypeSelect.length;i++){
+		   if(urlTypeSelect.options[i].value == eval("ur"+ vpSelect + "_" + sipSelect)){
+			  urlTypeSelect.options[i].selected = true;
+		   }
+		 }
+	}else{
+		urlTypeSelect.options[0] = new Option("SIPS","URL_Sips");	
+		urlTypeSelect.length = 1;	
+		urlTypeSelect.options[0].selected = true;		
+	}
+	 
+     for(i=0;i<speakingVolume.length;i++){
+       if(speakingVolume.options[i].value == eval("eg"+ vpSelect + "_" + sipSelect)){
+       	  speakingVolume.options[i].selected = true;
+       }
+     }
+     
+     for(i=0;i<listeningVolume.length;i++){
+       if(listeningVolume.options[i].value == eval("ig"+ vpSelect + "_" + sipSelect)){
+       	  listeningVolume.options[i].selected = true;
+       }
+     }
+     
+     if ( eval("ve"+ vpSelect + "_" + sipSelect) == 1  ){
+            vadEnable.checked = true;
+     } else {
+            vadEnable.checked = false;
+     }
+     
+     if ( eval("ec"+ vpSelect + "_" + sipSelect) == 1  ){
+            g168Enable.checked = true;
+     } else {
+            g168Enable.checked = false;
+     }
+     
+     if ( eval("cw"+ vpSelect + "_" + sipSelect) == 1  ){
+            callWaitingEnable.checked = true;
+     } else {
+            callWaitingEnable.checked = false;
+     }
+     
+     if ( eval('cfall'+ vpSelect + "_" + sipSelect) == 1){
+            unconditionalEnable.checked = true;
+     } else {
+            unconditionalEnable.checked = false;
+     }
+     
+     if ( eval('cfbus'+ vpSelect + "_" + sipSelect) == 1  ){
+            busyEnable.checked = true;
+     } else {
+            busyEnable.checked = false;
+     }
+     
+     if ( eval('cfnoa'+ vpSelect + "_" + sipSelect) == 1  ){
+            noAnswerEnable.checked = true;
+     } else {
+            noAnswerEnable.checked = false;
+     }
+     
+    unconditionalNumber.value = eval("cfnum"+ vpSelect + "_" + sipSelect);
+    busyNumber.value = eval("cfbnum"+ vpSelect + "_" + sipSelect);
+    noAnswerNumber.value = eval("cfnanum"+ vpSelect + "_" + sipSelect);
+	noAnswerCount.value = eval("rc"+ vpSelect + "_" + sipSelect);
+		 
+	if ( eval("dnd"+ vpSelect + "_" + sipSelect) == 1  ){
+            doNotDisturbEnable.checked = true;
+     } else {
+            doNotDisturbEnable.checked = false;
+     }
+     if ( eval("ct"+ vpSelect + "_" + sipSelect )== 1  ){
+            callTransferEnable.checked = true;
+     } else {
+            callTransferEnable.checked = false;
+     }
+     waitingRejectTimer.value = eval("cwrejt"+ vpSelect + "_" + sipSelect);
+     
+     if(eval("ps"+ vpSelect + "_" + sipSelect) & (1<<0) ){
+      phoneSelect1.checked = true;     	
+     }
+     else{
+     	phoneSelect1.checked = false;
+     }
+     if(fxschannelnum =='2'){
+	     if(eval("ps"+ vpSelect + "_" + sipSelect) & (1<<1) ){
+	      phoneSelect2.checked = true;     	
+	     }
+	     else{
+	     	phoneSelect2.checked = false;
+	     }
+     }
+          
+	 //handle codec list enable
+	var codecListEnable = eval("cle"+vpSelect+"_"+sipSelect);	
+	var tokLocCodeList = codecListEnable.split(",");
+    for(var i=1;i<=3;i++){		
+		var codecSelect = eval("codecSelect" + i);
+		var count=0;
+		for(j = 0; j < tokLocCodeList.length; j++){			
+			if(tokLocCodeList[j] == "G.711ALaw"){
+				codecSelect.options[j] = new Option("G.711a", tokLocCodeList[j]);
+				count++;
+			}		
+			else if(tokLocCodeList[j] == "G.711MuLaw"){
+				codecSelect.options[j] = new Option("G.711u", tokLocCodeList[j]);
+				count++;
+			}
+			else if(tokLocCodeList[j] == "G.726_24"){
+				codecSelect.options[j] = new Option("G.726-24", tokLocCodeList[j]);
+				count++;
+			}
+			else if(tokLocCodeList[j] == "G.726_32"){
+				codecSelect.options[j] = new Option("G.726-32", tokLocCodeList[j]);
+				count++;
+			}
+			else if(tokLocCodeList[j] == "G.729"){
+				codecSelect.options[j] = new Option("G.729", tokLocCodeList[j]);
+				count++;
+			}
+			else if(tokLocCodeList[j] == "G.722"){
+				codecSelect.options[j] = new Option("G.722", tokLocCodeList[j]);
+				count++;
+			}
+			else if((tokLocCodeList[j] == "X_5067F0_T38") || (tokLocCodeList[j] == "X_5067F0_NTE")){
+			//do nothing
+			}	
+			if(spainsetting == '1'){ //do nothing
+			}			
+			else{
+				codecSelect.options[j] = new Option(tokLocCodeList[j],tokLocCodeList[j]);
+				count++;
+			}		
+		}
+		codecSelect.options[count] = new Option("None", "None");
+		codecSelect.length = count+1;
+	}
+	
+      //Handle codec list
+    var codecListId = "codecList" + vpSelect + "_" + sipSelect;	  
+      temp = eval( "cl" + vpSelect + "_" + sipSelect + ".split(',')" );
+      for (var j = 0; j < maxPrefCodecs; j++)
+      {
+         k = j + 1;
+         if ( j < temp.length )
+         {
+         	eval("codecSelect" + k + ".value = \"None\"" );       	
+         	for(var t=0;t<eval("codecSelect" + k + ".length"); t++){
+         	  	if(eval("codecSelect" + k + ".options["+t+"].value") == temp[j]){
+         	  		eval("codecSelect" + k + ".options["+t+"].selected = true");
+         	  	}         	  	
+          	}     	      	
+         }
+         else
+         {
+            eval("codecSelect" + k + ".value = \"None\" " );
+            break;
+         }
+      }
+      
+    if(document.getElementById("codecSelect2").value != "None")
+	{
+		document.getElementById("codecSelect3").disabled = false;
+	}else{
+		document.getElementById("codecSelect3").disabled = true;
+	}
+      
+      warmExpireTime.value = eval("wltm"+ vpSelect + "_" + sipSelect);
+
+      if ( eval("mw"+ vpSelect + "_" + sipSelect) == 1  ){
+            mwiEnable.checked = true;
+            mwiExpireTime.disabled = false;
+     } else {
+            mwiEnable.checked = false;
+            mwiExpireTime.disabled = true;
+     }
+     
+      mwiExpireTime.value = eval("mwt"+ vpSelect + "_" + sipSelect);
+      
+      warmExpireTime.disabled = true;
+      if ( eval("hl"+ vpSelect + "_" + sipSelect)==1){
+         warmHotEnable.checked = true;    	
+      	warmHotNumber.disabled = false;		
+       	 warmLineSelect[0].checked = false;
+       	 warmLineSelect[1].checked = true;
+      	warmLineSelect[0].disabled = false;
+      	warmLineSelect[1].disabled = false;		 
+       	 warmHotNumber.value = eval("hotnum" + vpSelect + "_" + sipSelect);       	 
+      }
+      else if(eval("wl" + vpSelect + "_" + sipSelect)==1){       
+      	 warmHotEnable.checked = true;	  
+      	 warmHotNumber.disabled = false; 		 
+       	 warmLineSelect[0].checked = true;
+       	 warmLineSelect[1].checked = false;       
+      	 warmLineSelect[0].disabled = false;
+      	 warmLineSelect[1].disabled = false;			 
+       	 warmHotNumber.value = eval("warmnum" + vpSelect + "_" + sipSelect);
+       	 warmExpireTime.disabled = false;
+      }
+      else{
+      	warmHotEnable.checked = false;
+      	warmLineSelect[0].checked = false;
+      	warmLineSelect[0].disabled = true;
+      	warmLineSelect[1].checked = false;
+      	warmLineSelect[1].disabled = true;
+      	warmHotNumber.disabled = true;      	
+      }  
+	  /*
+	  if ( eval("mce"+ vpSelect + "_" + sipSelect)==1){
+		missedCallEmailEnable.checked = true;
+		mailServerSelect.disabled = false;	
+		missedCallEmailTo.disabled = false;
+		missedCallEmailTitle.disabled = false;
+	  }
+	  else{
+		missedCallEmailEnable.checked = false;
+		mailServerSelect.disabled = true;	
+		missedCallEmailTo.disabled = true;
+		missedCallEmailTitle.disabled = true;
+	  }
+	  
+	  for(var j=0;j<mailServerSelect.length;j++){
+		if(mailServerSelect.options[j].value == eval("mcesa"+ vpSelect + "_" + sipSelect)){
+			mailServerSelect.options[j].selected = true;			
+		}
+	  }
+	  
+	  
+	  missedCallEmailTo.value = eval("mceto" + vpSelect + "_" + sipSelect);
+	  
+	  missedCallEmailTitle.value = eval("mceti" + vpSelect + "_" + sipSelect);
+	  */
+	  
+	/*Mask CCBS setting on GUI, because its function not ready now, KeyYang@MSTC 20120830*/	  
+	  /*
+	  if ( eval("ccbs"+ vpSelect + "_" + sipSelect)==1){
+		ccbsEnable.checked = true;
+	  }
+	  else{
+		ccbsEnable.checked = false;
+	  }
+	  */
+
+	  // aircheng - early media
+	  /*
+	  if ( eval("em"+ vpSelect + "_" + sipSelect)==1){
+		earlyMedia.checked = true;
+		earlyMediaIndex.disabled = false;
+	  }
+	  else{
+		earlyMedia.checked = false;
+		earlyMediaIndex.disabled = true;
+	  }
+	  earlyMediaIndex.value = eval("emi" + vpSelect + "_" + sipSelect);
+	  */
+	  
+	  // aircheng - music on hold
+	  /*
+	  if ( eval("moh"+ vpSelect + "_" + sipSelect)==1){
+		musicOnHold.checked = true;
+		musicOnHoldIndex.disabled = false;
+	  }
+	  else{
+		musicOnHold.checked = false;
+		musicOnHoldIndex.disabled = true;
+	  }
+	  musicOnHoldIndex.value = eval("mohi" + vpSelect + "_" + sipSelect);
+	  */
+	  
+	}else{
+		//Handle line enable checkboxes
+		if ( defle == 1){
+			sipAccountEnable.checked = true;
+		} else {
+			sipAccountEnable.checked = false;
+		}
+
+		  sipAccountNumber.value = defphonenum;
+		  authUserName.value = defan;
+		  authPassword.value = defpw;
+		 if ( defanc == 1  ){
+				sendCallerIdEnable.checked = false;
+		 } else {
+				sendCallerIdEnable.checked = true;
+		 }
+
+		 if(eval("st"+ vpSelect)!= "TLS"){
+			urlTypeSelect.options[0] = new Option("SIP","URL_Sip");
+			urlTypeSelect.options[1] = new Option("TEL","URL_Tel");
+			urlTypeSelect.length = 2;		
+			 for(i=0;i<urlTypeSelect.length;i++){
+			   if(urlTypeSelect.options[i].value == defurltype){
+				  urlTypeSelect.options[i].selected = true;
+			   }
+			 }
+		}else{
+			urlTypeSelect.options[0] = new Option("SIPS","URL_Sips");	
+			urlTypeSelect.length = 1;	
+			urlTypeSelect.options[0].selected = true;		
+		}
+
+		 for(i=0;i<speakingVolume.length;i++){
+		   if(speakingVolume.options[i].value == defegain){
+			  speakingVolume.options[i].selected = true;
+		   }
+		 }
+		 
+		 for(i=0;i<listeningVolume.length;i++){
+		   if(listeningVolume.options[i].value == defingain){
+			  listeningVolume.options[i].selected = true;
+		   }
+		 }
+		 
+		 if ( defvadenable == 1  ){
+				vadEnable.checked = true;
+		 } else {
+				vadEnable.checked = false;
+		 }
+		 
+		 if ( defechocancel == 1  ){
+				g168Enable.checked = true;
+		 } else {
+				g168Enable.checked = false;
+		 }
+		 
+		 if ( defcallwait == 1  ){
+				callWaitingEnable.checked = true;
+		 } else {
+				callWaitingEnable.checked = false;
+		 }
+		 
+		 if ( deffwdall == 1){
+				unconditionalEnable.checked = true;
+		 } else {
+				unconditionalEnable.checked = false;
+		 }
+		 
+		 if ( deffwdbusy == 1  ){
+				busyEnable.checked = true;
+		 } else {
+				busyEnable.checked = false;
+		 }
+		 
+		 if ( deffwdnoans == 1  ){
+				noAnswerEnable.checked = true;
+		 } else {
+				noAnswerEnable.checked = false;
+		 }
+		 
+		unconditionalNumber.value = deffwdNum;
+		busyNumber.value = deffwdBusyNum;
+		noAnswerNumber.value = deffwdNoAnsNum;
+		noAnswerCount.value = deffwdringcount;
+			 
+		if ( defdnd == 1  ){
+				doNotDisturbEnable.checked = true;
+		 } else {
+				doNotDisturbEnable.checked = false;
+		 }
+		 if ( deftrans == 1  ){
+				callTransferEnable.checked = true;
+		 } else {
+				callTransferEnable.checked = false;
+		 }
+		 waitingRejectTimer.value = defcwrej;
+		 
+		 if(defphoneselect & (1<<0) ){
+		  phoneSelect1.checked = true;     	
+		 }
+		 else{
+			phoneSelect1.checked = false;
+		 }
+		 if(fxschannelnum =='2'){
+			 if(defphoneselect & (1<<1) ){
+			  phoneSelect2.checked = true;     	
+			 }
+			 else{
+				phoneSelect2.checked = false;
+			 }
+		 }
+		 
+    var codecListEnable= defcle;
+	var tokLocCodeList = codecListEnable.split(",");
+    for(var i=1;i<=3;i++){		
+		var codecSelect = eval("codecSelect" + i);
+		var count=0;
+		for(j = 0; j < tokLocCodeList.length; j++){			
+			if(tokLocCodeList[j] == "G.711ALaw"){
+				codecSelect.options[j] = new Option("G.711a", tokLocCodeList[j]);
+				count++;
+			}		
+			else if(tokLocCodeList[j] == "G.711MuLaw"){
+				codecSelect.options[j] = new Option("G.711u", tokLocCodeList[j]);
+				count++;
+			}
+			else if(tokLocCodeList[j] == "G.726_24"){
+				codecSelect.options[j] = new Option("G.726-24", tokLocCodeList[j]);
+				count++;
+			}
+			else if(tokLocCodeList[j] == "G.726_32"){
+				codecSelect.options[j] = new Option("G.726-32", tokLocCodeList[j]);
+				count++;
+			}
+			else if((tokLocCodeList[j] == "X_5067F0_T38") || (tokLocCodeList[j] == "X_5067F0_NTE")){
+			//do nothing
+			}
+			else{
+				codecSelect.options[j] = new Option(tokLocCodeList[j],tokLocCodeList[j]);
+				count++;
+			}		
+		}
+		codecSelect.options[count] = new Option("None");
+		codecSelect.length = count+1;
+	}
+		  //Handle codec list
+		var codecListId = defcl;	  
+		  temp = defcl.split(',');
+		  for (var j = 0; j < maxPrefCodecs; j++)
+		  {
+			 k = j + 1;
+			 if ( j < temp.length )
+			 {
+				eval("codecSelect" + k + ".value = \"None\"" );       	
+				for(var t=0;t<eval("codecSelect" + k + ".length"); t++){
+					if(eval("codecSelect" + k + ".options["+t+"].value") == temp[j]){
+						eval("codecSelect" + k + ".options["+t+"].selected = true");
+					}         	  	
+				}     	      	
+			 }
+			 else
+			 {
+				eval("codecSelect" + k + ".value = \"None\" " );
+				break;
+			 }
+		  }
+		  
+		if(document.getElementById("codecSelect2").value != "None")
+		{
+			document.getElementById("codecSelect3").disabled = false;
+		}else{
+			document.getElementById("codecSelect3").disabled = true;
+		}
+		  
+
+		  
+		  if ( defmw == 1  ){
+				mwiEnable.checked = true;
+				mwiExpireTime.disabled = false;
+		 } else {
+				mwiEnable.checked = false;
+				mwiExpireTime.disabled = true;
+		 }
+		 mwiExpireTime.value = defmwt;
+		 		 
+		  warmExpireTime.value = defwltm;		 		  
+		  warmExpireTime.disabled = true;
+		  if ( defhl==1){
+			 warmHotEnable.checked = true;    	
+			warmHotNumber.disabled = false;		
+			 warmLineSelect[0].checked = false;
+			 warmLineSelect[1].checked = true;
+			warmLineSelect[0].disabled = false;
+			warmLineSelect[1].disabled = false;		 
+			 warmHotNumber.value = defhlnum;       	 
+		  }
+		  else if(defwl == 1){       
+			 warmHotEnable.checked = true;	  
+			 warmHotNumber.disabled = false; 		 
+			 warmLineSelect[0].checked = true;
+			 warmLineSelect[1].checked = false;       
+			 warmLineSelect[0].disabled = false;
+			 warmLineSelect[1].disabled = false;			 
+			 warmHotNumber.value = defwlnum;
+			 warmExpireTime.disabled = false;
+		  }
+		  else{
+			warmHotEnable.checked = false;
+			warmLineSelect[0].checked = false;
+			warmLineSelect[0].disabled = true;
+			warmLineSelect[1].checked = false;
+			warmLineSelect[1].disabled = true;
+			warmHotNumber.disabled = true;      	
+		  } 	
+		  /*
+		  if(defmce == 1){
+			missedCallEmailEnable.checked = true;
+			mailServerSelect.disabled = false;	
+			missedCallEmailTo.disabled = false;
+			missedCallEmailTitle.disabled = false;
+		  }
+		  else{
+		    missedCallEmailEnable.checked = false;
+			mailServerSelect.disabled = true;	
+			missedCallEmailTo.disabled = true;
+			missedCallEmailTitle.disabled = true;
+		  }
+		  
+		  missedCallEmailTo.value = defmceto;
+		  missedCallEmailTitle.value = defmceti;
+		  */
+		  
+		/*Mask CCBS setting on GUI, because its function not ready now, KeyYang@MSTC 20120830*/		  
+		/*
+		  if(defccbs == 1){
+			ccbsEnable.checked = true;
+		  }
+		  else{
+			ccbsEnable.checked = false;
+		  }
+		*/
+
+		  // aircheng - early media
+		  /*
+		  if ( defem == 1  ){
+			earlyMedia.checked = true;
+			earlyMediaIndex.disabled = false;
+		  }
+		  else {
+			earlyMedia.checked = false;
+			earlyMediaIndex.disabled = true;
+		  }
+		  earlyMediaIndex.value = defemi;
+		  */
+
+		  // aircheng - music on hold
+		  /*
+		  if ( defmoh == 1  ){
+			musicOnHold.checked = true;
+			musicOnHoldIndex.disabled = false;
+		  }
+		  else {
+			musicOnHold.checked = false;
+			musicOnHoldIndex.disabled = true;
+		  }
+		  musicOnHoldIndex.value = defmohi;
+		  */
+
+		}	  
+   }
+ 
+   loadPreprocess();
+}
+
+// done hiding -->
+</script>
+</head>
+<body onload="frmLoad()">
+<form name="sipAccount" method="post" target="buttom">
+<br class="clearfloat" />
+</div>
+<div class="config-block">
+	<div class="left">
+		<div class="right">
+			<div class="headline">Service Provider Selection </div>		
+			  <form id="serverSelectForm" name="serverSelectForm" method="post" enctype="multipart/form-data" action="voip_sip_server.cgi">
+				<div class="root">			  
+					<table width="100%" border="0">
+					  <tr>
+                      <td width="3%">&nbsp;</td>
+                      <td width="30%">Service Provider Selection </td>
+						<td width='67%'><select id='vpSelect' name='vpSelect' onchange='frmLoad()'>
+						<script language="javascript">
+						printSPSelectList()
+						</script>
+						</select></td>                    
+					  </tr>
+					</table>
+				</div>				
+			<div class="headline">SIP Account Selection</div>	
+			  <div class="root">				
+			    <table width="100%" border="0">
+                    <tr>
+                      <td width="3%">&nbsp;</td>
+                      <td width="30%">SIP Account Selection </td>
+                      <td width="34%"><select id="sipSelect" name="sipSelect" onchange="frmLoad1()">
+                        <option selected="selected" value="0">Change-Me</option>                   
+                      </select></td>
+						<td width="33%">
+						<input type='button' onClick="btnDeleteLine('voip_sip_account')" value='Delete' ID="DeleteButton" disabled="false">
+						</td>					  
+                    </tr>
+                  </table>
+			  </div>				  
+			  </form>	
+		<!-- configuration beginning -->
+			<form id="sipForm" name="sipForm" method="post" enctype="multipart/form-data" action="voip_sip_account.cgi" onsubmit="return formCheck()">
+			 
+			  <div class="headline">General</div>
+			<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+              <tr>
+                <td><input name="sipAccountEnable"  type="checkbox" value="sipAccountEnable" /></td>
+                <td>Enable SIP Account</td>
+                <td width="67%">&nbsp;</td>
+              </tr>
+              <tr>
+                <td width="3%" nowrap="nowrap">&nbsp;</td>
+                <td width="30%" nowrap="nowrap" class="tindent">SIP Account Number</td>
+                <td><input type="text" maxlength="32" id="sipAccountNumber" name="sipAccountNumber" value="" /></td>
+              </tr>
+            </table>
+			<div class="headline">Authentication </div>
+			<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+              <tr>
+                <td width="3%" nowrap="nowrap">&nbsp;</td>
+                <td width="30%" nowrap="nowrap">User Name</td>
+                <td width="67%"><input id="authUserName" maxlength="127" type="text" name="authUserName" /></td>
+              </tr>
+              <tr>
+                <td height="24" nowrap="nowrap">&nbsp;</td>
+                <td nowrap="nowrap">Password</td>
+                <td><input id="authPassword" maxlength="127" type="password" autocomplete="new-password" name="authPassword" /></td>
+              </tr>
+            </table>
+      <div class="headline">Apply To Phone </div>
+		    <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+          	<tr>
+                <td width="3%" nowrap="nowrap">&nbsp;</td>
+                <td width="30%" nowrap="nowrap"><input type='checkbox' size="10" id='phoneSelect1' name='phoneSelect1' />Phone 1 </td>
+                <script language="javascript">
+                <!--
+                	if(spainsetting =='1'){     
+	                	document.writeln("<td width='67%' style='display:none'><input type='checkbox' size='10' id='phoneSelect2' name='phoneSelect2' />Phone 2 </td>");
+                	}
+                	else{						
+	                	document.writeln("<td width='67%'><input type='checkbox' size='10' id='phoneSelect2' name='phoneSelect2' />Phone 2 </td>");
+                	}
+                -->
+                </script>                
+		</tr>
+		</table>
+      <div class="warning" id="callWaitingTag">
+				<div class="title">Caution:</div>
+					<p>If both SIP accounts apply to the same phone, the SIP account priority for that phone is SIP1 > SIP2. </p>
+				</div>	
+			<div style="display:none ;" id="advanced">
+			<div class="headline">URI Type</div>
+		    <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+              <tr>
+                <td width="3%" nowrap="nowrap">&nbsp;</td>
+                <td width="30%" nowrap="nowrap">URI Type</td>
+                <td width="67%"><select id="urlTypeSelect" name="urlTypeSelect">
+                  <option value="URL_Sip">SIP</option>
+                  <option value="URL_Tel">TEL</option>					  
+                </select>                </td>
+              </tr>
+            </table>
+			<div class="headline">Voice Features</div>
+		    <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+              <tr>
+                <td width="3%" nowrap="nowrap">&nbsp;</td>
+                <td width="30%" nowrap="nowrap">Primary Compression Type</td>
+                <td width="67%"><select id="codecSelect1" name="codecSelect1"  onchange="javascript:codecChange()">                  				                   
+                </select>                </td>
+              </tr>
+              <tr>
+                <td nowrap="nowrap">&nbsp;</td>
+                <td nowrap="nowrap">Secondary Compression Type</td>
+                <td><select id="codecSelect2" name="codecSelect2" onchange="javascript:codecChange()">				  
+                </select></td>
+              </tr>
+              <tr>
+                <td nowrap="nowrap">&nbsp;</td>
+                <td nowrap="nowrap">Third Compression Type</td>
+                <td><select id="codecSelect3" name="codecSelect3" onchange="javascript:codecChange()"> 
+                </select></td>
+              </tr>
+            </table>
+			<p>&nbsp;</p>
+			<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+              <tr>
+                <td width="3%" nowrap="nowrap">&nbsp;</td>
+                <td width="30%" nowrap="nowrap">Speaking Volume Control </td>
+                <td width="67%"><select id="speakingVolume" name="speakingVolume">
+                    <option value="0" selected="selected">Minimum</option>
+                    <option value="1">Middle</option>
+                    <option value="2">Maximun</option>
+                  </select>                </td>
+              </tr>
+              <tr>
+                <td nowrap="nowrap">&nbsp;</td>
+                <td nowrap="nowrap">Listening Volume Control </td>
+                <td><select id="listeningVolume" name="listeningVolume">
+                    <option value="0" selected="selected">Minimum</option>
+                    <option value="1">Middle</option>
+                    <option value="2">Maximun</option>
+                  </select>                </td>
+              </tr>
+            </table>
+			<p>&nbsp;</p>
+			<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+              <tr>
+                <td width="3%"><input type="checkbox" id="g168Enable" name="g168Enable" value="1" ##g168Enable## /></td>
+                <td width="97%">Enable G.168 (Echo Cancellation) </td>
+              </tr>
+            </table>
+			<p>&nbsp;</p>
+			<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+              <tr>
+                <td width="3%" ><input type="checkbox" id="vadEnable" name="vadEnable" value="1" ##vadEnable##/></td>
+                <td width="97%" > Enable VAD(Voice Active Detector)</td>
+              </tr>
+            </table>
+			<p>&nbsp;</p>
+			<div class="headline">Call Features </div>
+			<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+              <tr>
+                <td width="3%" nowrap="nowrap"><input id="sendCallerIdEnable" name="sendCallerIdEnable" type="checkbox" value="1" ##sendCallerIdEnable##/></td>
+                <td width="30%" nowrap="nowrap">Send Caller ID </td>
+                <td nowrap="nowrap"></td>
+              </tr>
+            </table>
+			<p>&nbsp;</p>
+			<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+              <tr>
+                <td width="3%" ><input type="checkbox" id="callTransferEnable" name="callTransferEnable" value="1" ##callTransferEnable##/></td>
+                <td width="97%" >Enable Call Transfer</td>
+              </tr>
+            </table>
+			<p>&nbsp;</p>
+			<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+			  <script language="javascript">
+              <!--
+				  if(spainsetting =='1'){
+					document.writeln("<tr style='display:none'>");
+				  }
+				  else{
+					document.writeln("<tr>");
+				  }
+			  -->
+			  </script>
+                <td width="3%" ><input type="checkbox" id="callWaitingEnable" name="callWaitingEnable" value="1" ##callWaitingEnable## /></td>
+                <td width="30%" >Enable Call Waiting </td>
+                <td width="67%" >&nbsp;</td>
+              </tr>
+              <tr>
+                <td >&nbsp;</td>
+                <td >Call Waiting Reject Timer </td>
+                <td ><input type="text" id="waitingRejectTimer" name="waitingRejectTimer" size="5" maxlength="5"  onchange="rangeCheck(10,60,20,this,1,1)"/>
+                  <span class="hint">(10~60) Second</span></td>
+              </tr>
+            </table>
+			<div class="warning" id="callWaitingTag">
+			 	<div class="title">Caution:</div>
+				<p>If you enable [Call Waiting], [Busy Forward] will be ignored.</p>
+			</div>		
+			<p>&nbsp;</p>
+			<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+              
+              <tr>
+                <td width="3%" nowrap="nowrap">
+				<input type="checkbox" id="unconditionalEnable" name="unconditionalEnable" value="1" ##unconditionalEnable## onclick="javascript:disableItem(1,'unconditionalEnable','busyEnable','busyNumber','noAnswerEnable','noAnswerNumber','noAnswerCount')"/>
+				</td>
+                <td width="30%" nowrap="nowrap">Enable Unconditional Forward </td>
+                <td width="9%" nowrap="nowrap">To Number </td>
+                <td width="58%"><input type="text" maxlength="32" id="unconditionalNumber" name="unconditionalNumber" /></td>			
+              </tr>
+              <tr>
+                <td nowrap="nowrap"><input type="checkbox" id="busyEnable" name="busyEnable" value="1" ##busyEnable## /></td>
+                <td nowrap="nowrap">Enable Busy Forward</td>
+                <td width="9%" nowrap="nowrap"> To Number </td>
+                <td width="58%"><input type="text" maxlength="32" id="busyNumber" name="busyNumber"/></td>
+              </tr>
+              <tr>
+                <td nowrap="nowrap"><input type="checkbox" id="noAnswerEnable" name="noAnswerEnable" value="1" ##noAnswerEnable## /></td>
+                <td nowrap="nowrap">Enable No Answer Forward </td>
+                <td nowrap="nowrap">To Number </td>
+                <td><input type="text" maxlength="32" id="noAnswerNumber" name="noAnswerNumber"/></td>
+              </tr>
+              <tr>
+                <td width="3%" nowrap="nowrap"></td>
+                <td width="30%" nowrap="nowrap">No Answer Time</td>
+                <td colspan="2"><input id="noAnswerCount" name="noAnswerCount" type="text" size="5" maxlength="5" onchange="rangeCheck(10,180,30,this,1,1)" />
+                  <span class="hint">(10~180) Second</span></td>
+              </tr>
+            </table>
+			<div class="warning" id="callForwardTag">
+			 	<div class="title">Caution:</div>
+				<p>If you enable [Unconditional Forward], [Busy Forward] and [No Answer] will be ignored.</p>
+			</div>
+			<br />
+			<br />
+			<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+              <tr>
+                <td width="3%" ><input type="checkbox" id="doNotDisturbEnable" name="doNotDisturbEnable" value="1" ##doNotDisturbEnable##/></td>
+                <td >Enable Do Not Disturb</td>
+              </tr>
+            </table>
+			<div class="warning" id="dndTag">
+			  	<div class="title">Warning:</div>
+				<p>If you enable this item, you will not get indication when somebody call you.</p>
+		  </div>
+			<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+              <tr>
+                <td >&nbsp;</td>
+              </tr>
+            </table>
+<!-- Mask CCBS setting on GUI, because its function not ready now, KeyYang@MSTC 20120830-->
+<!--
+      <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+              <tr>
+                <td width="3%" ><input type="checkbox" id="ccbsEnable" name="ccbsEnable" value="1" ##ccbsEnable##/></td>
+                <td >Enable Call Completion on Busy Subscriber (CCBS)</td>
+              </tr>
+            </table>
+			<div class="warning" id="dndTag">
+			  	<div class="title">Notice:</div>
+				<p>If you enable CCBS, activate this feature by pressing phone key '5' after attempting a call on busy.</p>
+		  </div>
+			<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+              <tr>
+                <td >&nbsp;</td>
+              </tr>
+            </table>
+-->
+      <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+              <tr>
+                <td width="3%" ><input type="checkbox" id="mwiEnable" name="mwiEnable" value="1" onclick="checkMWIEnable()"/></td>
+                <td width="30%" >MWI (Message Waiting Indication) </td>
+                <td width="67%" >&nbsp;</td>
+              </tr>
+              <tr>
+                <td >&nbsp;</td>
+                <td >Expiration Time </td>
+                <td ><input type="text" id="mwiExpireTime" name="mwiExpireTime" size="5" maxlength="5"  onchange="rangeCheck(120,86400,3600,this,1,1)"/>
+                  <span class="hint">(120~86400)Second</span></td>
+              </tr>
+            </table>
+        <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+              <tr>
+                <td width="3%" ><input type="checkbox" id="warmHotEnable" name="warmHotEnable" value="0" onclick="checkWarmHotEnable()"/></td>
+                <td width="30%" >Hot Line / Warm Line Enable</td>
+                <td width="67%" >&nbsp;</td>
+              </tr>
+              <tr>
+                <td >&nbsp;</td>
+                <td ><input type="radio" name="warmLineSelect" value="1" onclick="checkWarmHotSelect()">Warm Line</td>
+                <td ><input type="radio" name="warmLineSelect" value="0" onclick="checkWarmHotSelect()">Hot Line</td>
+              </tr>
+              <tr>
+                <td >&nbsp;</td>
+                <td >Hot Line / Warm Line number</td>
+                <td ><input type="text" maxlength="32" id="warmHotNumber" name="warmHotNumber" />
+                  </td>
+              </tr>
+              <tr>
+                <td >&nbsp;</td>
+                <td >Warm Line Timer (sec)</td>
+                <td ><input type="text" id="warmExpireTime" name="warmExpireTime" size="5" maxlength="5"  onchange="rangeCheck(5,300,5,this,1,1)"/>
+                  <span class="hint">(5~300)Second</span></td>
+              </tr>              
+            </table>
+            <!--
+			<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+              <tr>
+                <td width="3%" ><input type="checkbox" id="missedCallEmailEnable" name="missedCallEmailEnable" value="1" onclick = "checkmissedCallEmailEnable()"/></td>
+                <td width="30%" >Enable Missed Call Email Notification </td>
+                <td width="67%" ></td>
+              </tr>
+			  <tr>
+                <td >&nbsp;</td>
+                <td >Mail Server</td>
+                <td >
+				<select name="mailServerSelect" size="1">
+                  <script TYPE="text/javascript">
+                     printMailServerListBox()
+                  </script>
+                </select>
+                </td>
+              </tr>
+              <tr>
+                <td >&nbsp;</td>
+                <td >Send Notification to Email </td>
+                <td ><input type="text" id="missedCallEmailTo" name="missedCallEmailTo" size="32" maxlength="32" />
+                  </td>
+              </tr>
+			  <tr>
+                <td >&nbsp;</td>
+                <td >Missed Call Email Title </td>
+                <td ><input type="text" id="missedCallEmailTitle" name="missedCallEmailTitle" size="32" maxlength="32" />
+                  </td>
+              </tr>
+            </table>
+			<div class="warning" id="dndTag">
+			  	<div class="title">Notice:</div>
+				<p>Please configure mail server in "Advanced > Email Notification" page and select the mail server for this feature .</p><br/>
+		  </div>
+		  -->
+		  
+			<!--
+			<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+              <tr>
+                <td width="3%" ><input type="checkbox" id="earlyMedia" name="earlyMedia" value="0" onclick="checkEarlyMediaEnable()"/></td>
+                <td width="30%" >Early Media </td>
+                <td width="67%" >&nbsp;</td>
+              </tr>
+              <tr>
+                <td width="3%" nowrap="nowrap">&nbsp;</td>
+                <td width="30%" nowrap="nowrap">IVR Play Index</td>
+                <td width="67%"><select id="earlyMediaIndex" name="earlyMediaIndex">
+				  <option value="66">Default</option>
+				  <option value="0">No. 1</option>
+                  <option value="1">No. 2</option>
+				  <option value="2">No. 3</option>
+				  <option value="3">No. 4</option>
+				  <option value="4">No. 5</option>
+                </select></td>
+              </tr>
+            </table>
+            -->
+
+			<!--
+			<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cfgpadding">
+              <tr>
+                <td width="3%" ><input type="checkbox" id="musicOnHold" name="musicOnHold" value="0" onclick="checkMusicOnHoldEnable()"/></td>
+                <td width="30%" >Music On Hold </td>
+                <td width="67%" >&nbsp;</td>
+              </tr>
+			  <tr>
+                <td width="3%" nowrap="nowrap">&nbsp;</td>
+                <td width="30%" nowrap="nowrap">IVR Play Index</td>
+                <td width="67%"><select id="musicOnHoldIndex" name="musicOnHoldIndex">
+				  <option value="66">Default</option>
+				  <option value="0">No. 1</option>
+                  <option value="1">No. 2</option>
+				  <option value="2">No. 3</option>
+				  <option value="3">No. 4</option>
+				  <option value="4">No. 5</option>
+                </select></td>
+              </tr>
+
+            </table>
+            -->
+
+			</div>
+		    
+		    <table width="90%" align="center" border="0" cellpadding="1" cellspacing="0">
+              <tbody>
+                <tr class="tabcolor1" align="center">
+                  <td width="39%"></td>
+                  <td width="39%"></td>
+                  <td width="24%" align="right">
+                  <input type='button' onClick="javascript:showtab()" value='Advanced' ID="showWord">
+                  </td>
+                </tr>
+              </tbody>
+          	</table> 
+			
+	        <div class="btn-block"> 
+			  <input type='button' onClick="btnStartSip('voip_sip_account')" value='Apply' ID="StartButton" disabled="false">
+			  <input onclick="btnDefaultSip('voip_sip_account')"  value="Cancel" id="DefaultButton" disabled="false" type="button">
+			</div>
+			</form>
+			<!-- configuration ending -->
+			<br class="clearfloat" />
+	  </div>
+		<br class="clearfloat" />
+  </div>
+</div>
+</form>
+<p>&nbsp;</p>
+</body>
+</html>
+

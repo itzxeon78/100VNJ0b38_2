@@ -1,0 +1,145 @@
+<html><head>
+<meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+<link rel=stylesheet href='../stylemain.css' type='text/css'>
+<link rel=stylesheet href='../colors.css' type='text/css'>
+<script language="javascript">
+<!-- hide 
+var voiceRunning = '<%ejGetVoice(voiceStatus)%>';
+var sessionkey = '<%ejGetOther(sessionKey)%>';
+function btnDefaultSip(current_view) {
+   var loc = 'voicesipsetdefault.cmd?';
+   loc += 'currentview=' + current_view;
+   //Stripping quotes and spaces
+   loc = loc.replace(/['" ]/g,'');
+   loc += '&sessionKey='+sessionkey;
+   var code = 'location="' + loc + '"';
+
+   eval(code);
+}
+function btnClearCalls(current_view) {
+   var loc = 'voicecallsclearall.cmd?';
+   loc += 'currentview=' + current_view;
+   //Stripping quotes and spaces
+   loc = loc.replace(/['" ]/g,'');
+   loc += '&sessionKey='+sessionkey;
+   var code = 'location="' + loc + '"';
+   eval(code);
+}
+
+
+function frmLoad() {
+   with ( document.forms[0] ) {
+   	 enableButtons();
+      }
+}
+
+function enableButtons(){
+   var btnClearCalls = document.getElementById("ClearButton");
+   var buttonDefault = document.getElementById("DefaultButton");
+
+   if ( voiceRunning == 1 ) {
+      btnClearCalls.disabled = true;
+      buttonDefault.disabled = false;
+   } else {
+      btnClearCalls.disabled = false;
+      buttonDefault.disabled = false;
+   }
+}
+// done hiding -->
+</script>
+</head>
+<body onLoad='frmLoad()'>
+<form id="form1" name="form1" method="post" action="">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" >
+    <tr>
+      <td width="5%" >&nbsp;</td>
+      
+      <td width="90%" height="18">  
+      </td>
+
+      <td width="5%" height="18">&nbsp;</td>
+        </tr>
+        <tr>
+        <td width="5%" >&nbsp;</td>
+        
+      <td class="BG4"> 
+        <!-- 3D -->
+        <table width="100%"  border="0" cellspacing="0" cellpadding="0">
+           <tr>
+            <td>&nbsp; 
+              <br> <table border="0" cellspacing="0" cellpadding="0" width="100%">
+                <tr> 
+                  <td width="3%" height="19" class="cTitle"><B><FONT class=NaviText> 
+                    </FONT></B> </td>
+                  <td height="19" class="cTitle"><B> Call History Summary</B></td>
+                  <td height="19" class="cTitle">&nbsp;</td>
+                </tr>
+                <tr> 
+                  <td height="10" colspan="3"></td>
+                </tr>
+              </table>
+              <table border="0" cellspacing="0" cellpadding="0" width="100%">
+                <tr> 
+                  <td>
+                    <table width="95%" border="1" align="center" cellpadding="1" cellspacing="0">
+                      <tr align="center"> 
+                        <td width="7%"> 
+                          <div align="center">
+                            <input id="DefaultButton" type="button" value="Refresh" onclick='location.href="CallHistorySummary.html"'>
+                            <input id="ClearButton" type="button" value="Clear All" onclick="btnClearCalls('callhistory_summary')">
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+                 
+                                          
+                    <table width="90%" border="1" align="center" cellpadding="1" cellspacing="0" bordercolor="#FFFFFF">
+                      <tr class="tableTitle" height="30"> 
+                        <td align=center class="tableTitle" width="5%">No.</td>
+                        <td align=center class="tableTitle" width="13%">Date</td>
+                        <td align=center class="tableTitle" width="13%">Total 
+                          Calls</td>
+                        <td align=center class="tableTitle" width="19%">Outgoing 
+                          Calls</td>
+                        <td align=center class="tableTitle" width="19%">Incoming 
+                          Calls</td>
+                        <td align=center class="tableTitle" width="16%">Missing 
+                          Calls</td>
+                        <td align=center class="tableTitle" width="18%">Total 
+                          Duration</td>
+                      </tr>
+		      <%ejGetOther(CallHistorySummaryShow)%>
+                    </table>
+                    </td>
+                </tr>
+                <tr> 
+                  <td>&nbsp;</td>
+                </tr>
+                <tr align="center" valign="middle"> 
+                  <td height="36">
+                    <table border="0" cellspacing="0" cellpadding="0" width="357" align="center">
+                      <tr> 
+                        <td colspan="3">&nbsp;</td>
+                      </tr>
+                      <tr align="center"> 
+                        <td colspan="3" background="../images/wg_dotline.gif">&nbsp;</td>
+                      </tr>
+                      <tr> 
+                        <td colspan="3">&nbsp;</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+<!-- 3D -->
+            </td>
+                  </tr>
+              </table>
+          <!-- 3D -->   
+      </td>
+<td width="5%" >&nbsp;</td>
+</tr>
+</table>
+</form>
+</body>
+</html>

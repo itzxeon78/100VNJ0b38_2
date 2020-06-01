@@ -1,0 +1,28 @@
+#!/bin/sh
+
+#lauch all app for ZyIMS
+ethctl eth0 reg 24 0x7007
+ethctl eth0 reg 24 0xf217
+ethctl eth0 reg 24 0x7007
+ethctl eth1 reg 24 0x7007
+ethctl eth1 reg 24 0xf217
+ethctl eth1 reg 24 0x7007
+ethctl eth2 reg 24 0x7007
+ethctl eth2 reg 24 0xf217
+ethctl eth2 reg 24 0x7007
+ethctl eth3 reg 24 0x7007
+ethctl eth3 reg 24 0xf217
+ethctl eth3 reg 24 0x7007
+
+ethctl eth0 reg 28 0x2800
+ethctl eth0 reg 28 0xA901
+ethctl eth0 reg 28 0x2800
+ethctl eth1 reg 28 0x2800
+ethctl eth1 reg 28 0xA901
+ethctl eth1 reg 28 0x2800
+ethctl eth2 reg 28 0x2800
+ethctl eth2 reg 28 0xA901
+ethctl eth2 reg 28 0x2800
+ethctl eth3 reg 28 0x2800
+ethctl eth3 reg 28 0xA901
+ethctl eth3 reg 28 0x2800

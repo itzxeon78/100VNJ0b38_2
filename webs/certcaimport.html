@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+    <meta http-equiv="x-frame-options" content="sameorigin">
+    <link rel="stylesheet" href='stylemain.css' type='text/css'>
+      <link rel="stylesheet" href='colors.css' type='text/css'>
+        <script language="javascript" src="util.js"></script>
+        <script language="javascript">
+<!-- hide
+
+var certstart = '-----BEGIN CERTIFICATE-----';
+var certinsert = '\n<insert certificate here>\n';
+var certend = '-----END CERTIFICATE-----';
+var sessionKey='<%ejGetOther(sessionKey)%>';
+var enableMultipleTr69Ca = '<%ejGetOther(enableMultipleTr69Ca)%>';
+
+function frmLoad() {
+  document.importForm.action = 'certca.cmd?action=import&sessionKey=' + sessionKey;
+  with ( document.forms[0] ) {
+    certPublic.value = certstart + certinsert + certend + '\n';
+  }
+}
+
+function applyClick() {
+  var idx;
+ 
+  with ( document.forms[0] ) {
+    if ( certName.value == '' ) {
+      alert('Certificate Name should not be empty.');
+      return;
+    }
+    if ( certPublic.value == '' ) {
+      alert('Certificate Public Key should not be empty.');
+      return;
+    }
+
+    if ( enableMultipleTr69Ca == 1 ) {
+      if ( enableCACertTR069.checked == true ) {
+        enableCACertTR069.value = "1";
+      } else {
+        enableCACertTR069.value = "0";
+      }
+    } else {
+      enableCACertTR069.value = "0";
+    }
+  }
+  document.importForm.submit();
+}
+// done hiding -->
+</script>
+  </head>
+  <body onLoad='frmLoad()'>
+    <blockquote>
+      <form name="importForm" method="post">
+        <b>Import CA certificate<br>
+        </b>
+        <br>
+        Enter certificate name and paste certificate content.<br>
+        <br>
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="180">Certificate Name:</td>
+            <td><input type='text' name='certName' size='20' maxlength="63"></td>
+          </tr>
+            <tr>
+              <td width="180">Certificate:</td>
+              <td>
+                <P>
+                  <TEXTAREA name='certPublic' rows='20' cols='80'>
+              </TEXTAREA>
+                </P>
+              </td>
+            </tr>
+            <tr>
+              <td width="200">
+                <input type='checkbox' name='enableCACertTR069'>Enable Trusted CA for TR069
+              </td>
+            </tr>
+          </table>
+        </div>
+        <br>
+        <br>
+        <br>
+        <center>
+          <input type='button' value='Apply' onclick="applyClick()">
+        </center>
+      </form>
+    </blockquote>
+  </body>
+</html>
