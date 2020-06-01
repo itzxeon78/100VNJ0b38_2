@@ -1,0 +1,8 @@
+#!/bin/sh
+prefix=
+exec_prefix=${prefix}
+bindir=${exec_prefix}/bin
+sysconfdir=/etc
+localstatedir=${prefix}/var
+
+${bindir}/pdbtool merge -r --glob \*.pdb -D ${sysconfdir}/patterndb.d -p ${localstatedir}/patterndb.xml
